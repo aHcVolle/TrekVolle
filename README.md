@@ -1,6 +1,14 @@
 # TrekVolle
 ## Pebble Watchface
 
+Usage:
+
+Tap on watch to change between weather conditions & current location.
+
+Use the configuration settings to configure all the used colors.
+
+If the phone's battery is displayed depends on your phone. Its working on android cm-12.1, not tested anywhere else.
+
 Credits & Thanks to:
 
 * Idea: [chops's Trekv3](http://www.markspebblefaces.com/)
