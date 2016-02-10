@@ -27,55 +27,6 @@
     "resources": {
         "media": [
             {
-                "file": "images/BatteryHigh.png",
-                "name": "IMAGE_BATTERY_HIGH",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/BatteryMid.png",
-                "name": "IMAGE_BATTERY_MID",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/BatteryLow.png",
-                "name": "IMAGE_BATTERY_LOW",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Error.png",
-                "name": "IMAGE_ERROR",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Steps.png",
-                "name": "IMAGE_STEPS",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Overview.png",
-                "menuIcon": true,
-                "name": "IMAGE_OVERVIEW",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Network.png",
-                "name": "IMAGE_NETWORK",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Bluetooth.png",
-                "name": "IMAGE_BLUETOOTH",
-                "targetPlatforms": null,
-                "type": "png"
-            },
-            {
                 "file": "images/Weather_50.png",
                 "name": "IMAGE_WEATHER_50",
                 "targetPlatforms": null,
@@ -126,6 +77,55 @@
             {
                 "file": "images/Weather_01.png",
                 "name": "IMAGE_WEATHER_01",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/Steps.png",
+                "name": "IMAGE_STEPS",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/Overview.png",
+                "menuIcon": true,
+                "name": "IMAGE_OVERVIEW",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/Network.png",
+                "name": "IMAGE_NETWORK",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/Error.png",
+                "name": "IMAGE_ERROR",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/Bluetooth.png",
+                "name": "IMAGE_BLUETOOTH",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/BatteryMid.png",
+                "name": "IMAGE_BATTERY_MID",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/BatteryLow.png",
+                "name": "IMAGE_BATTERY_LOW",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/BatteryHigh.png",
+                "name": "IMAGE_BATTERY_HIGH",
                 "targetPlatforms": null,
                 "type": "png"
             },
