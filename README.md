@@ -17,3 +17,5 @@ Credits & Thanks to:
 * Data: [pebble documentation](https://developer.pebble.com/docs/c/)
 * Phone battery: [mdn](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API)
 * Weather: [openweathermap.org](http://openweathermap.org/)
+
+Donate: [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XU85WXAT4CVXE) 
