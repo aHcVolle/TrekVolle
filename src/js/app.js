@@ -133,8 +133,7 @@ Pebble.addEventListener('appmessage',function(e)
 });
 
 function getBattery()
-{
-   
+{   
    //console.log("Getting battery info...");
    //navigator.getBattery().level;
    if (batteryAvailiable && MessagingAvailiable)
@@ -163,14 +162,10 @@ var xhrRequest = function (url, type, callback)
      };  
   xhr.open(type, url);
   xhr.send();
-  
-
 };
 
 function locationSuccess(pos) 
 {
-  
-   
   // Construct URL
   var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
       pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + myAPIKey;
@@ -229,17 +224,12 @@ function getWeather()
   );
 }
 
-function SendPebbleTimeOutMsg(value)
-{
-   var dictionary ={'KEY_ONLINE': value};
-   Pebble.sendAppMessage(dictionary,function(e){},function(e){});
-}
-
 function getOnline()
 {
    if (LastOnlineCheck === false)
    {
-      SendPebbleTimeOutMsg(0);
+      var dictionary ={'KEY_ONLINE': 0};
+	  Pebble.sendAppMessage(dictionary,function(e){},function(e){});
    }
    LastOnlineCheck = false;
    // Construct URL
@@ -251,7 +241,8 @@ function getOnline()
       {
           LastOnlineCheck = true;
           //console.log('Got an online reply!');
-          SendPebbleTimeOutMsg(1);
+          var dictionary ={'KEY_ONLINE': 1};
+		  Pebble.sendAppMessage(dictionary,function(e){},function(e){});
     });
    
 }
