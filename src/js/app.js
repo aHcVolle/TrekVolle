@@ -5,7 +5,7 @@ var batteryAvailiable;
 var MessagingAvailiable = false;
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://www.vllmr.eu/pebble/config/index.html';
+  var url = 'https://raw.githubusercontent.com/aHcVolle/TrekVolle/master/config/index.html';
   //console.log('Showing configuration page: ' + url);
 
   Pebble.openURL(url);
@@ -241,7 +241,7 @@ function getOnline()
    }
    LastOnlineCheck = false;
    // Construct URL
-   var url = 'http://www.vllmr.eu/pebble/online.html';
+   var url = 'https://raw.githubusercontent.com/aHcVolle/TrekVolle/master/online.html';
    
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 
