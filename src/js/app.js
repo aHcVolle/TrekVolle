@@ -1,3 +1,5 @@
+var myAPIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d';
+
 var LastOnlineCheck = false;
 
 var battery;
@@ -167,7 +169,7 @@ var xhrRequest = function (url, type, callback)
 
 function locationSuccess(pos) 
 {
-   var myAPIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d';
+  
    
   // Construct URL
   var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
