@@ -20,6 +20,11 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
    Tuple *Color_Charging_tuple = dict_find(iterator,KEY_COLOR_CHARGING);
    Tuple *Color_Error_tuple = dict_find(iterator,KEY_COLOR_ERROR);
    Tuple *Color_BatteryLow_tuple = dict_find(iterator,KEY_COLOR_BATTERYLOW);
+   
+   Tuple *TemperatureInCelcius_tuple = dict_find(iterator,KEY_TEMPERATURE_CELCIUS);
+   Tuple *Clock24h_tuple = dict_find(iterator,KEY_CLOCK_24H);
+   Tuple *DateStyle_tuple = dict_find(iterator,KEY_DATE_STYLE);
+   Tuple *NetworkRefresh_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);
 
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
       HandleWeather(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
@@ -51,6 +56,18 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
        
    if (Color_BatteryLow_tuple)
       HandleBatteryLowColor((int)Color_BatteryLow_tuple->value->int32);
+   
+   if (TemperatureInCelcius_tuple)
+      HandleTemperatureInCelcius((bool)TemperatureInCelcius_tuple->value->int32);
+   
+   if (Clock24h_tuple)
+      HandleClock24h((bool)Clock24h_tuple->value->int32);
+   
+   if (DateStyle_tuple)
+      HandleDateStyle((int)DateStyle_tuple->value->int32);
+   
+   if (NetworkRefresh_tuple)
+      HandleNetworkRefreshTime((int)NetworkRefresh_tuple->value->int32);
 
 }
 

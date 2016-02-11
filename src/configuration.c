@@ -55,6 +55,31 @@ void HandleBatteryLowColor(int RGB)
    RedrawBattery();
 }
 
+void HandleTemperatureInCelcius(bool b_TemperatureInCelcius)
+{
+   TemperatureInCelcius = b_TemperatureInCelcius;
+   RedrawWeather();
+}
+
+void HandleClock24h(bool b_Clock24h)
+{
+   Clock24h = b_Clock24h;
+   RedrawTime();
+}
+
+void HandleDateStyle(int i_DateStyle)
+{
+   DateStyle = i_DateStyle;
+   RedrawTime();
+}
+
+void HandleNetworkRefreshTime(int i_NetworkRefreshTime)
+{
+   NetworkRefreshTime = i_NetworkRefreshTime;
+}
+
+
+
 void LoadConfigFromStorage()
 {
    
@@ -87,6 +112,26 @@ void LoadConfigFromStorage()
    {
      Color_BatteryLow.argb = persist_read_int(KEY_COLOR_BATTERYLOW);
    }
+   
+   
+   if (persist_exists(KEY_TEMPERATURE_CELCIUS)) 
+   {
+     TemperatureInCelcius = persist_read_bool(KEY_TEMPERATURE_CELCIUS);
+   }
+   if (persist_exists(KEY_CLOCK_24H)) 
+   {
+     Clock24h = persist_read_bool(KEY_CLOCK_24H);
+   }
+   if (persist_exists(KEY_DATE_STYLE)) 
+   {
+     DateStyle = persist_read_int(KEY_DATE_STYLE);
+   }
+   if (persist_exists(KEY_NETWORK_REFRESHTIME)) 
+   {
+     NetworkRefreshTime = persist_read_int(KEY_NETWORK_REFRESHTIME);
+   }
+   
+   
 }
 
 void SaveConfigToStorage()
@@ -98,6 +143,12 @@ void SaveConfigToStorage()
    persist_write_int(KEY_COLOR_CHARGING, (int)Color_Charging.argb);
    persist_write_int(KEY_COLOR_ERROR, (int)Color_Error.argb);
    persist_write_int(KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
+      
+   
+   persist_write_bool(KEY_TEMPERATURE_CELCIUS, TemperatureInCelcius);
+   persist_write_bool(KEY_CLOCK_24H, Clock24h);
+   persist_write_int(KEY_DATE_STYLE, DateStyle);
+   persist_write_int(KEY_NETWORK_REFRESHTIME, NetworkRefreshTime);
 }
 
 void LoadDefaultConfig()
@@ -109,6 +160,9 @@ void LoadDefaultConfig()
    Color_Charging = GColorGreen;
    Color_Error = GColorRed;
    Color_BatteryLow = GColorRed;
-   
+   TemperatureInCelcius = true;
+   NetworkRefreshTime = 1;
+   DateStyle = DATE_DD_MM_YY;
+   Clock24h = true;
 }
 

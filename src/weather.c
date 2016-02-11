@@ -3,12 +3,13 @@ TextLayer* Layer_Weather_Text;
 static BitmapLayer* Layer_Weather_Image = NULL;
 static GBitmap *Image_Weather;
 
-static char temperature_buffer[8];
 static char conditions_buffer[32];
 static char location_buffer[32];
 static char weather_layer_buffer[32];
 
 int WeatherImage;
+
+int Temperature;
 
 void RedrawWeatherText()
 {
@@ -19,7 +20,15 @@ void RedrawWeatherText()
    }
       
    if (DisplayState == DISPLAY_CONDITIONS)
-      snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s°C, %s", temperature_buffer, conditions_buffer);
+   {
+      if (TemperatureInCelcius)
+         snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%d°C, %s", Temperature, conditions_buffer);
+      else
+      {
+         float Fahrenheit = Temperature * 1.8 + 32;
+         snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%d°F, %s", (int)Fahrenheit, conditions_buffer);
+      }
+   }      
    else
       snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s", location_buffer);
       
@@ -57,7 +66,7 @@ void HandleWeather(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locati
 {
    if(Temperature_tuple) 
    {
-      snprintf(temperature_buffer, sizeof(temperature_buffer), "%d", (int)Temperature_tuple->value->int32);
+      Temperature = (int)Temperature_tuple->value->int32;
       LastWeatherUpdateWasOK = true;
    }
    

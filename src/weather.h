@@ -15,6 +15,8 @@ enum DisplayStates
 int DisplayState;
 bool LastWeatherUpdateWasOK;
 
+bool TemperatureInCelcius;
+
 void HandleWeather(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple);
 
 void InitWeather();

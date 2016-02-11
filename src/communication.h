@@ -24,6 +24,10 @@
 #define KEY_COLOR_ERROR 12 
 #define KEY_COLOR_BATTERYLOW 13
 
+#define KEY_TEMPERATURE_CELCIUS 14
+#define KEY_CLOCK_24H 15
+#define KEY_DATE_STYLE 16
+#define KEY_NETWORK_REFRESHTIME 17
 
 void InitCommunication();
 void DeInitCommunication();
