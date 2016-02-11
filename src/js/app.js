@@ -1,4 +1,4 @@
-var myAPIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d';
+var myAPIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d'; // Please use your own....
 
 var LastOnlineCheck = false;
 
