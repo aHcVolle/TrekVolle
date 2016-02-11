@@ -86,8 +86,28 @@
       <div class='item-container-footer'>
         Choose the battery low color.
       </div>
+	  
+	  <div class='item-container-content'>
+        <label class='item'>
+          Temperature in Celcius
+          <input id='celcius_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        This switches between Celcius and Fahrenheit.
+      </div>
+	  
+	  <div class='item-container-content'>
+        <label class='item'>
+          Clock in 24h mode
+          <input id='clock24h_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        This switches between 24h and 12h clock display.
+      </div>
     </div>
-
+	
 	<div class='item-container'>
       <div class='button-container'>
         <input id='Button_Reset' type='button' class='item-button' value='Reset to defaults'>
@@ -127,6 +147,9 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
 		localStorage['Color_Background'] = Color_Background_Picker.value;
 		localStorage['Color_Text'] 	     = Color_Text_Picker.value;
 		localStorage['Color_Image'] 	 = Color_Image_Picker.value;
@@ -134,6 +157,9 @@
 		localStorage['Color_Charging']   = Color_Charging_Picker.value;
 		localStorage['Color_Error']      = Color_Error_Picker.value;
 		localStorage['Color_BatteryLow'] = Color_BatteryLow_Picker.value;
+		
+		localStorage['TemperatureInCelcius'] = Celcius_Checkbox.checked.toString();
+		localStorage['Clock24h'] = Clock24h_Checkbox.checked.toString();
 		
 	}
   
@@ -146,6 +172,9 @@
 		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
 
 		var options = 
 		{
@@ -155,7 +184,9 @@
 			'Color_Window'    : Color_Window_Picker.value,
 			'Color_Charging'  : Color_Charging_Picker.value,
 			'Color_Error'     : Color_Error_Picker.value,
-			'Color_BatteryLow': Color_BatteryLow_Picker.value
+			'Color_BatteryLow': Color_BatteryLow_Picker.value,
+			'TemperatureInCelcius'     : Celcius_Checkbox.checked.toString(),
+			'Clock24h': Clock24h_Checkbox.checked.toString()
 		};
 
 		// Save for next launch
@@ -176,6 +207,9 @@
 		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
 
 		Color_Background_Picker.value = "0x0055FF";
 		Color_Text_Picker.value       = "0xFF5555";
@@ -184,6 +218,9 @@
 		Color_Charging_Picker.value   = "0x00FF00";
 		Color_Error_Picker.value      = "0xFF0000";
 		Color_BatteryLow_Picker.value = "0xFF0000";
+		
+		Celcius_Checkbox.checked = true;
+		Clock24h_Checkbox.checked = true;
 		console.log('Defaults: loading finished');
 		return true;
 	}
@@ -199,6 +236,9 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
 		if(localStorage['Color_Background']) 
 			Color_Background_Picker.value = localStorage['Color_Background'];
 		if(localStorage['Color_Text']) 
@@ -213,6 +253,12 @@
 			Color_Error_Picker.value      = localStorage['Color_Error'];
 		if(localStorage['Color_BatteryLow']) 
 			Color_BatteryLow_Picker.value = localStorage['Color_BatteryLow'];
+			
+		if(localStorage['TemperatureInCelcius']) 
+			Celcius_Checkbox.checked = (localStorage['TemperatureInCelcius'] === 'true'); 
+		if(localStorage['Clock24h']) 
+			Clock24h_Checkbox.checked = (localStorage['Clock24h'] === 'true');
+			
 		console.log('Reload: loading finished');
 		return true;
 	}
