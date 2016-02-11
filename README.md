@@ -1,13 +1,29 @@
 # TrekVolle
 ## Pebble Watchface
 
+Features:
+- Time (24H) 
+- Date (day of week & dd.mm.yy) 
+- Day of year - Week of year 
+- Weather information (temperature, conditions, icon, location (tap the pebble)) 
+- Pebble battery status 
+- Phone battery status 
+- Network connection status 
+- Bluetooth connection status 
+- Health information (step count & distance) 
+- Customizable colors
+
 Usage:
 
-Tap on watch to change between weather conditions & current location.
+- Tap on watch to change between weather conditions & current location.
+- Use the configuration settings to configure all the used colors.
+- If the phone's battery is displayed depends on your phone. Its working on android cm-12.1, not tested anywhere else.
 
-Use the configuration settings to configure all the used colors.
-
-If the phone's battery is displayed depends on your phone. Its working on android cm-12.1, not tested anywhere else.
+ToDo:
+- Display temperature in °C or °F
+- Display time in 24H / 12H
+- Customize network refresh time
+- Customize date display (dd-mm-yy / yy-mm-dd / mm-dd-yy)
 
 Credits & Thanks to:
 
