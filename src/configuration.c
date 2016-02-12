@@ -78,6 +78,16 @@ void HandleNetworkRefreshTime(int i_NetworkRefreshTime)
    NetworkRefreshTime = i_NetworkRefreshTime;
 }
 
+void HandleBluetoothVibrationEnabled(bool b_VibrationEnabled)
+{
+   m_b_Bluetooth_VibrationEnabled = b_VibrationEnabled;   
+}
+
+void HandleNetworkVibrationEnabled(bool b_VibrationEnabled)
+{
+   m_b_Network_VibrationEnabled = b_VibrationEnabled;
+}
+
 
 
 void LoadConfigFromStorage()
@@ -131,7 +141,14 @@ void LoadConfigFromStorage()
      NetworkRefreshTime = persist_read_int(KEY_NETWORK_REFRESHTIME);
    }
    
-   
+   if (persist_exists(KEY_BLUETOOTH_VIBRATIONENABLED)) 
+   {
+     m_b_Bluetooth_VibrationEnabled = persist_read_bool(KEY_BLUETOOTH_VIBRATIONENABLED);
+   }
+   if (persist_exists(KEY_NETWORK_VIBRATIONENABLED)) 
+   {
+     m_b_Network_VibrationEnabled = persist_read_bool(KEY_NETWORK_VIBRATIONENABLED);
+   }
 }
 
 void SaveConfigToStorage()
@@ -149,6 +166,10 @@ void SaveConfigToStorage()
    persist_write_bool(KEY_CLOCK_24H, Clock24h);
    persist_write_int(KEY_DATE_STYLE, DateStyle);
    persist_write_int(KEY_NETWORK_REFRESHTIME, NetworkRefreshTime);
+   
+   persist_write_bool(KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
+   persist_write_bool(KEY_NETWORK_VIBRATIONENABLED, m_b_Network_VibrationEnabled);
+   
 }
 
 void LoadDefaultConfig()
@@ -164,5 +185,7 @@ void LoadDefaultConfig()
    NetworkRefreshTime = 1;
    DateStyle = DATE_DD_MM_YY;
    Clock24h = true;
+   m_b_Network_VibrationEnabled = true;
+   m_b_Bluetooth_VibrationEnabled = true;
 }
 

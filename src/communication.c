@@ -25,6 +25,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
    Tuple *Clock24h_tuple = dict_find(iterator,KEY_CLOCK_24H);
    Tuple *DateStyle_tuple = dict_find(iterator,KEY_DATE_STYLE);
    Tuple *NetworkRefresh_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);
+   
+   Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
+   Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
 
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
       HandleWeather(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
@@ -68,6 +71,12 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
    
    if (NetworkRefresh_tuple)
       HandleNetworkRefreshTime((int)NetworkRefresh_tuple->value->int32);
+   
+   if (Network_VibrationEnabled_tuple)
+      HandleNetworkVibrationEnabled((bool)Network_VibrationEnabled_tuple->value->int32);
+   
+   if (Bluetooth_VibrationEnabled_tuple)
+      HandleBluetoothVibrationEnabled((bool)Bluetooth_VibrationEnabled_tuple->value->int32);
 
 }
 

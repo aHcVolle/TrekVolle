@@ -2,6 +2,7 @@
     "appKeys": {
         "KEY_BATTERY_CHARGE": 5,
         "KEY_BATTERY_STATE": 6,
+        "KEY_BLUETOOTH_VIBRATIONENABLED": 18,
         "KEY_CLOCK_24H": 15,
         "KEY_COLOR_BACKGROUND": 7,
         "KEY_COLOR_BATTERYLOW": 13,
@@ -15,6 +16,7 @@
         "KEY_ICON": 2,
         "KEY_LOCATION": 3,
         "KEY_NETWORK_REFRESHTIME": 17,
+        "KEY_NETWORK_VIBRATIONENABLED": 19,
         "KEY_ONLINE": 4,
         "KEY_TEMPERATURE": 0,
         "KEY_TEMPERATURE_CELCIUS": 14

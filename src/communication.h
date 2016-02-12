@@ -29,6 +29,9 @@
 #define KEY_DATE_STYLE 16
 #define KEY_NETWORK_REFRESHTIME 17
 
+#define KEY_BLUETOOTH_VIBRATIONENABLED 18
+#define KEY_NETWORK_VIBRATIONENABLED 19
+
 void InitCommunication();
 void DeInitCommunication();
 

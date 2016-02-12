@@ -42,12 +42,13 @@ static void handle_bluetooth(bool connected)
       return;
    
    LastBTConnectionState = connected;
-   if (connected)
+   if (connected && m_b_Bluetooth_VibrationEnabled)
    {
+      
       vibes_short_pulse();
       //printf("BT connected");
    }
-   else
+   else if (m_b_Bluetooth_VibrationEnabled)
    {
       vibes_double_pulse();
       //printf("BT disconnected");

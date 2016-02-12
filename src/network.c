@@ -48,17 +48,17 @@ void RedrawNetworkImage()
 
 void HandleNetworkReply(Tuple *network_tuple)
 {
-   int ThisValue = (int)network_tuple->value->int32;
+   int i_Connected = (int)network_tuple->value->int32;
    
-   if (LastNETConnectionState == ThisValue)
+   if (LastNETConnectionState == i_Connected)
       return;
    
-   LastNETConnectionState = ThisValue;
-   if (ThisValue)
+   LastNETConnectionState = i_Connected;
+   if (i_Connected && m_b_Network_VibrationEnabled)
    {
       vibes_short_pulse();  
    }
-   else
+   else if (m_b_Network_VibrationEnabled)
    {
       vibes_double_pulse();
    }

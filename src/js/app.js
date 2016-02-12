@@ -30,6 +30,8 @@ Pebble.addEventListener('webviewclosed', function(e)
    var Clock24h = configData.Clock24h;
    var DateStyle = configData.DateStyle;
    var NetworkRefreshTime = configData.NetworkRefreshTime;
+   var Bluetooth_VibrationEnabled = configData.Bluetooth_VibrationEnabled;
+   var Network_VibrationEnabled = configData.Network_VibrationEnabled;
 
    //console.log('Color_Text: ' + Color_Text);
   
@@ -49,6 +51,12 @@ Pebble.addEventListener('webviewclosed', function(e)
    if (Clock24h == "false")
       Clock24h_int = 0;
    
+   var i_Bluetooth_VibrationEnabled = 1;
+   if (Bluetooth_VibrationEnabled == "false")
+      i_Bluetooth_VibrationEnabled = 0;
+   var i_Network_VibrationEnabled = 1;
+   if (Network_VibrationEnabled == "false")
+      i_Network_VibrationEnabled = 0;
    
    var DateStyle_int = parseInt(DateStyle, 10);
    var NetworkRefreshTime_int = parseInt(NetworkRefreshTime, 10);
@@ -73,7 +81,9 @@ Pebble.addEventListener('webviewclosed', function(e)
           'KEY_TEMPERATURE_CELCIUS' : TemperatureInCelcius_int,
           'KEY_CLOCK_24H' : Clock24h_int,
           'KEY_DATE_STYLE' : DateStyle_int,
-          'KEY_NETWORK_REFRESHTIME' : NetworkRefreshTime_int
+          'KEY_NETWORK_REFRESHTIME' : NetworkRefreshTime_int,
+          'KEY_BLUETOOTH_VIBRATIONENABLED' : i_Bluetooth_VibrationEnabled,
+          'KEY_NETWORK_VIBRATIONENABLED' : i_Network_VibrationEnabled
           
        };
 
