@@ -19,7 +19,7 @@ void HandleImageColor(int RGB)
    RedrawBluetoothImage();
    RedrawNetworkImage();
    RedrawWeatherImage();
-   RedrawBattery();
+   Battery_RedrawAll();
 }
 
 void HandleWindowColor(int RGB)
@@ -28,7 +28,7 @@ void HandleWindowColor(int RGB)
    RedrawBluetoothImage();
    RedrawNetworkImage();
    RedrawWeatherImage();
-   RedrawBattery();
+   Battery_RedrawAll();
    SetColor();
 }
 
@@ -36,7 +36,7 @@ void HandleChargingColor(int RGB)
 {
    Color_Charging = GColorFromHEX(RGB);
    SetColor();
-   RedrawBattery();
+   Battery_RedrawAll();
 }
 
 void HandleErrorColor(int RGB)
@@ -45,14 +45,14 @@ void HandleErrorColor(int RGB)
    SetColor();
    RedrawBluetoothImage();
    RedrawNetworkImage();
-   RedrawBattery();
+   Battery_RedrawAll();
 }
 
 void HandleBatteryLowColor(int RGB)
 {
    Color_BatteryLow = GColorFromHEX(RGB);
    SetColor();
-   RedrawBattery();
+   Battery_RedrawAll();
 }
 
 void HandleTemperatureInCelcius(bool b_TemperatureInCelcius)

@@ -229,7 +229,7 @@ void SetColor()
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
    layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
    
-   RedrawBattery();
+   Battery_RedrawAll();
    
    if (Image_Steps)
    {

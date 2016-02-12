@@ -1,65 +1,40 @@
 #include "battery.h"
 
-TextLayer* Layer_Battery_Text_Phone = NULL;
-TextLayer* Layer_Battery_Text_Pebble = NULL;
-BitmapLayer* Layer_Battery_Image_Pebble = NULL;
-BitmapLayer* Layer_Battery_Image_Phone = NULL;
-
-GBitmap *Image_Battery_Phone;
-GBitmap *Image_Battery_Pebble;
-
-bool FirstPhoneBattery;
-
-int BatteryLevelPhone;
-int BatteryLevelPebble;
-bool BatteryStatePhone;
-bool BatteryStatePebble;
-
-void ColorBatteryImagePhone(int Image_ID, GColor Color)
+// Phone battery vars
+struct BatteryData
 {
-   if (Layer_Battery_Image_Phone == NULL)
+   TextLayer*   l_Text;
+   BitmapLayer* l_Image;
+   GBitmap*     bmp_Image;
+   int i_BatteryLevel;
+   bool b_ChargingState;
+   bool b_FirstValue;
+};
+
+struct BatteryData m_BatteryPhone;
+struct BatteryData m_BatteryPebble;
+
+void BatteryRedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
+{
+   if (Battery->l_Image == NULL)
       return;
    
-   bitmap_layer_set_bitmap(Layer_Battery_Image_Phone, NULL);
-   if (Image_Battery_Phone)
+   bitmap_layer_set_bitmap(Battery->l_Image, NULL);
+   if (Battery->bmp_Image)
    {
-      gbitmap_destroy(Image_Battery_Phone);
-      Image_Battery_Phone = NULL;
+      gbitmap_destroy(Battery->bmp_Image);
+      Battery->bmp_Image = NULL;
    }         
-   Image_Battery_Phone = gbitmap_create_with_resource(Image_ID);
-   replace_gbitmap_color(GColorWhite, Color, Image_Battery_Phone, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Battery_Phone, NULL);
-   bitmap_layer_set_bitmap(Layer_Battery_Image_Phone, Image_Battery_Phone);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Battery_Image_Phone));
-}  
-
-void ColorBatteryImagePebble(int Image_ID, GColor Color)
-{
-   if (Layer_Battery_Image_Pebble == NULL)
-      return;
-   
-   bitmap_layer_set_bitmap(Layer_Battery_Image_Pebble, NULL);
-   if (Image_Battery_Pebble)
-   {
-      gbitmap_destroy(Image_Battery_Pebble);
-      Image_Battery_Pebble = NULL;
-   }         
-   Image_Battery_Pebble = gbitmap_create_with_resource(Image_ID);
-   replace_gbitmap_color(GColorWhite, Color, Image_Battery_Pebble, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Battery_Pebble, NULL);
-   bitmap_layer_set_bitmap(Layer_Battery_Image_Pebble, Image_Battery_Pebble);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Battery_Image_Pebble));
-}   
-
-static void handle_battery(BatteryChargeState charge_state) 
-{
-   BatteryLevelPebble = charge_state.charge_percent;
-   BatteryStatePebble = charge_state.is_charging;
-   RedrawPebbleBattery();
-   
+   Battery->bmp_Image = gbitmap_create_with_resource(Image_ID);
+   replace_gbitmap_color(GColorWhite, Color, Battery->bmp_Image, NULL);
+   replace_gbitmap_color(GColorBlack,  Color_Window, Battery->bmp_Image, NULL);
+   bitmap_layer_set_bitmap(Battery->l_Image, Battery->bmp_Image);
+   layer_mark_dirty(bitmap_layer_get_layer(Battery->l_Image));
 }
 
-void RequestBattery()
+
+
+void Battery_RequestPhone()
 {
      // Begin dictionary
      DictionaryIterator *iter;
@@ -72,118 +47,92 @@ void RequestBattery()
      app_message_outbox_send();
 }
 
-void HandleBatteryReply(Tuple *batterycharge_tuple,Tuple *batterystate_tuple)
+
+
+void Battery_Redraw(struct BatteryData* Battery)
+{
+   static char s_BatteryText[5];
+   
+   if (Battery->l_Text == NULL)
+      return;
+  
+   if (Battery->i_BatteryLevel < 30)
+   {
+      text_layer_set_text_color(Battery->l_Text, Color_BatteryLow);
+      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_LOW,Color_BatteryLow);
+   }
+   else if (Battery->i_BatteryLevel < 60)
+   {
+      text_layer_set_text_color(Battery->l_Text, Color_Text);
+      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_MID,Color_Image);
+   }
+   else
+   {
+      text_layer_set_text_color(Battery->l_Text, Color_Text);
+      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_HIGH,Color_Image);
+   }
+   
+   if (Battery->b_ChargingState )
+   {
+      text_layer_set_text_color(Battery->l_Text, Color_Charging);
+   }
+   
+   if (Battery->i_BatteryLevel > 99)
+      snprintf(s_BatteryText, sizeof(s_BatteryText), "%d", Battery->i_BatteryLevel);
+   else
+      snprintf(s_BatteryText, sizeof(s_BatteryText), "%d%%", Battery->i_BatteryLevel);
+   text_layer_set_text(Battery->l_Text, s_BatteryText);
+   layer_mark_dirty(text_layer_get_layer(Battery->l_Text));
+   
+}
+
+static void Battery_Handle_Pebble(BatteryChargeState charge_state) 
+{
+   m_BatteryPebble.i_BatteryLevel = charge_state.charge_percent;
+   m_BatteryPebble.b_ChargingState = charge_state.is_charging;
+   Battery_Redraw(&m_BatteryPebble);
+}
+
+void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState)
 {
    show_PhoneBattery(true);
    
-   BatteryLevelPhone = (int)batterycharge_tuple->value->int32;
-   BatteryStatePhone = (int)batterystate_tuple->value->int32;
-   RedrawPhoneBattery();
+   m_BatteryPhone.i_BatteryLevel = i_BatteryLevel;
+   m_BatteryPhone.b_ChargingState = b_ChargingState;
+   Battery_Redraw(&m_BatteryPhone);
 }
 
-void RedrawPhoneBattery()
+void Battery_RedrawAll()
 {
-   static char battery_text[5];
-   
-   if (Layer_Battery_Text_Phone == NULL)
-      return;
-  
-   if (BatteryLevelPhone < 30)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Phone, Color_BatteryLow);
-      ColorBatteryImagePhone(RESOURCE_ID_IMAGE_BATTERY_LOW,Color_BatteryLow);
-   }
-   else if (BatteryLevelPhone < 60)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
-      ColorBatteryImagePhone(RESOURCE_ID_IMAGE_BATTERY_MID, Color_Image);
-   }
-   else
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
-      ColorBatteryImagePhone(RESOURCE_ID_IMAGE_BATTERY_HIGH, Color_Image);
-   }
-   
-   if (BatteryStatePhone)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Charging);
-   }
-   
-   if (BatteryLevelPhone > 99)
-      snprintf(battery_text, sizeof(battery_text), "%d", BatteryLevelPhone);
-   else
-      snprintf(battery_text, sizeof(battery_text), "%d%%", BatteryLevelPhone);
-   text_layer_set_text(Layer_Battery_Text_Phone, battery_text);
-   layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Phone));
-   
-}
-
-void RedrawPebbleBattery()
-{
-   static char battery_text[5];
-   if (Layer_Battery_Text_Pebble == NULL)
-      return;
-   
-   if (BatteryLevelPebble < 30)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_BatteryLow);
-      ColorBatteryImagePebble(RESOURCE_ID_IMAGE_BATTERY_LOW,Color_BatteryLow);
-   }
-   else if (BatteryLevelPebble < 60)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
-      ColorBatteryImagePebble(RESOURCE_ID_IMAGE_BATTERY_MID, Color_Image);
-   }
-   else
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
-      ColorBatteryImagePebble(RESOURCE_ID_IMAGE_BATTERY_HIGH, Color_Image);
-   }
-   
-   if (BatteryStatePebble)
-   {
-      text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Charging);
-   }
-   
-   if (BatteryLevelPebble > 99)
-      snprintf(battery_text, sizeof(battery_text), "%d", BatteryLevelPebble);
-   else
-      snprintf(battery_text, sizeof(battery_text), "%d%%", BatteryLevelPebble);
-   text_layer_set_text(Layer_Battery_Text_Pebble, battery_text);
-   layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
-}
-
-void RedrawBattery()
-{
-   RedrawPhoneBattery();
-   RedrawPebbleBattery();
+   Battery_Redraw(&m_BatteryPhone);
+   Battery_Redraw(&m_BatteryPebble);
 }
 
 
-void InitBattery()
+void Battery_Init()
 {
-   Layer_Battery_Text_Pebble =  GetBatteryTextLayerPebble();
-   Layer_Battery_Image_Pebble = GetBatteryImageLayerPebble();
-   Layer_Battery_Text_Phone =   GetBatteryTextLayerPhone();
-   Layer_Battery_Image_Phone =  GetBatteryImageLayerPhone();
+   m_BatteryPebble.l_Text =  GetBatteryTextLayerPebble();
+   m_BatteryPebble.l_Image = GetBatteryImageLayerPebble();
+   m_BatteryPhone.l_Text =   GetBatteryTextLayerPhone();
+   m_BatteryPhone.l_Image =  GetBatteryImageLayerPhone();
    show_PhoneBattery(false);
-   battery_state_service_subscribe(handle_battery);
-   handle_battery(battery_state_service_peek());
+   battery_state_service_subscribe(Battery_Handle_Pebble);
+   Battery_Handle_Pebble(battery_state_service_peek());
 }
 
-void DeInitBattery()
+void Battery_Deinit()
 {
    battery_state_service_unsubscribe();
-   if (Image_Battery_Phone)
+   if (m_BatteryPhone.bmp_Image)
    {
-      gbitmap_destroy(Image_Battery_Phone);
-      Image_Battery_Phone = NULL;
+      gbitmap_destroy(m_BatteryPhone.bmp_Image);
+      m_BatteryPhone.bmp_Image = NULL;
    }
       
-   if (Image_Battery_Pebble)
+   if (m_BatteryPebble.bmp_Image)
    {
-      gbitmap_destroy(Image_Battery_Pebble);
-      Image_Battery_Pebble = NULL;
+      gbitmap_destroy(m_BatteryPebble.bmp_Image);
+      m_BatteryPebble.bmp_Image = NULL;
    }
       
 }

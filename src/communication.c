@@ -36,7 +36,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       HandleNetworkReply(Network_tuple);
    
    if (Batterycharge_tuple && Batterystate_tuple)
-      HandleBatteryReply(Batterycharge_tuple, Batterystate_tuple);
+      Battery_Handle_Phone( (int)Batterycharge_tuple->value->int32, (bool)Batterystate_tuple->value->int32);
    
    
    if (Color_Background_tuple)

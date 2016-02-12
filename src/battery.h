@@ -5,10 +5,8 @@
 #include "mainwindow.h"
 #include "communication.h"
 
-void InitBattery();
-void DeInitBattery();
-void RedrawPhoneBattery();
-void RedrawPebbleBattery();
-void RedrawBattery();
-void HandleBatteryReply(Tuple *batterycharge_tuple,Tuple *batterystate_tuple);
+void Battery_Init();
+void Battery_Deinit();
+void Battery_RedrawAll();
+void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState);
 #endif
