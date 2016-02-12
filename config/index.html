@@ -22,6 +22,7 @@
 
     <div class='item-container' id="parent">
       <div class='item-container-header'>Customizability</div>
+      
       <div class='item-container-content'>
         <label class='item'>
           Background Image Color
@@ -31,7 +32,8 @@
       <div class='item-container-footer'>
         Choose the app's background image color.
       </div>
-	  <div class='item-container-content'>
+      
+      <div class='item-container-content'>
         <label class='item'>
           Text Color
           <input id='Color_Text_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -40,8 +42,8 @@
       <div class='item-container-footer'>
         Choose the app's text color.
       </div>
-	  </div>
-	  <div class='item-container-content'>
+
+      <div class='item-container-content'>
         <label class='item'>
           Image Color
           <input id='Color_Image_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -50,7 +52,8 @@
       <div class='item-container-footer'>
         Choose the app's image color.
       </div>
-	  <div class='item-container-content'>
+      
+      <div class='item-container-content'>
         <label class='item'>
           Window Background Color
           <input id='Color_Window_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -59,7 +62,8 @@
       <div class='item-container-footer'>
         Choose the app's background color.
       </div>
-	  <div class='item-container-content'>
+      
+      <div class='item-container-content'>
         <label class='item'>
           Battery charging Color
           <input id='Color_Charging_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -68,7 +72,8 @@
       <div class='item-container-footer'>
         Choose the battery charging color.
       </div>
-	  <div class='item-container-content'>
+
+      <div class='item-container-content'>
         <label class='item'>
           Error Color
           <input id='Color_Error_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -77,7 +82,8 @@
       <div class='item-container-footer'>
         Choose the app's error / disconnection color.
       </div>
-	  <div class='item-container-content'>
+
+      <div class='item-container-content'>
         <label class='item'>
           Battery low Color
           <input id='Color_BatteryLow_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
@@ -87,7 +93,7 @@
         Choose the battery low color.
       </div>
 	  
-	  <div class='item-container-content'>
+      <div class='item-container-content'>
         <label class='item'>
           Temperature in Celcius
           <input id='celcius_checkbox' type='checkbox' class='item-toggle'>
@@ -97,7 +103,7 @@
         This switches between Celcius and Fahrenheit.
       </div>
 	  
-	  <div class='item-container-content'>
+      <div class='item-container-content'>
         <label class='item'>
           Clock in 24h mode
           <input id='clock24h_checkbox' type='checkbox' class='item-toggle'>
@@ -106,26 +112,45 @@
       <div class='item-container-footer'>
         This switches between 24h and 12h clock display.
       </div>
-    </div>
-	
-	<div class='item-container'>
-      <div class='button-container'>
-        <input id='Button_Reset' type='button' class='item-button' value='Reset to defaults'>
-      </div>
-    </div> 
-	
-	<div class='item-container'>
-      <div class='button-container'>
-        <input id='Button_Reload' type='button' class='item-button' value='Reload saved values'>
-      </div>
-    </div> 
-	
-     <div class='item-container'>
-      <div class='button-container'>
-        <input id='Button_Submit' type='button' class='item-button' value='Save'>
-      </div>
-    </div> 
 
+      <div class='item-container-content'>
+        <label class='item'>
+          Bluetooth vibration
+          <input id='bluetooth_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Enable vibration on bluetooth connection change.
+      </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Network vibration
+          <input id='network_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Enable vibration on network connection change.
+      </div>
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Reset' type='button' class='item-button' value='Reset to defaults'>
+        </div>
+      </div> 
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Reload' type='button' class='item-button' value='Reload saved values'>
+        </div>
+      </div> 
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Submit' type='button' class='item-button' value='Save'>
+        </div>
+      </div> 
+  </div>
 
   </body>
   
@@ -150,6 +175,9 @@
 		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
 		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
 		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
 		localStorage['Color_Background'] = Color_Background_Picker.value;
 		localStorage['Color_Text'] 	     = Color_Text_Picker.value;
 		localStorage['Color_Image'] 	 = Color_Image_Picker.value;
@@ -161,6 +189,8 @@
 		localStorage['TemperatureInCelcius'] = Celcius_Checkbox.checked.toString();
 		localStorage['Clock24h'] = Clock24h_Checkbox.checked.toString();
 		
+		localStorage['Bluetooth_VibrationEnabled'] = Bluetooth_VibrationEnabled_Checkbox.checked.toString();
+		localStorage['Network_VibrationEnabled'] = Network_VibrationEnabled_Checkbox.checked.toString();
 	}
   
 	function getConfigData() 
@@ -175,7 +205,10 @@
 		
 		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
 		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
-
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
 		var options = 
 		{
 			'Color_Background': Color_Background_Picker.value,
@@ -186,7 +219,9 @@
 			'Color_Error'     : Color_Error_Picker.value,
 			'Color_BatteryLow': Color_BatteryLow_Picker.value,
 			'TemperatureInCelcius'     : Celcius_Checkbox.checked.toString(),
-			'Clock24h': Clock24h_Checkbox.checked.toString()
+			'Clock24h': Clock24h_Checkbox.checked.toString(),
+			'Bluetooth_VibrationEnabled': Bluetooth_VibrationEnabled_Checkbox.checked.toString(),
+			'Network_VibrationEnabled': Network_VibrationEnabled_Checkbox.checked.toString()
 		};
 
 		// Save for next launch
@@ -210,7 +245,11 @@
 		
 		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
 		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
-
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
+		
 		Color_Background_Picker.value = "0x0055FF";
 		Color_Text_Picker.value       = "0xFF5555";
 		Color_Image_Picker.value      = "0xFF5555";
@@ -221,6 +260,8 @@
 		
 		Celcius_Checkbox.checked = true;
 		Clock24h_Checkbox.checked = true;
+		Bluetooth_VibrationEnabled_Checkbox.checked = true;
+		Network_VibrationEnabled_Checkbox.checked = true;
 		console.log('Defaults: loading finished');
 		return true;
 	}
@@ -238,6 +279,10 @@
 		
 		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
 		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
 		
 		if(localStorage['Color_Background']) 
 			Color_Background_Picker.value = localStorage['Color_Background'];
@@ -258,7 +303,12 @@
 			Celcius_Checkbox.checked = (localStorage['TemperatureInCelcius'] === 'true'); 
 		if(localStorage['Clock24h']) 
 			Clock24h_Checkbox.checked = (localStorage['Clock24h'] === 'true');
-			
+		if(localStorage['Bluetooth_VibrationEnabled']) 
+			Bluetooth_VibrationEnabled_Checkbox.checked = (localStorage['Bluetooth_VibrationEnabled'] === 'true'); 
+		if(localStorage['Network_VibrationEnabled']) 
+			Network_VibrationEnabled_Checkbox.checked = (localStorage['Network_VibrationEnabled'] === 'true'); 
+		
+		
 		console.log('Reload: loading finished');
 		return true;
 	}
