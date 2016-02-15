@@ -9,6 +9,7 @@ struct BatteryData
    int i_BatteryLevel;
    bool b_ChargingState;
    bool b_FirstValue;
+   char s_Text[5];
 };
 
 struct BatteryData m_BatteryPhone;
@@ -51,7 +52,6 @@ void Battery_RequestPhone()
 
 void Battery_Redraw(struct BatteryData* Battery)
 {
-   static char s_BatteryText[5];
    
    if (Battery->l_Text == NULL)
       return;
@@ -78,10 +78,10 @@ void Battery_Redraw(struct BatteryData* Battery)
    }
    
    if (Battery->i_BatteryLevel > 99)
-      snprintf(s_BatteryText, sizeof(s_BatteryText), "%d", Battery->i_BatteryLevel);
+      snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d", Battery->i_BatteryLevel);
    else
-      snprintf(s_BatteryText, sizeof(s_BatteryText), "%d%%", Battery->i_BatteryLevel);
-   text_layer_set_text(Battery->l_Text, s_BatteryText);
+      snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d%%", Battery->i_BatteryLevel);
+   text_layer_set_text(Battery->l_Text, Battery->s_Text);
    layer_mark_dirty(text_layer_get_layer(Battery->l_Text));
    
 }
