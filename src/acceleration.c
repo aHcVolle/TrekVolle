@@ -1,6 +1,6 @@
 #include "acceleration.h"
 
-static void tap_handler(AccelAxisType axis, int32_t direction) 
+static void Acceleration_Handle(AccelAxisType axis, int32_t direction) 
 {
    
    if  (axis == ACCEL_AXIS_Y)  
@@ -15,12 +15,12 @@ static void tap_handler(AccelAxisType axis, int32_t direction)
 }
 
 
-void InitAcceleration(void)
+void Acceleration_Init(void)
 {
-   accel_tap_service_subscribe(tap_handler);
+   accel_tap_service_subscribe(Acceleration_Handle);
 }
 
-void DeInitAcceleration(void)
+void Acceleration_DeInit(void)
 {
    accel_tap_service_unsubscribe();
 }

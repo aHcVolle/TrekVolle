@@ -13,15 +13,6 @@ bool m_b_Bluetooth_VibrationEnabled;
 bool m_b_Network_VibrationEnabled;
 
 
-
-
-void HandleBackgroundColor(int RGB);
-void HandleTextColor(int RGB);
-void HandleImageColor(int RGB);
-void HandleWindowColor(int RGB);
-void HandleChargingColor(int RGB);
-void HandleErrorColor(int RGB);
-void HandleBatteryLowColor(int RGB);
 void HandleTemperatureInCelcius(bool b_TemperatureInCelcius);
 void HandleClock24h(bool b_Clock24h);
 void HandleDateStyle(int i_DateStyle);

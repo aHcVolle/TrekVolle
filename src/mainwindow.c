@@ -219,11 +219,9 @@ void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Col
    layer_mark_dirty(bitmap_layer_get_layer(l_Image));
 }
 
-void SetColor()
+
+void Color_SetTextColor()
 {
-//   text_layer_set_background_color(Layer_Background_Color, Color_Window);
-//   layer_mark_dirty(text_layer_get_layer(Layer_Background_Color));
-   
    text_layer_set_text_color(Layer_Time_Text, Color_Text);
    layer_mark_dirty(text_layer_get_layer(Layer_Time_Text));
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
@@ -238,7 +236,10 @@ void SetColor()
    layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
    layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
-   
+}
+
+void Color_SetImageColor()
+{
    Battery_RedrawAll();
    
    Redraw_Image(Layer_Steps_Image,m_Steps_Image,RESOURCE_ID_IMAGE_STEPS,Color_Image);

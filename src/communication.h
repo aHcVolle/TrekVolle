@@ -32,8 +32,8 @@
 #define KEY_BLUETOOTH_VIBRATIONENABLED 18
 #define KEY_NETWORK_VIBRATIONENABLED 19
 
-void InitCommunication();
-void DeInitCommunication();
+void Communication_Init();
+void Communication_DeInit();
 
 
 

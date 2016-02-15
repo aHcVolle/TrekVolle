@@ -17,7 +17,9 @@ GColor Color_BatteryLow;
 void show_mainwindow(void);
 void hide_mainwindow(void);
 void show_PhoneBattery(bool show);
-void SetColor();
+void Color_SetTextColor();
+void Color_SetImageColor();
+
 
 void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color);
 

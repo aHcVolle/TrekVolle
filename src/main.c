@@ -15,7 +15,8 @@ static void init()
    // UI 
    show_mainwindow();
    // Set Color
-   SetColor();   
+   Color_SetTextColor();   
+   Color_SetImageColor();
  
    // Network
    Network_Init();
@@ -36,11 +37,10 @@ static void init()
    InitWeather();
    
    // Communication
-   InitCommunication();
-     
-   
+   Communication_Init();
+        
    // Acceleration
-   InitAcceleration();
+   Acceleration_Init();
 }
 
 static void deinit() 
@@ -50,9 +50,9 @@ static void deinit()
    Network_DeInit();
    Battery_Deinit();
    Time_DeInit();
-   DeInitCommunication();
+   Communication_DeInit();
    Health_DeInit();
-   DeInitAcceleration();
+   Acceleration_DeInit();
    // Destroy Window
    hide_mainwindow();
 }

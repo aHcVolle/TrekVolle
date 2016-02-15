@@ -3,8 +3,8 @@
 #include <pebble.h>
 #include "weather.h"
 
-void InitAcceleration(void);
-void DeInitAcceleration(void);
+void Acceleration_Init(void);
+void Acceleration_DeInit(void);
 
 
 
