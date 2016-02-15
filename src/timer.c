@@ -1,50 +1,50 @@
 #include "timer.h"
 
-TextLayer* Layer_Time_Text;
-TextLayer* Layer_Date_Text;
-TextLayer* Layer_Day_Text;
+TextLayer* m_Time_Text_Layer;
+TextLayer* m_Date_Text_Layer;
+TextLayer* m_Day_Text_Layer;
 
-void RedrawTime() 
+void Time_Redraw() 
 {
    // Get a tm structure
-   time_t temp = time(NULL);
-   struct tm *tick_time = localtime(&temp);
+   time_t Time_Temp = time(NULL);
+   struct tm* Time_Tick = localtime(&Time_Temp);
 
    // Write the current hours and minutes into a buffer
-   static char s_timebuffer[8];
+   static char s_TimeBuffer[8];
    
-   if (Clock24h)
-      strftime(s_timebuffer, sizeof(s_timebuffer), "%H:%M", tick_time);
+   if (m_b_Clock24h)
+      strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%H:%M", Time_Tick);
    else
    {
-      strftime(s_timebuffer, sizeof(s_timebuffer), "%I:%M", tick_time);
+      strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%I:%M", Time_Tick);
    }
 
    // Display this time on the TextLayer
-   text_layer_set_text(Layer_Time_Text, s_timebuffer);
+   text_layer_set_text(m_Time_Text_Layer, s_TimeBuffer);
    
-   static char s_datebuffer[20];
-   if (DateStyle == DATE_DD_MM_YY)
-      strftime(s_datebuffer, sizeof(s_datebuffer), "%a, %d.%m.%y", tick_time);
-   else if (DateStyle == DATE_YY_MM_DD)
-      strftime(s_datebuffer, sizeof(s_datebuffer), "%a, %y-%m-%d", tick_time);
+   static char s_DateBuffer[20];
+   if (m_i_DateStyle == DATE_DD_MM_YY)
+      strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %d.%m.%y", Time_Tick);
+   else if (m_i_DateStyle == DATE_YY_MM_DD)
+      strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %y-%m-%d", Time_Tick);
    else // if DATE_MM_DD_YY
-      strftime(s_datebuffer, sizeof(s_datebuffer), "%a, %m/%d/%y", tick_time);
+      strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %m/%d/%y", Time_Tick);
    
    // Display this date on the TextLayer
-   text_layer_set_text(Layer_Date_Text, s_datebuffer);
+   text_layer_set_text(m_Date_Text_Layer, s_DateBuffer);
    
-   static char s_daybuffer[20];
-   strftime(s_daybuffer, sizeof(s_daybuffer), "D%j W%W", tick_time);
+   static char s_DayBuffer[20];
+   strftime(s_DayBuffer, sizeof(s_DayBuffer), "D%j W%W", Time_Tick);
    
    // Display this day on the TextLayer
-   text_layer_set_text(Layer_Day_Text, s_daybuffer);
+   text_layer_set_text(m_Day_Text_Layer, s_DayBuffer);
    
 }
 
-static void tick_handler(struct tm *tick_time, TimeUnits units_changed) 
+static void Time_Handle(struct tm *tick_time, TimeUnits units_changed) 
 {
-   RedrawTime();
+   Time_Redraw();
    
    if (tick_time->tm_min % m_i_NetworkRefreshTime == 0)
       Network_Request();
@@ -57,23 +57,23 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
    
 }
 
-void InitTimer()
+void Time_Init()
 {
-   Layer_Time_Text = GetTimeTextLayer();
-   Layer_Date_Text = GetDateTextLayer();
-   Layer_Day_Text  = GetDayTextLayer();
+   m_Time_Text_Layer = GetTimeTextLayer();
+   m_Date_Text_Layer = GetDateTextLayer();
+   m_Day_Text_Layer  = GetDayTextLayer();
    
    
    // Make sure the time is displayed from the start
-   RedrawTime();
+   Time_Redraw();
 
    // Add Handlers
    
    // Register with TickTimerService
-   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+   tick_timer_service_subscribe(MINUTE_UNIT, Time_Handle);
 }
 
-void DeInitTimer()
+void Time_DeInit()
 {
    tick_timer_service_unsubscribe();
 }

@@ -1,9 +1,8 @@
 #include "mainwindow.h"
 
-GBitmap* Image_Background;
-GBitmap* Image_Battery_Pebble;
-GBitmap* Image_Battery_Phone;
-GBitmap* Image_Steps;
+GBitmap* m_Background_Image;
+
+GBitmap* m_Steps_Image;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -186,28 +185,16 @@ void show_mainwindow(void)
 void hide_mainwindow(void) 
 {
    SaveConfigToStorage();
-   if (Image_Background)
+   if (m_Background_Image)
    {
-      gbitmap_destroy(Image_Background);
-      Image_Background = NULL;
+      gbitmap_destroy(m_Background_Image);
+      m_Background_Image = NULL;
    }
       
-   if (Image_Battery_Pebble)
+   if (m_Steps_Image)
    {
-      gbitmap_destroy(Image_Battery_Pebble);
-      Image_Battery_Pebble = NULL;
-   }
-      
-   if (Image_Battery_Phone)
-   {
-      gbitmap_destroy(Image_Battery_Phone);
-      Image_Battery_Phone = NULL;
-   }
-      
-   if (Image_Steps)
-   {
-      gbitmap_destroy(Image_Steps);
-      Image_Steps = NULL;
+      gbitmap_destroy(m_Steps_Image);
+      m_Steps_Image = NULL;
    }      
       
   window_stack_remove(s_window, true);
@@ -215,6 +202,9 @@ void hide_mainwindow(void)
 
 void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color)
 {
+   if (l_Image == NULL)
+      return;
+   
    bitmap_layer_set_bitmap(l_Image, NULL);
    if (Bitmap)
    {
@@ -251,8 +241,8 @@ void SetColor()
    
    Battery_RedrawAll();
    
-   Redraw_Image(Layer_Steps_Image,Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
-   Redraw_Image(Layer_Background_Image,Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
+   Redraw_Image(Layer_Steps_Image,m_Steps_Image,RESOURCE_ID_IMAGE_STEPS,Color_Image);
+   Redraw_Image(Layer_Background_Image,m_Background_Image,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }
 
 void show_PhoneBattery(bool show)

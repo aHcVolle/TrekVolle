@@ -9,10 +9,10 @@
 #define DATE_YY_MM_DD 1
 #define DATE_MM_DD_YY 2
 
-int DateStyle;
-bool Clock24h;
+int m_i_DateStyle;
+bool m_b_Clock24h;
 
-void RedrawTime();
-void InitTimer();
-void DeInitTimer();
+void Time_Redraw();
+void Time_Init();
+void Time_DeInit();
 #endif

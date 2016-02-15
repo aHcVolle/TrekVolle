@@ -17,7 +17,7 @@ Pebble.addEventListener('showConfiguration', function() {
 Pebble.addEventListener('webviewclosed', function(e) 
 {
    var configData = JSON.parse(decodeURIComponent(e.response));
-   //console.log('Configuration page returned: ' + JSON.stringify(configData));
+   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
    var Color_Background = configData.Color_Background;
    var Color_Text = configData.Color_Text;

@@ -63,14 +63,14 @@ void HandleTemperatureInCelcius(bool b_TemperatureInCelcius)
 
 void HandleClock24h(bool b_Clock24h)
 {
-   Clock24h = b_Clock24h;
-   RedrawTime();
+   m_b_Clock24h = b_Clock24h;
+   Time_Redraw();
 }
 
 void HandleDateStyle(int i_DateStyle)
 {
-   DateStyle = i_DateStyle;
-   RedrawTime();
+   m_i_DateStyle = i_DateStyle;
+   Time_Redraw();
 }
 
 void HandleNetworkRefreshTime(int i_NetworkRefreshTime)
@@ -130,11 +130,11 @@ void LoadConfigFromStorage()
    }
    if (persist_exists(KEY_CLOCK_24H)) 
    {
-     Clock24h = persist_read_bool(KEY_CLOCK_24H);
+     m_b_Clock24h = persist_read_bool(KEY_CLOCK_24H);
    }
    if (persist_exists(KEY_DATE_STYLE)) 
    {
-     DateStyle = persist_read_int(KEY_DATE_STYLE);
+     m_i_DateStyle = persist_read_int(KEY_DATE_STYLE);
    }
    if (persist_exists(KEY_NETWORK_REFRESHTIME)) 
    {
@@ -160,11 +160,10 @@ void SaveConfigToStorage()
    persist_write_int(KEY_COLOR_CHARGING, (int)Color_Charging.argb);
    persist_write_int(KEY_COLOR_ERROR, (int)Color_Error.argb);
    persist_write_int(KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
-      
-   
+         
    persist_write_bool(KEY_TEMPERATURE_CELCIUS, TemperatureInCelcius);
-   persist_write_bool(KEY_CLOCK_24H, Clock24h);
-   persist_write_int(KEY_DATE_STYLE, DateStyle);
+   persist_write_bool(KEY_CLOCK_24H, m_b_Clock24h);
+   persist_write_int(KEY_DATE_STYLE, m_i_DateStyle);
    persist_write_int(KEY_NETWORK_REFRESHTIME, m_i_NetworkRefreshTime);
    
    persist_write_bool(KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
@@ -183,8 +182,8 @@ void LoadDefaultConfig()
    Color_BatteryLow = GColorRed;
    TemperatureInCelcius = true;
    m_i_NetworkRefreshTime = 1;
-   DateStyle = DATE_DD_MM_YY;
-   Clock24h = true;
+   m_i_DateStyle = DATE_DD_MM_YY;
+   m_b_Clock24h = true;
    m_b_Network_VibrationEnabled = true;
    m_b_Bluetooth_VibrationEnabled = true;
 }
