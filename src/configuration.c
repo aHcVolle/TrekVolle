@@ -16,7 +16,7 @@ void HandleImageColor(int RGB)
 {
    Color_Image = GColorFromHEX(RGB);
    SetColor();
-   RedrawBluetoothImage();
+   Bluetooth_Redraw();
    RedrawNetworkImage();
    RedrawWeatherImage();
    Battery_RedrawAll();
@@ -25,7 +25,7 @@ void HandleImageColor(int RGB)
 void HandleWindowColor(int RGB)
 {
    Color_Window = GColorFromHEX(RGB);
-   RedrawBluetoothImage();
+   Bluetooth_Redraw();
    RedrawNetworkImage();
    RedrawWeatherImage();
    Battery_RedrawAll();
@@ -43,7 +43,7 @@ void HandleErrorColor(int RGB)
 {
    Color_Error = GColorFromHEX(RGB);
    SetColor();
-   RedrawBluetoothImage();
+   Bluetooth_Redraw();
    RedrawNetworkImage();
    Battery_RedrawAll();
 }

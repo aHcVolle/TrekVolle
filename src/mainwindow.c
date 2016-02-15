@@ -30,7 +30,8 @@ static TextLayer *Layer_Battery_Text_Pebble;
 static BitmapLayer *Layer_Battery_Image_Phone;
 static TextLayer *Layer_Battery_Text_Phone;
 
-static void initialise_ui(void) {
+static void initialise_ui(void) 
+{
   s_window = window_create();
   window_set_background_color(s_window, GColorBlack);
   #ifndef PBL_SDK_3
@@ -140,7 +141,8 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Phone);
 }
 
-static void destroy_ui(void) {
+static void destroy_ui(void) 
+{
   window_destroy(s_window);
   bitmap_layer_destroy(Layer_Background_Image);
   bitmap_layer_destroy(Layer_Bluetooth_Image);
@@ -165,11 +167,13 @@ static void destroy_ui(void) {
 }
 // END AUTO-GENERATED UI CODE
 
-static void handle_window_unload(Window* window) {
+static void handle_window_unload(Window* window) 
+{
   destroy_ui();
 }
 
-void show_mainwindow(void) {
+void show_mainwindow(void) 
+{
   initialise_ui();
   LoadConfigFromStorage();
   
@@ -209,6 +213,22 @@ void hide_mainwindow(void)
   window_stack_remove(s_window, true);
 }
 
+void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color)
+{
+   bitmap_layer_set_bitmap(l_Image, NULL);
+   if (Bitmap)
+   {
+      gbitmap_destroy(Bitmap);
+      Bitmap = NULL;
+   }
+   Bitmap = gbitmap_create_with_resource(ImageID);
+   replace_gbitmap_color(GColorWhite, Color, Bitmap, NULL);
+   replace_gbitmap_color(GColorBlack,  Color_Window, Bitmap, NULL);
+   bitmap_layer_set_bitmap(l_Image, Bitmap);
+   
+   layer_mark_dirty(bitmap_layer_get_layer(l_Image));
+}
+
 void SetColor()
 {
 //   text_layer_set_background_color(Layer_Background_Color, Color_Window);
@@ -231,27 +251,8 @@ void SetColor()
    
    Battery_RedrawAll();
    
-   if (Image_Steps)
-   {
-      gbitmap_destroy(Image_Steps);
-      Image_Steps = NULL;
-   }      
-   Image_Steps = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_STEPS);
-   replace_gbitmap_color(GColorWhite, Color_Image, Image_Steps, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Steps, NULL);
-   bitmap_layer_set_bitmap(Layer_Steps_Image, Image_Steps);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Steps_Image));
-   
-   if (Image_Background)
-   {
-      gbitmap_destroy(Image_Background);
-      Image_Background = NULL;
-   }      
-   Image_Background = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BACKGROUND);
-   replace_gbitmap_color(GColorWhite,  Color_Background, Image_Background, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Background, NULL);
-   bitmap_layer_set_bitmap(Layer_Background_Image, Image_Background);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Background_Image));
+   Redraw_Image(Layer_Steps_Image,Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
+   Redraw_Image(Layer_Background_Image,Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }
 
 void show_PhoneBattery(bool show)

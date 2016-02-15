@@ -27,7 +27,7 @@ static void init()
    Battery_Init();
    
    // BT
-   InitBluetooth();
+   Bluetooth_Init();
 
    // Health
    InitHealth();
@@ -46,7 +46,7 @@ static void init()
 static void deinit() 
 {
    DeInitWeather();
-   DeInitBluetooth();
+   Bluetooth_DeInit();
    DeInitNetwork();
    Battery_Deinit();
    DeInitTimer();

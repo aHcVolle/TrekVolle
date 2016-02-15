@@ -1,17 +1,17 @@
 #include "bluetooth.h"
 
-BitmapLayer* Layer_Bluetooth_Image = NULL;
-GBitmap *Image_Bluetooth;
+BitmapLayer* m_Bluetooth_Image_Layer = NULL;
+GBitmap* m_Bluetooth_Image = NULL;
 
-bool LastBTConnectionState;
+bool m_b_Bluetooth_LastConnectionState;
 
-void RedrawBluetoothImage()
+void Bluetooth_Redraw()
 {
-   if (Layer_Bluetooth_Image == NULL)
+   if (m_Bluetooth_Image_Layer == NULL)
       return;
    
    GColor Color;
-   if (LastBTConnectionState)
+   if (m_b_Bluetooth_LastConnectionState)
    {
       Color = Color_Image;
    }
@@ -20,28 +20,16 @@ void RedrawBluetoothImage()
       Color = Color_Error;
    }
    
-   
-   bitmap_layer_set_bitmap(Layer_Bluetooth_Image, NULL);
-   if (Image_Bluetooth)
-   {
-      gbitmap_destroy(Image_Bluetooth);
-      Image_Bluetooth = NULL;
-   }
-   Image_Bluetooth = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH);
-   replace_gbitmap_color(GColorWhite, Color, Image_Bluetooth, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Bluetooth, NULL);
-   bitmap_layer_set_bitmap(Layer_Bluetooth_Image, Image_Bluetooth);
-   
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Bluetooth_Image));
+   Redraw_Image(m_Bluetooth_Image_Layer,m_Bluetooth_Image,RESOURCE_ID_IMAGE_BLUETOOTH,Color);
 }
 
 
-static void handle_bluetooth(bool connected) 
+static void Bluetooth_Handle(bool connected) 
 {
-   if (LastBTConnectionState == connected)
+   if (m_b_Bluetooth_LastConnectionState == connected)
       return;
    
-   LastBTConnectionState = connected;
+   m_b_Bluetooth_LastConnectionState = connected;
    if (connected && m_b_Bluetooth_VibrationEnabled)
    {
       
@@ -53,27 +41,27 @@ static void handle_bluetooth(bool connected)
       vibes_double_pulse();
       //printf("BT disconnected");
    }
-   RedrawBluetoothImage();
+   Bluetooth_Redraw();
 }
 
 
 
-void InitBluetooth()
+void Bluetooth_Init()
 {
-   LastBTConnectionState = true;
-   Image_Bluetooth = NULL;
-   Layer_Bluetooth_Image = GetBluetoothImageLayer();
-   handle_bluetooth(connection_service_peek_pebble_app_connection());
-   connection_service_subscribe((ConnectionHandlers) {.pebble_app_connection_handler = handle_bluetooth});
-   RedrawBluetoothImage();
+   m_b_Bluetooth_LastConnectionState = true;
+   m_Bluetooth_Image_Layer = NULL;
+   m_Bluetooth_Image_Layer = GetBluetoothImageLayer();
+   Bluetooth_Handle(connection_service_peek_pebble_app_connection());
+   connection_service_subscribe((ConnectionHandlers) {.pebble_app_connection_handler = Bluetooth_Handle});
+   Bluetooth_Redraw();
 }
 
-void DeInitBluetooth()
+void Bluetooth_DeInit()
 {
    connection_service_unsubscribe();
-   if (Image_Bluetooth)
+   if (m_Bluetooth_Image)
    {
-      gbitmap_destroy(Image_Bluetooth);
-      Image_Bluetooth = NULL;
+      gbitmap_destroy(m_Bluetooth_Image);
+      m_Bluetooth_Image = NULL;
    }
 }

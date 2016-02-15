@@ -18,6 +18,9 @@ void show_mainwindow(void);
 void hide_mainwindow(void);
 void show_PhoneBattery(bool show);
 void SetColor();
+
+void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color);
+
 BitmapLayer* GetWeatherImageLayer();
 BitmapLayer* GetBluetoothImageLayer();
 BitmapLayer* GetNetworkImageLayer();

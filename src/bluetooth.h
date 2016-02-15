@@ -6,7 +6,7 @@
 #include "configuration.h"
 #include "gbitmap_color_palette_manipulator.h"
 
-void InitBluetooth();
-void DeInitBluetooth();
-void RedrawBluetoothImage();
+void Bluetooth_Init();
+void Bluetooth_DeInit();
+void Bluetooth_Redraw();
 #endif

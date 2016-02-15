@@ -17,23 +17,8 @@ struct BatteryData m_BatteryPebble;
 
 void BatteryRedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
 {
-   if (Battery->l_Image == NULL)
-      return;
-   
-   bitmap_layer_set_bitmap(Battery->l_Image, NULL);
-   if (Battery->bmp_Image)
-   {
-      gbitmap_destroy(Battery->bmp_Image);
-      Battery->bmp_Image = NULL;
-   }         
-   Battery->bmp_Image = gbitmap_create_with_resource(Image_ID);
-   replace_gbitmap_color(GColorWhite, Color, Battery->bmp_Image, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Battery->bmp_Image, NULL);
-   bitmap_layer_set_bitmap(Battery->l_Image, Battery->bmp_Image);
-   layer_mark_dirty(bitmap_layer_get_layer(Battery->l_Image));
+   Redraw_Image(Battery->l_Image,Battery->bmp_Image,Image_ID,Color);
 }
-
-
 
 void Battery_RequestPhone()
 {
