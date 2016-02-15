@@ -27,7 +27,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
    Tuple *NetworkRefresh_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);
    
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
-   Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
+   Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
       HandleWeather(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
