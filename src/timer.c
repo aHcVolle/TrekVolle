@@ -46,8 +46,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 {
    RedrawTime();
    
-   if (tick_time->tm_min % NetworkRefreshTime == 0)
-      RequestNetwork();
+   if (tick_time->tm_min % m_i_NetworkRefreshTime == 0)
+      Network_Request();
    
    // Get weather update every 30 minutes
    if ((!LastWeatherUpdateWasOK) || (tick_time->tm_min % 30 == 0))

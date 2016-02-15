@@ -1,44 +1,44 @@
 #include "health.h"
 
-TextLayer* Layer_Steps_Text;
+TextLayer* m_Health_Text_Layer;
 
-void GetMovementData(void)
+void Health_GetMovementData(void)
 {
-   HealthMetric stepcount = HealthMetricStepCount;
-   HealthMetric distance = HealthMetricWalkedDistanceMeters;
-   time_t start = time_start_of_today();
-   time_t end = time(NULL);
+   HealthMetric Step_Metric_Count = HealthMetricStepCount;
+   HealthMetric Step_Metric_Distance = HealthMetricWalkedDistanceMeters;
+   time_t Step_Start = time_start_of_today();
+   time_t Step_End = time(NULL);
    
    // Check the metric has data available for today
-   HealthServiceAccessibilityMask masksteps = health_service_metric_accessible(stepcount,start, end);
-   int steps = 0;
-   if(masksteps & HealthServiceAccessibilityMaskAvailable) 
+   HealthServiceAccessibilityMask Step_Metric_Count_Mask = health_service_metric_accessible(Step_Metric_Count,Step_Start, Step_End);
+   int Step_Count = 0;
+   if(Step_Metric_Count_Mask & HealthServiceAccessibilityMaskAvailable) 
    {
        // Data is available!
-      steps = (int)health_service_sum_today(stepcount);
+      Step_Count = (int)health_service_sum_today(Step_Metric_Count);
    } 
-   HealthServiceAccessibilityMask maskdist = health_service_metric_accessible(distance,start, end);
-   int dist = 0;
-   if(maskdist & HealthServiceAccessibilityMaskAvailable) 
+   HealthServiceAccessibilityMask Step_Metric_Distance_Mask = health_service_metric_accessible(Step_Metric_Distance,Step_Start, Step_End);
+   int Step_Distance = 0;
+   if(Step_Metric_Distance_Mask & HealthServiceAccessibilityMaskAvailable) 
    {
        // Data is available!
-      dist = (int)health_service_sum_today(distance);
+      Step_Distance = (int)health_service_sum_today(Step_Metric_Distance);
    } 
    
-   static char s_buffer[30];
-   snprintf(s_buffer,sizeof(s_buffer),"%d %dm",steps,dist);
+   static char s_HealthText[30];
+   snprintf(s_HealthText,sizeof(s_HealthText),"%d %dm",Step_Count,Step_Distance);
    
-   text_layer_set_text(Layer_Steps_Text, s_buffer);
+   text_layer_set_text(m_Health_Text_Layer, s_HealthText);
 }
 
-static void health_handler(HealthEventType event, void *context) {
+static void Health_Handler(HealthEventType event, void *context) {
   // Which type of event occured?
   switch(event) {
     case HealthEventSignificantUpdate:
       //APP_LOG(APP_LOG_LEVEL_INFO,"New HealthService HealthEventSignificantUpdate event");
       break;
     case HealthEventMovementUpdate:
-      GetMovementData();
+      Health_GetMovementData();
       break;
     case HealthEventSleepUpdate:
       //APP_LOG(APP_LOG_LEVEL_INFO,"New HealthService HealthEventSleepUpdate event");
@@ -46,16 +46,15 @@ static void health_handler(HealthEventType event, void *context) {
   }
 }
 
-void InitHealth()
+void Health_Init()
 {
-   Layer_Steps_Text = GetStepTextLayer();
-   // Health
-   health_service_events_subscribe(health_handler, NULL);
+   m_Health_Text_Layer = GetStepTextLayer();
    
-   GetMovementData();
+   health_service_events_subscribe(Health_Handler, NULL);
+   Health_GetMovementData();
 }
 
-void DeInitHealth()
+void Health_DeInit()
 {
    health_service_events_unsubscribe();
 }

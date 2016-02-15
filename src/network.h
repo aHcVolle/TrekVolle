@@ -6,11 +6,11 @@
 #include "communication.h"
 #include "gbitmap_color_palette_manipulator.h"
 
-int NetworkRefreshTime;
+int m_i_NetworkRefreshTime;
 
-void RequestNetwork();
-void HandleNetworkReply(Tuple *network_tuple);
-void InitNetwork();
-void DeInitNetwork();
-void RedrawNetworkImage();
+void Network_Request();
+void Network_Handle_Reply(Tuple *network_tuple);
+void Network_Init();
+void Network_DeInit();
+void Network_Redraw();
 #endif

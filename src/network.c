@@ -1,11 +1,11 @@
 #include "network.h"
 
-BitmapLayer* Layer_Network_Image = NULL;
-GBitmap *Image_Network;
+BitmapLayer* m_Network_Image_Layer = NULL;
+GBitmap* m_Network_Image;
 
-int LastNETConnectionState;
+bool m_b_Network_LastConnectionState;
 
-void RequestNetwork()
+void Network_Request()
 {
       // Begin dictionary
      DictionaryIterator *iter;
@@ -18,13 +18,11 @@ void RequestNetwork()
      app_message_outbox_send();
 }
 
-void RedrawNetworkImage()
+void Network_Redraw()
 {
-   if (Layer_Network_Image == NULL)
-      return;
-   
+  
    GColor Color;
-   if (LastNETConnectionState)
+   if (m_b_Network_LastConnectionState)
    {
       Color = Color_Image;
    }
@@ -33,28 +31,19 @@ void RedrawNetworkImage()
       Color = Color_Error;
    }     
    
-   bitmap_layer_set_bitmap(Layer_Network_Image, NULL);
-   if (Image_Network)
-   {
-      gbitmap_destroy(Image_Network);
-      Image_Network = NULL;
-   }      
-   Image_Network = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_NETWORK);
-   replace_gbitmap_color(GColorWhite, Color, Image_Network, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Network, NULL);
-   bitmap_layer_set_bitmap(Layer_Network_Image, Image_Network);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Network_Image));
+   Redraw_Image(m_Network_Image_Layer,m_Network_Image,RESOURCE_ID_IMAGE_NETWORK,Color);
+   
 }
 
-void HandleNetworkReply(Tuple *network_tuple)
+void Network_Handle_Reply(Tuple *network_tuple)
 {
-   int i_Connected = (int)network_tuple->value->int32;
+   bool b_Connected = (bool)network_tuple->value->int32;
    
-   if (LastNETConnectionState == i_Connected)
+   if (m_b_Network_LastConnectionState == b_Connected)
       return;
    
-   LastNETConnectionState = i_Connected;
-   if (i_Connected && m_b_Network_VibrationEnabled)
+   m_b_Network_LastConnectionState = b_Connected;
+   if (b_Connected && m_b_Network_VibrationEnabled)
    {
       vibes_short_pulse();  
    }
@@ -63,22 +52,22 @@ void HandleNetworkReply(Tuple *network_tuple)
       vibes_double_pulse();
    }
    
-   RedrawNetworkImage();
+  Network_Redraw();
 }
 
-void InitNetwork()
+void Network_Init()
 {
-   LastNETConnectionState = 1;
-   Image_Network = NULL;
-   Layer_Network_Image = GetNetworkImageLayer();
-   RedrawNetworkImage();
+   m_b_Network_LastConnectionState = true;
+   m_Network_Image = NULL;
+   m_Network_Image_Layer = GetNetworkImageLayer();
+   Network_Redraw();
 }
 
-void DeInitNetwork()
+void Network_DeInit()
 {
-   if (Image_Network)
+   if (m_Network_Image)
    {
-      gbitmap_destroy(Image_Network);
-      Image_Network = NULL;
+      gbitmap_destroy(m_Network_Image);
+      m_Network_Image = NULL;
    }         
 }

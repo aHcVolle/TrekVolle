@@ -33,7 +33,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       HandleWeather(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
 
    if (Network_tuple)
-      HandleNetworkReply(Network_tuple);
+      Network_Handle_Reply(Network_tuple);
    
    if (Batterycharge_tuple && Batterystate_tuple)
       Battery_Handle_Phone( (int)Batterycharge_tuple->value->int32, (bool)Batterystate_tuple->value->int32);

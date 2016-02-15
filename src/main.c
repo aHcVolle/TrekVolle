@@ -18,7 +18,7 @@ static void init()
    SetColor();   
  
    // Network
-   InitNetwork();
+   Network_Init();
    
    // Time 
    InitTimer();
@@ -30,7 +30,7 @@ static void init()
    Bluetooth_Init();
 
    // Health
-   InitHealth();
+   Health_Init();
    
    // Weather
    InitWeather();
@@ -47,11 +47,11 @@ static void deinit()
 {
    DeInitWeather();
    Bluetooth_DeInit();
-   DeInitNetwork();
+   Network_DeInit();
    Battery_Deinit();
    DeInitTimer();
    DeInitCommunication();
-   DeInitHealth();
+   Health_DeInit();
    DeInitAcceleration();
    // Destroy Window
    hide_mainwindow();
