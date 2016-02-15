@@ -34,7 +34,7 @@ static void init()
    Health_Init();
    
    // Weather
-   InitWeather();
+   Weather_Init();
    
    // Communication
    Communication_Init();
@@ -45,7 +45,7 @@ static void init()
 
 static void deinit() 
 {
-   DeInitWeather();
+   Weather_DeInit();
    Bluetooth_DeInit();
    Network_DeInit();
    Battery_Deinit();

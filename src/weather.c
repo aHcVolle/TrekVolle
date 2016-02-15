@@ -1,119 +1,104 @@
 #include "weather.h"
-TextLayer* Layer_Weather_Text;
-static BitmapLayer* Layer_Weather_Image = NULL;
-static GBitmap *Image_Weather;
+TextLayer* m_Weather_Text_Layer;
+static BitmapLayer* m_Weather_Image_Layer = NULL;
+static GBitmap *m_Weather_Image;
 
-static char conditions_buffer[32];
-static char location_buffer[32];
-static char weather_layer_buffer[32];
+static char m_s_Weather_ConditionBuffer[32];
+static char m_s_Weather_LocationBuffer[32];
+static char m_s_Weather_TextBuffer[32];
 
-int WeatherImage;
+int m_i_Weather_WeatherImage;
+int m_i_Weather_Temperature;
 
-int Temperature;
-
-void RedrawWeatherText()
+void Weather_RedrawText()
 {
-   if (!LastWeatherUpdateWasOK)
+   if (!m_b_Weather_LastUpdateWasOK)
    {
-      RequestWeather();
+      Weather_Request();
       return;
    }
       
-   if (DisplayState == DISPLAY_CONDITIONS)
+   if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
    {
-      if (TemperatureInCelcius)
-         snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%d°C, %s", Temperature, conditions_buffer);
+      if (m_b_Weather_TemperatureInCelcius)
+         snprintf(m_s_Weather_TextBuffer, sizeof(m_s_Weather_TextBuffer), "%d°C, %s", m_i_Weather_Temperature, m_s_Weather_ConditionBuffer);
       else
       {
-         float Fahrenheit = Temperature * 1.8 + 32;
-         snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%d°F, %s", (int)Fahrenheit, conditions_buffer);
+         float Fahrenheit = m_i_Weather_Temperature * 1.8 + 32;
+         snprintf(m_s_Weather_TextBuffer, sizeof(m_s_Weather_TextBuffer), "%d°F, %s", (int)Fahrenheit, m_s_Weather_ConditionBuffer);
       }
    }      
    else
-      snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s", location_buffer);
+      snprintf(m_s_Weather_TextBuffer, sizeof(m_s_Weather_TextBuffer), "%s", m_s_Weather_LocationBuffer);
       
-   text_layer_set_text(Layer_Weather_Text, weather_layer_buffer);
-   layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
+   text_layer_set_text(m_Weather_Text_Layer, m_s_Weather_TextBuffer);
+   layer_mark_dirty(text_layer_get_layer(m_Weather_Text_Layer));
 }
 
-void RedrawWeatherImage()
+void Weather_RedrawImage()
 {
-   if (Layer_Weather_Image == NULL)
-      return;
-   
-   bitmap_layer_set_bitmap(Layer_Weather_Image, NULL);
-   if (Image_Weather)
-   {
-      gbitmap_destroy(Image_Weather);
-      Image_Weather = NULL;
-   }
-         
-   Image_Weather = gbitmap_create_with_resource(WeatherImage);
-   replace_gbitmap_color(GColorWhite, Color_Image, Image_Weather, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Image_Weather, NULL);
-   bitmap_layer_set_bitmap(Layer_Weather_Image, Image_Weather);
-   layer_mark_dirty(bitmap_layer_get_layer(Layer_Weather_Image));
+   Redraw_Image(m_Weather_Image_Layer,m_Weather_Image,m_i_Weather_WeatherImage,Color_Image);
 }
 
-void RedrawWeather()
+void Weather_Redraw()
 {
-   RedrawWeatherText();
-   RedrawWeatherImage();
+   Weather_RedrawText();
+   Weather_RedrawImage();
 }
 
 
-void HandleWeather(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple)
+void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple)
 {
    if(Temperature_tuple) 
    {
-      Temperature = (int)Temperature_tuple->value->int32;
-      LastWeatherUpdateWasOK = true;
+      m_i_Weather_Temperature = (int)Temperature_tuple->value->int32;
+      m_b_Weather_LastUpdateWasOK = true;
    }
    
    if(Condition_tuple)
    {
-      snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", Condition_tuple->value->cstring);
-      LastWeatherUpdateWasOK = true;
+      snprintf(m_s_Weather_ConditionBuffer, sizeof(m_s_Weather_ConditionBuffer), "%s", Condition_tuple->value->cstring);
+      m_b_Weather_LastUpdateWasOK = true;
    }
       
    if(Location_tuple) 
    {
-      snprintf(location_buffer, sizeof(location_buffer), "%s", Location_tuple->value->cstring);
-      LastWeatherUpdateWasOK = true;
+      snprintf(m_s_Weather_LocationBuffer, sizeof(m_s_Weather_LocationBuffer), "%s", Location_tuple->value->cstring);
+      m_b_Weather_LastUpdateWasOK = true;
    }
    
    if (Image_tuple)
    {  
-      WeatherImage = imagename2resid(Image_tuple->value->cstring);
-      RedrawWeatherImage();
+      m_i_Weather_WeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
+      Weather_RedrawImage();
    }
    
-   RedrawWeatherText();
+   Weather_RedrawText();
 }
 
-void InitWeather()
+void Weather_Init()
 {
-   LastWeatherUpdateWasOK = false;
-   DisplayState = DISPLAY_CONDITIONS;
-   Layer_Weather_Text = GetWeatherTextLayer();
-   Layer_Weather_Image = GetWeatherImageLayer(); 
+   m_b_Weather_LastUpdateWasOK = false;
+   m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
+   m_Weather_Text_Layer = GetWeatherTextLayer();
+   m_Weather_Image_Layer = GetWeatherImageLayer(); 
    
-   WeatherImage = RESOURCE_ID_IMAGE_ERROR;
-   RedrawWeatherImage();
+   m_i_Weather_WeatherImage = RESOURCE_ID_IMAGE_ERROR;
+   Weather_RedrawImage();
 }
 
-void DeInitWeather()
+void Weather_DeInit()
 {
-   if (Image_Weather)
+   if (m_Weather_Image)
    {
-      gbitmap_destroy(Image_Weather);
-      Image_Weather = NULL;
+      gbitmap_destroy(m_Weather_Image);
+      m_Weather_Image = NULL;
    }  
 }
 
-void RequestWeather()
+void Weather_Request()
 {
-   LastWeatherUpdateWasOK = false;
+   m_b_Weather_LastUpdateWasOK = false;
 
    //printf("C: requesting weather update...\n");
    // Begin dictionary
@@ -128,45 +113,45 @@ void RequestWeather()
 }
 
 
-int imagename2resid(char* imagename)
+int Weather_GetImageID(char* s_WeatherImageName)
 {
-   if (strcmp(imagename,"01d") == 0)
+   if (strcmp(s_WeatherImageName,"01d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
-   else if (strcmp(imagename,"01n") == 0)
+   else if (strcmp(s_WeatherImageName,"01n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
-   else if (strcmp(imagename,"02d") == 0)
+   else if (strcmp(s_WeatherImageName,"02d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_02;
-   else if (strcmp(imagename,"02n") == 0)
+   else if (strcmp(s_WeatherImageName,"02n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_02;
-   else if (strcmp(imagename,"03d") == 0)
+   else if (strcmp(s_WeatherImageName,"03d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_03;
-   else if (strcmp(imagename,"03n") == 0)
+   else if (strcmp(s_WeatherImageName,"03n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_03;
-   else if (strcmp(imagename,"04d") == 0)
+   else if (strcmp(s_WeatherImageName,"04d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_04;
-   else if (strcmp(imagename,"04n") == 0)
+   else if (strcmp(s_WeatherImageName,"04n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_04;
-   else if (strcmp(imagename,"09d") == 0)
+   else if (strcmp(s_WeatherImageName,"09d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_09;
-   else if (strcmp(imagename,"09n") == 0)
+   else if (strcmp(s_WeatherImageName,"09n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_09;
-   else if (strcmp(imagename,"10d") == 0)
+   else if (strcmp(s_WeatherImageName,"10d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_10;
-   else if (strcmp(imagename,"10n") == 0)
+   else if (strcmp(s_WeatherImageName,"10n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_10;
-   else if (strcmp(imagename,"11d") == 0)
+   else if (strcmp(s_WeatherImageName,"11d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_11;
-   else if (strcmp(imagename,"11n") == 0)
+   else if (strcmp(s_WeatherImageName,"11n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_11;   
-   else if (strcmp(imagename,"13d") == 0)
+   else if (strcmp(s_WeatherImageName,"13d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_13;
-   else if (strcmp(imagename,"13n") == 0)
+   else if (strcmp(s_WeatherImageName,"13n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_13;
-   else if (strcmp(imagename,"50d") == 0)
+   else if (strcmp(s_WeatherImageName,"50d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_50;
-   else if (strcmp(imagename,"50n") == 0)
+   else if (strcmp(s_WeatherImageName,"50n") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_50;
       
-   printf("Unknown weather image %s\n",imagename);
+   printf("Unknown weather image %s\n",s_WeatherImageName);
    return RESOURCE_ID_IMAGE_ERROR;
 }

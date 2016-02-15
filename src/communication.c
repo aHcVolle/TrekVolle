@@ -30,7 +30,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
-      HandleWeather(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
+      Weather_Handle(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
 
    if (Network_tuple)
       Network_Handle_Reply(Network_tuple);
@@ -93,36 +93,51 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       Bluetooth_Redraw();
       Network_Redraw();
       Battery_RedrawAll();
-      RedrawWeatherImage();
+      Weather_RedrawImage();
    }
       
    
    if (TemperatureInCelcius_tuple)
    {
-      HandleTemperatureInCelcius((bool)TemperatureInCelcius_tuple->value->int32);
+      
+      m_b_Weather_TemperatureInCelcius = (bool)TemperatureInCelcius_tuple->value->int32;
+      Weather_RedrawText();
    }
       
-   
+   bool b_TimeChanged = false;
    if (Clock24h_tuple)
    {
-      HandleClock24h((bool)Clock24h_tuple->value->int32);
+      m_b_Time_Clock24h = (bool)Clock24h_tuple->value->int32;
+      b_TimeChanged = true;
    }
       
    
    if (DateStyle_tuple)
    {
-      HandleDateStyle((int)DateStyle_tuple->value->int32);
+      m_i_Time_DateStyle = (int)DateStyle_tuple->value->int32;
+      b_TimeChanged = true;
+   }
+   
+   if (b_TimeChanged)
+   {
+      Time_Redraw();
    }
       
    
    if (NetworkRefresh_tuple)
-      HandleNetworkRefreshTime((int)NetworkRefresh_tuple->value->int32);
+   {
+      m_i_Network_RefreshTime = (int)NetworkRefresh_tuple->value->int32;
+   }
    
    if (Network_VibrationEnabled_tuple)
-      HandleNetworkVibrationEnabled((bool)Network_VibrationEnabled_tuple->value->int32);
+   {
+      m_b_Network_VibrationEnabled = (bool)Network_VibrationEnabled_tuple->value->int32;
+   }
    
    if (Bluetooth_VibrationEnabled_tuple)
-      HandleBluetoothVibrationEnabled((bool)Bluetooth_VibrationEnabled_tuple->value->int32);
+   {
+      m_b_Bluetooth_VibrationEnabled = (bool)Bluetooth_VibrationEnabled_tuple->value->int32;  
+   }
 
 }
 

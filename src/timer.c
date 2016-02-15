@@ -13,7 +13,7 @@ void Time_Redraw()
    // Write the current hours and minutes into a buffer
    static char s_TimeBuffer[8];
    
-   if (m_b_Clock24h)
+   if (m_b_Time_Clock24h)
       strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%H:%M", Time_Tick);
    else
    {
@@ -24,9 +24,9 @@ void Time_Redraw()
    text_layer_set_text(m_Time_Text_Layer, s_TimeBuffer);
    
    static char s_DateBuffer[20];
-   if (m_i_DateStyle == DATE_DD_MM_YY)
+   if (m_i_Time_DateStyle == DATE_DD_MM_YY)
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %d.%m.%y", Time_Tick);
-   else if (m_i_DateStyle == DATE_YY_MM_DD)
+   else if (m_i_Time_DateStyle == DATE_YY_MM_DD)
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %y-%m-%d", Time_Tick);
    else // if DATE_MM_DD_YY
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %m/%d/%y", Time_Tick);
@@ -46,13 +46,13 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
 {
    Time_Redraw();
    
-   if (tick_time->tm_min % m_i_NetworkRefreshTime == 0)
+   if (tick_time->tm_min % m_i_Network_RefreshTime == 0)
       Network_Request();
    
    // Get weather update every 30 minutes
-   if ((!LastWeatherUpdateWasOK) || (tick_time->tm_min % 30 == 0))
+   if ((!m_b_Weather_LastUpdateWasOK) || (tick_time->tm_min % 30 == 0))
    {
-     RequestWeather();
+     Weather_Request();
    }
    
 }

@@ -4,7 +4,7 @@
 #include <pebble.h>
 #include "mainwindow.h"
 #include "communication.h"
-#include "gbitmap_color_palette_manipulator.h"
+
 
 enum DisplayStates
 {
@@ -12,19 +12,19 @@ enum DisplayStates
    DISPLAY_LOCATION
 };
 
-int DisplayState;
-bool LastWeatherUpdateWasOK;
+int m_i_Weather_DisplayState;
+bool m_b_Weather_LastUpdateWasOK;
 
-bool TemperatureInCelcius;
+bool m_b_Weather_TemperatureInCelcius;
 
-void HandleWeather(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple);
+void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple);
 
-void InitWeather();
-void DeInitWeather();
-void RequestWeather();
+void Weather_Init();
+void Weather_DeInit();
+void Weather_Request();
 
-void RedrawWeatherText();
-void RedrawWeatherImage();
-void RedrawWeather();
-int imagename2resid(char* imagename);
+void Weather_RedrawText();
+void Weather_RedrawImage();
+void Weather_Redraw();
+int  Weather_GetImageID(char* s_WeatherImageName);
 #endif

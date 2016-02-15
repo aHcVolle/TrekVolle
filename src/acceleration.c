@@ -5,12 +5,12 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
    
    if  (axis == ACCEL_AXIS_Y)  
    {
-      if (DisplayState == DISPLAY_CONDITIONS)
-         DisplayState = DISPLAY_LOCATION;
+      if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
+         m_i_Weather_DisplayState = DISPLAY_LOCATION;
       else
-         DisplayState = DISPLAY_CONDITIONS;
+         m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
 
-      RedrawWeatherText();
+      Weather_RedrawText();
    }
 }
 
