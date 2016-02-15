@@ -1,5 +1,5 @@
 var m_b_MessagingAvailiable = false;
-var m_b_Debug = true;
+var m_b_Debug = false;
 
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 

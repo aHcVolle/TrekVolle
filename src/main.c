@@ -12,7 +12,7 @@
 
 static void init() 
 {
-   m_b_Debug = true;
+   m_b_Debug = false;
    
    // UI 
    show_mainwindow();
