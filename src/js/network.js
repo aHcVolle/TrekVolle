@@ -1,3 +1,4 @@
+var m_b_LastOnlineCheck = false;
 
 function Network_GetData()
 {

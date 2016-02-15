@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 
 GBitmap* m_Background_Image;
-
 GBitmap* m_Steps_Image;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY

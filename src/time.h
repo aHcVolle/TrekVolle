@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef TIME_H
+#define TIME_H
 #include <pebble.h>
 #include "mainwindow.h"
 #include "weather.h"
