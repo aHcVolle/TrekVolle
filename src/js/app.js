@@ -5,7 +5,7 @@ var LastOnlineCheck = false;
 var battery;
 var batteryAvailiable;
 var MessagingAvailiable = false;
-
+var apptest;
 Pebble.addEventListener('showConfiguration', function() {
   var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/index.html';
   // var url = 'https://www.vllmr.eu/pebble/config/index.html';
