@@ -1,4 +1,4 @@
-#include "time.h"
+#include "clock.h"
 
 TextLayer* m_Time_Text_Layer;
 TextLayer* m_Date_Text_Layer;

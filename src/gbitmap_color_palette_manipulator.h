@@ -1,3 +1,6 @@
+#ifndef BMB_COLOR_PALETTE_H
+#define BMB_COLOR_PALETTE_H
+
 #include <pebble.h>
 
 #ifdef PBL_COLOR
@@ -7,4 +10,6 @@ void replace_gbitmap_color(GColor color_to_replace, GColor replace_with_color, G
 void spit_gbitmap_color_palette(GBitmap *im);
 bool gbitmap_color_palette_contains_color(GColor m_color, GBitmap *im);
 void gbitmap_fill_all_except(GColor color_to_not_change, GColor fill_color, bool fill_gcolorclear, GBitmap *im, BitmapLayer *bml);
+#endif
+
 #endif

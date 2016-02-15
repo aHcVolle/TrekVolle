@@ -4,7 +4,7 @@
 #include "health.h"
 #include "battery.h"
 #include "bluetooth.h"
-#include "time.h"
+#include "clock.h"
 #include "network.h"
 #include "communication.h"
 #include "acceleration.h"

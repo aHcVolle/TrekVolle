@@ -7,7 +7,7 @@
 #include "bluetooth.h"
 #include "weather.h"
 #include "network.h"
-#include "time.h"
+#include "clock.h"
 
 void LoadConfigFromStorage();
 void SaveConfigToStorage();
