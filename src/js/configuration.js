@@ -27,6 +27,7 @@ Pebble.addEventListener('webviewclosed', function(e)
    
    var Weather_TemperatureCelcius = configData.Weather_TemperatureCelcius;
    var Weather_Refreshtime = configData.Weather_Refreshtime;
+   var Weather_RetryUpdate = configData.Weather_RetryUpdate;
    
    var Clock_Clock24h = configData.Clock_Clock24h;
    var Clock_Datestyle_ddmmyy = configData.Clock_Datestyle_ddmmyy;
@@ -52,6 +53,9 @@ Pebble.addEventListener('webviewclosed', function(e)
    if (Weather_TemperatureCelcius == "false")
       i_Weather_TemperatureCelcius = 0;
    var i_Weather_Refreshtime = parseInt(Weather_Refreshtime, 10);
+   var i_Weather_RetryUpdate = 1;
+   if (Weather_RetryUpdate == "false")
+      i_Weather_RetryUpdate = 0;
    
    var i_Clock_Clock24h = 1;
    if (Clock_Clock24h == "false")
@@ -104,6 +108,7 @@ Pebble.addEventListener('webviewclosed', function(e)
       
       console.log("[JS:CONF] Config: i_Weather_TemperatureCelcius "+i_Weather_TemperatureCelcius.toString());
       console.log("[JS:CONF] Config: i_Weather_Refreshtime "+i_Weather_Refreshtime.toString());
+      console.log("[JS:CONF] Config: i_Weather_RetryUpdate "+i_Weather_RetryUpdate.toString());
       
       console.log("[JS:CONF] Config: i_Clock_Clock24h "+i_Clock_Clock24h.toString());
       console.log("[JS:CONF] Config: i_Clock_Datestyle_ddmmyy "+i_Clock_Datestyle_ddmmyy.toString());
@@ -135,6 +140,7 @@ Pebble.addEventListener('webviewclosed', function(e)
           'KEY_COLOR_BATTERYLOW' : i_Color_BatteryLow,
           'KEY_WEATHER_TEMPERATURECELCIUS' : i_Weather_TemperatureCelcius,
           'KEY_WEATHER_REFRESHTIME': i_Weather_Refreshtime,
+          'KEY_WEATHER_RETRYUPDATE' : i_Weather_RetryUpdate,
           'KEY_CLOCK_CLOCK24H' : i_Clock_Clock24h,
           'KEY_CLOCK_DATESTYLE' : i_Clock_Datestyle,
           'KEY_NETWORK_REFRESHTIME' : i_Network_RefreshTime,          

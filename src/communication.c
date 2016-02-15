@@ -23,6 +23,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    
    Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,KEY_WEATHER_TEMPERATURECELCIUS);
    Tuple *Weather_Refreshtime_tuple = dict_find(iterator,KEY_WEATHER_REFRESHTIME);
+   Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,KEY_WEATHER_RETRYUPDATE);
    
    Tuple *Clock_Clock24h_tuple = dict_find(iterator,KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,KEY_CLOCK_DATESTYLE);
@@ -109,6 +110,11 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    {
       m_i_Weather_RefreshTime = (int)Weather_Refreshtime_tuple->value->int32;
    }
+   if (Weather_RetryUpdate_tuple)
+   {
+      m_b_Weather_RetryUpdate = (bool)Weather_RetryUpdate_tuple->value->int32;
+   }
+   
       
    bool b_ClockChanged = false;
    if (Clock_Clock24h_tuple)

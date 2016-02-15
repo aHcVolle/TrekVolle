@@ -14,6 +14,7 @@ enum DisplayStates
 
 int m_i_Weather_DisplayState;
 bool m_b_Weather_LastUpdateWasOK;
+bool m_b_Weather_RetryUpdate;
 bool m_b_Weather_TemperatureInCelcius;
 int m_i_Weather_RefreshTime;
 

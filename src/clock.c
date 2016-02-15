@@ -4,8 +4,8 @@ TextLayer* m_Time_Text_Layer = NULL;
 TextLayer* m_Date_Text_Layer = NULL;
 TextLayer* m_Day_Text_Layer = NULL;
 
-int m_i_WeatherTimer = 0;
-int m_i_NetworkTimer = 0;
+int m_i_Weather_Counter = 0;
+int m_i_Network_Counter = 0;
 
 void Time_Redraw() 
 {
@@ -55,18 +55,18 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
    
    Time_Redraw();
    
-   m_i_NetworkTimer++;
-   if (m_i_NetworkTimer >= m_i_Network_RefreshTime)
+   m_i_Network_Counter++;
+   if (m_i_Network_Counter >= m_i_Network_RefreshTime)
    {
       Network_Request();
-      m_i_NetworkTimer = 0;
+      m_i_Network_Counter = 0;
    }
         
-   m_i_WeatherTimer++;
-   if ((!m_b_Weather_LastUpdateWasOK) || (m_i_WeatherTimer >= m_i_Weather_RefreshTime))
+   m_i_Weather_Counter++;
+   if ((m_b_Weather_RetryUpdate && !m_b_Weather_LastUpdateWasOK) || (m_i_Weather_Counter >= m_i_Weather_RefreshTime))
    {
       Weather_Request();
-      m_i_WeatherTimer = 0;     
+      m_i_Weather_Counter = 0;     
    }   
 }
 

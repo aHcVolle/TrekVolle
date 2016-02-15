@@ -20,6 +20,7 @@
         "KEY_ONLINE": 4,
         "KEY_TEMPERATURE": 0,
         "KEY_WEATHER_REFRESHTIME": 20,
+        "KEY_WEATHER_RETRYUPDATE": 21,
         "KEY_WEATHER_TEMPERATURECELCIUS": 14
     },
     "capabilities": [

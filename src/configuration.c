@@ -46,6 +46,10 @@ void LoadConfigFromStorage()
    {
      m_i_Weather_RefreshTime = persist_read_int(KEY_WEATHER_REFRESHTIME);
    }
+   if (persist_exists(KEY_WEATHER_RETRYUPDATE)) 
+   {
+     m_b_Weather_RetryUpdate = persist_read_bool(KEY_WEATHER_RETRYUPDATE);
+   }
    
    if (persist_exists(KEY_CLOCK_CLOCK24H)) 
    {
@@ -87,7 +91,8 @@ void SaveConfigToStorage()
          
    persist_write_bool(KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
    persist_write_int(KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
-   
+   persist_write_bool(KEY_WEATHER_RETRYUPDATE, m_b_Weather_RetryUpdate);
+      
    persist_write_bool(KEY_CLOCK_CLOCK24H, m_b_Clock_Clock24h);
    persist_write_int(KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
    
@@ -114,6 +119,7 @@ void LoadDefaultConfig()
    
    m_b_Weather_TemperatureInCelcius = true;
    m_i_Weather_RefreshTime = 30;
+   m_b_Weather_RetryUpdate = true;
       
    m_i_Clock_DateStyle = DATE_DD_MM_YY;
    m_b_Clock_Clock24h = true;
