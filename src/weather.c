@@ -61,33 +61,33 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
    if(Temperature_tuple) 
    {
       m_i_Weather_Temperature = (int)Temperature_tuple->value->int32;
-      m_b_Weather_LastUpdateWasOK = true;
       if (m_b_Debug)
          printf("[WTHR] Handler: Got temperatue");
+      m_b_Weather_LastUpdateWasOK = true; 
    }
    
    if(Condition_tuple)
    {
       snprintf(m_s_Weather_ConditionBuffer, sizeof(m_s_Weather_ConditionBuffer), "%s", Condition_tuple->value->cstring);
-      m_b_Weather_LastUpdateWasOK = true;
       if (m_b_Debug)
          printf("[WTHR] Handler: Got condition");
+      m_b_Weather_LastUpdateWasOK = true;
    }
       
    if(Location_tuple) 
    {
       snprintf(m_s_Weather_LocationBuffer, sizeof(m_s_Weather_LocationBuffer), "%s", Location_tuple->value->cstring);
-      m_b_Weather_LastUpdateWasOK = true;
       if (m_b_Debug)
          printf("[WTHR] Handler: Got location");
+      m_b_Weather_LastUpdateWasOK = true;
    }
    
    if (Image_tuple)
    {  
       m_i_Weather_WeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
-      Weather_RedrawImage();
       if (m_b_Debug)
          printf("[WTHR] Handler: Got imageid");
+      Weather_RedrawImage();
    }
    
    Weather_RedrawText();

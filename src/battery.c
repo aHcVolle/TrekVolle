@@ -10,6 +10,8 @@ struct BatteryData
    bool b_ChargingState;
    bool b_FirstValue;
    char s_Text[5];
+   GColor c_Color;
+   int i_ImageID;
 };
 
 struct BatteryData m_BatteryPhone;
@@ -44,37 +46,53 @@ void Battery_RequestPhone()
 
 void Battery_Redraw(struct BatteryData* Battery)
 {
-   if (Battery->l_Text == NULL)
-      return;
+   int i_ImageID;
+   GColor BatteryColor;
+   GColor TextColor;
    
-   if (m_b_Debug)
-      printf("[BATT] Redrawing battery");
-  
+   if (Battery->l_Text == NULL)
+      return;  
+
    if (Battery->i_BatteryLevel < 30)
    {
-      text_layer_set_text_color(Battery->l_Text, Color_BatteryLow);
-      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_LOW,Color_BatteryLow);
+      TextColor = Color_BatteryLow;
+      i_ImageID = RESOURCE_ID_IMAGE_BATTERY_LOW;
+      BatteryColor = Color_BatteryLow;
    }
    else if (Battery->i_BatteryLevel < 60)
    {
-      text_layer_set_text_color(Battery->l_Text, Color_Text);
-      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_MID,Color_Image);
+      TextColor = Color_Text;
+      i_ImageID = RESOURCE_ID_IMAGE_BATTERY_MID;
+      BatteryColor = Color_Image;
    }
    else
    {
-      text_layer_set_text_color(Battery->l_Text, Color_Text);
-      BatteryRedrawImage(Battery,RESOURCE_ID_IMAGE_BATTERY_HIGH,Color_Image);
+      TextColor = Color_Text;
+      i_ImageID = RESOURCE_ID_IMAGE_BATTERY_HIGH;
+      BatteryColor = Color_Image;
    }
    
    if (Battery->b_ChargingState )
    {
-      text_layer_set_text_color(Battery->l_Text, Color_Charging);
+      TextColor = Color_Charging;
    }
    
+   if ((!gcolor_equal(Battery->c_Color,BatteryColor)) || (Battery->i_ImageID != i_ImageID))
+   {
+      if (m_b_Debug)
+         printf("[BATT] Redrawing battery image");
+      Battery->c_Color = BatteryColor;
+      Battery->i_ImageID = i_ImageID;
+      BatteryRedrawImage(Battery,Battery->i_ImageID,Battery->c_Color);
+   }
+
    if (Battery->i_BatteryLevel > 99)
       snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d", Battery->i_BatteryLevel);
    else
       snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d%%", Battery->i_BatteryLevel);
+   if (m_b_Debug)
+         printf("[BATT] Redrawing battery text");
+   text_layer_set_text_color(Battery->l_Text, TextColor);
    text_layer_set_text(Battery->l_Text, Battery->s_Text);
    layer_mark_dirty(text_layer_get_layer(Battery->l_Text));
    

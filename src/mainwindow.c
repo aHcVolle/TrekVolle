@@ -201,8 +201,6 @@ void hide_mainwindow(void)
 
 void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color)
 {
-   if (m_b_Debug)
-         printf("[MAIN] Redrawing Image");
    if (l_Image == NULL)
       return;
    
