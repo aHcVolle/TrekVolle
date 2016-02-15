@@ -2,8 +2,8 @@
 <html>
   <head>
   <title>TrekVolle Configuration</title>
-  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
-  <script src='js/slate.min.js'></script>
+  <link rel='stylesheet' type='text/css' href='css/slate.css'>
+  <script src='js/slate.js'></script>
   <style>
   .title {
     padding: 15px 10px;
@@ -96,27 +96,55 @@
       <div class='item-container-content'>
         <label class='item'>
           Temperature in Celcius
-          <input id='celcius_checkbox' type='checkbox' class='item-toggle'>
+          <input id='Weather_TemperatureCelcius_Checkbox' type='checkbox' class='item-toggle'>
         </label>
       </div>
       <div class='item-container-footer'>
         This switches between Celcius and Fahrenheit.
       </div>
 	  
+	  <div class='item-container-content'>
+        <label class='item'>
+          Weather refresh time
+          <input id='Weather_Refreshtime_Input' type='number' class='item-number' min='1' max='99'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Time in minutes between weather refreshs (1-99).
+      </div>
+	  
       <div class='item-container-content'>
         <label class='item'>
           Clock in 24h mode
-          <input id='clock24h_checkbox' type='checkbox' class='item-toggle'>
+          <input id='Clock_Clock24h_Checkbox' type='checkbox' class='item-toggle'>
         </label>
       </div>
       <div class='item-container-footer'>
         This switches between 24h and 12h clock display.
       </div>
+	  
+	  <div class='item-container-content'>
+        <label class='item'>
+          Date style DD.MM.YY
+          <input id='Clock_Datestyle_ddmmyy_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
+        </label>
+		<label class='item'>
+          Date style YY-MM-DD
+          <input id='Clock_Datestyle_yymmdd_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
+        </label>
+		<label class='item'>
+          Date style MM/DD/YY
+          <input id='Clock_Datestyle_mmddyy_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Select the date's display style.
+      </div>
 
       <div class='item-container-content'>
         <label class='item'>
           Bluetooth vibration
-          <input id='bluetooth_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+          <input id='Bluetooth_VibrationEnabled_Checkbox' type='checkbox' class='item-toggle'>
         </label>
       </div>
       <div class='item-container-footer'>
@@ -126,13 +154,24 @@
       <div class='item-container-content'>
         <label class='item'>
           Network vibration
-          <input id='network_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+          <input id='Network_VibrationEnabled_Checkbox' type='checkbox' class='item-toggle'>
         </label>
       </div>
       <div class='item-container-footer'>
         Enable vibration on network connection change.
       </div>
-	
+	  
+	  <div class='item-container-content'>
+        <label class='item'>
+          Network refresh time
+          <input id='Network_Refreshtime_Input' type='number' class='item-number' min='1' max='99'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Time in minutes between network checks (1-99).
+      </div>
+	  
+	  
       <div class='item-container'>
         <div class='button-container'>
           <input id='Button_Reset' type='button' class='item-button' value='Reset to defaults'>
@@ -172,11 +211,18 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
-		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
-		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
-		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
-		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
+		var Clock_Datestyle_ddmmyy_Radio = document.getElementById('Clock_Datestyle_ddmmyy_Radio');
+		var Clock_Datestyle_yymmdd_Radio = document.getElementById('Clock_Datestyle_yymmdd_Radio');
+		var Clock_Datestyle_mmddyy_Radio = document.getElementById('Clock_Datestyle_mmddyy_Radio');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('Bluetooth_VibrationEnabled_Checkbox');
+		
+		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
+		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
 		localStorage['Color_Background'] = Color_Background_Picker.value;
 		localStorage['Color_Text'] 	     = Color_Text_Picker.value;
@@ -186,11 +232,18 @@
 		localStorage['Color_Error']      = Color_Error_Picker.value;
 		localStorage['Color_BatteryLow'] = Color_BatteryLow_Picker.value;
 		
-		localStorage['TemperatureInCelcius'] = Celcius_Checkbox.checked.toString();
-		localStorage['Clock24h'] = Clock24h_Checkbox.checked.toString();
+		localStorage['Weather_TemperatureCelcius'] = Weather_TemperatureCelcius_Checkbox.checked.toString();
+		localStorage['Weather_Refreshtime'] = Weather_Refreshtime_Input.value;
+		
+		localStorage['Clock_Clock24h'] = Clock_Clock24h_Checkbox.checked.toString();
+		localStorage['Clock_Datestyle_ddmmyy'] = Clock_Datestyle_ddmmyy_Radio.checked.toString();
+		localStorage['Clock_Datestyle_yymmdd'] = Clock_Datestyle_yymmdd_Radio.checked.toString();
+		localStorage['Clock_Datestyle_mmddyy'] = Clock_Datestyle_mmddyy_Radio.checked.toString();
 		
 		localStorage['Bluetooth_VibrationEnabled'] = Bluetooth_VibrationEnabled_Checkbox.checked.toString();
+		
 		localStorage['Network_VibrationEnabled'] = Network_VibrationEnabled_Checkbox.checked.toString();
+		localStorage['Network_Refreshtime'] = Network_Refreshtime_Input.value;
 	}
   
 	function getConfigData() 
@@ -203,11 +256,18 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
-		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
-		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
-		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
-		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
+		var Clock_Datestyle_ddmmyy_Radio = document.getElementById('Clock_Datestyle_ddmmyy_Radio');
+		var Clock_Datestyle_yymmdd_Radio = document.getElementById('Clock_Datestyle_yymmdd_Radio');
+		var Clock_Datestyle_mmddyy_Radio = document.getElementById('Clock_Datestyle_mmddyy_Radio');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('Bluetooth_VibrationEnabled_Checkbox');
+		
+		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
+		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
 		var options = 
 		{
@@ -218,10 +278,19 @@
 			'Color_Charging'  : Color_Charging_Picker.value,
 			'Color_Error'     : Color_Error_Picker.value,
 			'Color_BatteryLow': Color_BatteryLow_Picker.value,
-			'TemperatureInCelcius'     : Celcius_Checkbox.checked.toString(),
-			'Clock24h': Clock24h_Checkbox.checked.toString(),
+			
+			'Weather_TemperatureCelcius'     : Weather_TemperatureCelcius_Checkbox.checked.toString(),
+			'Weather_Refreshtime' : Weather_Refreshtime_Input.value,
+			
+			'Clock_Clock24h': Clock_Clock24h_Checkbox.checked.toString(),
+			'Clock_Datestyle_ddmmyy': Clock_Datestyle_ddmmyy_Radio.checked.toString(),
+			'Clock_Datestyle_yymmdd': Clock_Datestyle_yymmdd_Radio.checked.toString(),
+			'Clock_Datestyle_mmddyy': Clock_Datestyle_mmddyy_Radio.checked.toString(),
+			
 			'Bluetooth_VibrationEnabled': Bluetooth_VibrationEnabled_Checkbox.checked.toString(),
-			'Network_VibrationEnabled': Network_VibrationEnabled_Checkbox.checked.toString()
+			
+			'Network_VibrationEnabled': Network_VibrationEnabled_Checkbox.checked.toString(),
+			'Network_Refreshtime' : Network_Refreshtime_Input.value
 		};
 
 		// Save for next launch
@@ -243,11 +312,18 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
-		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
-		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
-		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
-		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
+		var Clock_Datestyle_ddmmyy_Radio = document.getElementById('Clock_Datestyle_ddmmyy_Radio');
+		var Clock_Datestyle_yymmdd_Radio = document.getElementById('Clock_Datestyle_yymmdd_Radio');
+		var Clock_Datestyle_mmddyy_Radio = document.getElementById('Clock_Datestyle_mmddyy_Radio');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('Bluetooth_VibrationEnabled_Checkbox');
+		
+		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
+		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
 		
 		Color_Background_Picker.value = "0x0055FF";
@@ -258,10 +334,19 @@
 		Color_Error_Picker.value      = "0xFF0000";
 		Color_BatteryLow_Picker.value = "0xFF0000";
 		
-		Celcius_Checkbox.checked = true;
-		Clock24h_Checkbox.checked = true;
+		Weather_TemperatureCelcius_Checkbox.checked = true;
+		Weather_Refreshtime_Input.value = "1";
+		
+		Clock_Clock24h_Checkbox.checked = true;
+		Clock_Datestyle_ddmmyy_Radio.checked = true;
+		Clock_Datestyle_yymmdd_Radio.checked = false;
+		Clock_Datestyle_mmddyy_Radio.checked = false;
+		
 		Bluetooth_VibrationEnabled_Checkbox.checked = true;
+		
 		Network_VibrationEnabled_Checkbox.checked = true;
+		Network_Refreshtime_Input.value = "30";
+		
 		console.log('Defaults: loading finished');
 		return true;
 	}
@@ -277,11 +362,18 @@
 		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
-		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
-		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
-		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
-		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
+		var Clock_Datestyle_ddmmyy_Radio = document.getElementById('Clock_Datestyle_ddmmyy_Radio');
+		var Clock_Datestyle_yymmdd_Radio = document.getElementById('Clock_Datestyle_yymmdd_Radio');
+		var Clock_Datestyle_mmddyy_Radio = document.getElementById('Clock_Datestyle_mmddyy_Radio');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('Bluetooth_VibrationEnabled_Checkbox');
+		
+		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
+		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
 		
 		if(localStorage['Color_Background']) 
@@ -299,14 +391,27 @@
 		if(localStorage['Color_BatteryLow']) 
 			Color_BatteryLow_Picker.value = localStorage['Color_BatteryLow'];
 			
-		if(localStorage['TemperatureInCelcius']) 
-			Celcius_Checkbox.checked = (localStorage['TemperatureInCelcius'] === 'true'); 
-		if(localStorage['Clock24h']) 
-			Clock24h_Checkbox.checked = (localStorage['Clock24h'] === 'true');
+		if(localStorage['Weather_TemperatureCelcius']) 
+			Weather_TemperatureCelcius_Checkbox.checked = (localStorage['Weather_TemperatureCelcius'] === 'true');
+		if(localStorage['Weather_Refreshtime']) 
+			Weather_Refreshtime_Input.value = localStorage['Weather_Refreshtime'];			
+			
+		if(localStorage['Clock_Clock24h']) 
+			Clock_Clock24h_Checkbox.checked = (localStorage['Clock_Clock24h'] === 'true');
+		if(localStorage['Clock_Datestyle_ddmmyy']) 
+			Clock_Datestyle_ddmmyy_Radio.checked = (localStorage['Clock_Datestyle_ddmmyy'] === 'true'); 
+		if(localStorage['Clock_Datestyle_yymmdd']) 
+			Clock_Datestyle_yymmdd_Radio.checked = (localStorage['Clock_Datestyle_yymmdd'] === 'true'); 
+		if(localStorage['Clock_Datestyle_mmddyy']) 
+			Clock_Datestyle_mmddyy_Radio.checked = (localStorage['Clock_Datestyle_mmddyy'] === 'true'); 
+			
 		if(localStorage['Bluetooth_VibrationEnabled']) 
-			Bluetooth_VibrationEnabled_Checkbox.checked = (localStorage['Bluetooth_VibrationEnabled'] === 'true'); 
+			Bluetooth_VibrationEnabled_Checkbox.checked = (localStorage['Bluetooth_VibrationEnabled'] === 'true');
+			
 		if(localStorage['Network_VibrationEnabled']) 
 			Network_VibrationEnabled_Checkbox.checked = (localStorage['Network_VibrationEnabled'] === 'true'); 
+		if(localStorage['Network_Refreshtime']) 
+			Network_Refreshtime_Input.value = localStorage['Network_Refreshtime'];	
 		
 		
 		console.log('Reload: loading finished');
