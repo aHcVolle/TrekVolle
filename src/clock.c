@@ -10,7 +10,7 @@ int m_i_NetworkTimer = 0;
 void Time_Redraw() 
 {
    if (m_b_Debug)
-         printf("[CLOCK] Redrawing\n");
+         printf("[CLOCK] Redrawing");
    
    // Get a tm structure
    time_t Time_Temp = time(NULL);
@@ -51,7 +51,7 @@ void Time_Redraw()
 static void Time_Handle(struct tm *tick_time, TimeUnits units_changed) 
 {
    if (m_b_Debug)
-         printf("[CLOCK] Handler\n");
+         printf("[CLOCK] Handler");
    
    Time_Redraw();
    
@@ -73,7 +73,7 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
 void Time_Init()
 {
    if (m_b_Debug)
-         printf("[CLOCK] Init\n");
+         printf("[CLOCK] Init");
    
    m_Time_Text_Layer = GetTimeTextLayer();
    m_Date_Text_Layer = GetDateTextLayer();
@@ -92,6 +92,6 @@ void Time_Init()
 void Time_DeInit()
 {
    if (m_b_Debug)
-         printf("[CLOCK] Deinit\n");
+         printf("[CLOCK] Deinit");
    tick_timer_service_unsubscribe();
 }

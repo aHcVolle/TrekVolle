@@ -6,7 +6,7 @@ void LoadConfigFromStorage()
    LoadDefaultConfig();
    
    if (m_b_Debug)
-         printf("[CONF] Loading\n");
+         printf("[CONF] Loading");
    
    if (persist_exists(KEY_COLOR_BACKGROUND)) 
    {
@@ -75,7 +75,7 @@ void LoadConfigFromStorage()
 void SaveConfigToStorage()
 {
    if (m_b_Debug)
-         printf("[CONF] Saving\n");
+         printf("[CONF] Saving");
    
    persist_write_int(KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
    persist_write_int(KEY_COLOR_TEXT, (int)Color_Text.argb);
@@ -102,7 +102,7 @@ void SaveConfigToStorage()
 void LoadDefaultConfig()
 {
    if (m_b_Debug)
-         printf("[CONF] Setting defaults\n");
+         printf("[CONF] Setting defaults");
    
    Color_Background = GColorBlueMoon;
    Color_Text = GColorSunsetOrange;

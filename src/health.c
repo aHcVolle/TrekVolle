@@ -5,7 +5,7 @@ TextLayer* m_Health_Text_Layer;
 void Health_GetMovementData(void)
 {
    if (m_b_Debug)
-         printf("[HEALTH] Getting data\n");
+         printf("[HEALTH] Getting data");
    
    HealthMetric Step_Metric_Count = HealthMetricStepCount;
    HealthMetric Step_Metric_Distance = HealthMetricWalkedDistanceMeters;
@@ -43,7 +43,7 @@ static void Health_Handler(HealthEventType event, void *context)
       break;
     case HealthEventMovementUpdate:
       if (m_b_Debug)
-         printf("[HEALTH] Handler\n");
+         printf("[HEALTH] Handler");
       Health_GetMovementData();
       break;
     case HealthEventSleepUpdate:
@@ -55,7 +55,7 @@ static void Health_Handler(HealthEventType event, void *context)
 void Health_Init()
 {
    if (m_b_Debug)
-         printf("[HEALTH] Init\n");
+         printf("[HEALTH] Init");
    m_Health_Text_Layer = GetStepTextLayer();
    
    health_service_events_subscribe(Health_Handler, NULL);
@@ -65,6 +65,6 @@ void Health_Init()
 void Health_DeInit()
 {
    if (m_b_Debug)
-         printf("[HEALTH] Deinit\n");
+         printf("[HEALTH] Deinit");
    health_service_events_unsubscribe();
 }

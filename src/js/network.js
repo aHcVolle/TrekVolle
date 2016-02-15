@@ -18,10 +18,12 @@ function Network_GetData()
   xhrRequest(url, 'GET', 
     function(responseText) 
       {
-          m_b_LastOnlineCheck = true;
-          //console.log('Got an online reply!');
-          var dictionary ={'KEY_ONLINE': 1};
-		  Pebble.sendAppMessage(dictionary,function(e){},function(e){});
+         if (m_b_Debug)
+            console.log("[JS:NET] Network check: OK");
+         m_b_LastOnlineCheck = true;
+          
+         var dictionary ={'KEY_ONLINE': 1};
+         Pebble.sendAppMessage(dictionary,function(e){},function(e){});
     });
    
 }

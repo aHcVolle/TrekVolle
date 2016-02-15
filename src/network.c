@@ -14,7 +14,7 @@ void Network_Request()
    }
      
    if (m_b_Debug)
-         printf("[NET] Connection request\n");
+         printf("[NET] Connection request");
    
    // Begin dictionary
    DictionaryIterator *iter;
@@ -30,7 +30,7 @@ void Network_Request()
 void Network_Redraw()
 {
    if (m_b_Debug)
-         printf("[NET] Redrawing\n");
+         printf("[NET] Redrawing");
    GColor Color;
    if (m_b_Network_ConnectionState)
    {
@@ -53,19 +53,19 @@ void Network_Handle_Reply(Tuple *network_tuple)
       return;
    
    if (m_b_Debug)
-         printf("[NET] Handler\n");
+         printf("[NET] Handler");
    
    m_b_Network_ConnectionState = b_ConnectionState;
    if (m_b_Network_ConnectionState && m_b_Network_VibrationEnabled)
    {
       if (m_b_Debug)
-         printf("[NET] Handler: Connection OK\n");
+         printf("[NET] Handler: Connection OK");
       vibes_short_pulse();  
    }
    else if (m_b_Network_VibrationEnabled)
    {
       if (m_b_Debug)
-         printf("[NET] Handler: Connection failed\n");
+         printf("[NET] Handler: Connection failed");
       vibes_double_pulse();
    }
    
@@ -75,7 +75,7 @@ void Network_Handle_Reply(Tuple *network_tuple)
 void Network_Init()
 {
    if (m_b_Debug)
-         printf("[NET] Init\n");
+         printf("[NET] Init");
    m_b_Network_ConnectionState = true;
    m_Network_Image = NULL;
    m_Network_Image_Layer = GetNetworkImageLayer();
@@ -85,7 +85,7 @@ void Network_Init()
 void Network_DeInit()
 {
    if (m_b_Debug)
-         printf("[NET] Deinit\n");
+         printf("[NET] Deinit");
    if (m_Network_Image)
    {
       gbitmap_destroy(m_Network_Image);

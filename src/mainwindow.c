@@ -202,7 +202,7 @@ void hide_mainwindow(void)
 void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color)
 {
    if (m_b_Debug)
-         printf("[MAIN] Redrawing Image\n");
+         printf("[MAIN] Redrawing Image");
    if (l_Image == NULL)
       return;
    
@@ -224,7 +224,7 @@ void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Col
 void Color_SetTextColor()
 {
    if (m_b_Debug)
-         printf("[MAIN] Setting text color\n");
+         printf("[MAIN] Setting text color");
    text_layer_set_text_color(Layer_Time_Text, Color_Text);
    layer_mark_dirty(text_layer_get_layer(Layer_Time_Text));
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
@@ -244,7 +244,7 @@ void Color_SetTextColor()
 void Color_SetImageColor()
 {
    if (m_b_Debug)
-         printf("[MAIN] Setting image color\n");
+         printf("[MAIN] Setting image color");
    Battery_RedrawAll();
    
    Redraw_Image(Layer_Steps_Image,m_Steps_Image,RESOURCE_ID_IMAGE_STEPS,Color_Image);
@@ -254,7 +254,7 @@ void Color_SetImageColor()
 void show_PhoneBattery(bool show)
 {
    if (m_b_Debug)
-         printf("[MAIN] Setting phone batetry display\n");
+         printf("[MAIN] Setting phone battery display");
    layer_set_hidden((Layer *)Layer_Battery_Text_Phone, !show);
    layer_set_hidden((Layer *)Layer_Battery_Image_Phone, !show);
 }
