@@ -1,10 +1,10 @@
-var m_b_MessagingAvailiable = false;
+var m_b_MessagingAvailable = false;
 var m_b_Debug = false;
 
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
 {
-   m_b_MessagingAvailiable = true;
+   m_b_MessagingAvailable = true;
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");
    
@@ -38,7 +38,6 @@ Pebble.addEventListener('appmessage',function(e)
    
 });
 
-
 var xhrRequest = function (url, type, callback) 
 {
   if (m_b_Debug)
@@ -48,9 +47,11 @@ var xhrRequest = function (url, type, callback)
      {
        callback(this.responseText);
      };  
+  xhr.timeout = 5000; 
+  xhr.ontimeout = function () { Network_SendReply(false); }; 
+  xhr.onerror = function () { Network_SendReply(false); };  
   xhr.open(type, url);
   xhr.send();
+   
 };
-
-
 

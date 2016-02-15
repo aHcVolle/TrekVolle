@@ -1,5 +1,7 @@
+// This will hold the battery manager object
 var m_Battery;
-var m_b_Battery_Availiable;
+// Simple var to save if the battery manager is available
+var m_b_Battery_Available;
 
 navigator.getBattery().then(function(battery) 
 {
@@ -25,7 +27,7 @@ function Battery_InitSuccess(batteryManager)
    if (m_b_Debug)
          console.log("[JS:BATT] Init OK");
    m_Battery = batteryManager;
-   m_b_Battery_Availiable = true;
+   m_b_Battery_Available = true;
    Battery_GetData();
 }
 
@@ -33,7 +35,7 @@ function Battery_InitFailure()
 {
    if (m_b_Debug)
          console.log("[JS:BATT] Init failed");
-   m_b_Battery_Availiable = false;
+   m_b_Battery_Available = false;
 }
 
 function Battery_Init()
@@ -54,7 +56,7 @@ function Battery_Init()
 
 function Battery_GetData()
 {   
-   if (m_b_Battery_Availiable && m_b_MessagingAvailiable)
+   if (m_b_Battery_Available && m_b_MessagingAvailable)
    {
       if (m_b_Debug)
          console.log("[JS:BATT] Getting battery data");
