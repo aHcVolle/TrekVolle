@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>TrekVolle Configuration</title>
+  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+  <script src='js/slate.min.js'></script>
+  <style>
+  .title {
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+  }
+  </style>
+  </head>
+
+  <body>
+    <h1 class='title'>TrekVolle Configuration</h1>
+
+    <div class='item-container' id="parent">
+      <div class='item-container-header'>Customizability</div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Background Image Color
+          <input id='Color_Background_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the app's background image color.
+      </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Text Color
+          <input id='Color_Text_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the app's text color.
+      </div>
+
+      <div class='item-container-content'>
+        <label class='item'>
+          Image Color
+          <input id='Color_Image_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the app's image color.
+      </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Window Background Color
+          <input id='Color_Window_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the app's background color.
+      </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Battery charging Color
+          <input id='Color_Charging_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the battery charging color.
+      </div>
+
+      <div class='item-container-content'>
+        <label class='item'>
+          Error Color
+          <input id='Color_Error_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the app's error / disconnection color.
+      </div>
+
+      <div class='item-container-content'>
+        <label class='item'>
+          Battery low Color
+          <input id='Color_BatteryLow_Picker' type='text' class='item-color item-color-sunny' value='0x000000'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Choose the battery low color.
+      </div>
+	  
+      <div class='item-container-content'>
+        <label class='item'>
+          Temperature in Celcius
+          <input id='celcius_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        This switches between Celcius and Fahrenheit.
+      </div>
+	  
+      <div class='item-container-content'>
+        <label class='item'>
+          Clock in 24h mode
+          <input id='clock24h_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        This switches between 24h and 12h clock display.
+      </div>
+
+      <div class='item-container-content'>
+        <label class='item'>
+          Bluetooth vibration
+          <input id='bluetooth_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Enable vibration on bluetooth connection change.
+      </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Network vibration
+          <input id='network_vibrationenabled_checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Enable vibration on network connection change.
+      </div>
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Reset' type='button' class='item-button' value='Reset to defaults'>
+        </div>
+      </div> 
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Reload' type='button' class='item-button' value='Reload saved values'>
+        </div>
+      </div> 
+	
+      <div class='item-container'>
+        <div class='button-container'>
+          <input id='Button_Submit' type='button' class='item-button' value='Save'>
+        </div>
+      </div> 
+  </div>
+
+  </body>
+  
+  <script>
+	function ReDraw()
+	{
+		console.log('ReDraw: starting');
+		window.location.reload(false);
+		console.log('ReDraw: finished');		
+	}
+	
+	function SaveData()
+	{
+		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
+		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
+		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
+		var Color_Window_Picker = document.getElementById('Color_Window_Picker');
+		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
+		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
+		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
+		localStorage['Color_Background'] = Color_Background_Picker.value;
+		localStorage['Color_Text'] 	     = Color_Text_Picker.value;
+		localStorage['Color_Image'] 	 = Color_Image_Picker.value;
+		localStorage['Color_Window'] 	 = Color_Window_Picker.value;
+		localStorage['Color_Charging']   = Color_Charging_Picker.value;
+		localStorage['Color_Error']      = Color_Error_Picker.value;
+		localStorage['Color_BatteryLow'] = Color_BatteryLow_Picker.value;
+		
+		localStorage['TemperatureInCelcius'] = Celcius_Checkbox.checked.toString();
+		localStorage['Clock24h'] = Clock24h_Checkbox.checked.toString();
+		
+		localStorage['Bluetooth_VibrationEnabled'] = Bluetooth_VibrationEnabled_Checkbox.checked.toString();
+		localStorage['Network_VibrationEnabled'] = Network_VibrationEnabled_Checkbox.checked.toString();
+	}
+  
+	function getConfigData() 
+	{
+		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
+		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
+		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
+		var Color_Window_Picker = document.getElementById('Color_Window_Picker');
+		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
+		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
+		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
+		var options = 
+		{
+			'Color_Background': Color_Background_Picker.value,
+			'Color_Text'      : Color_Text_Picker.value,
+			'Color_Image'     : Color_Image_Picker.value,
+			'Color_Window'    : Color_Window_Picker.value,
+			'Color_Charging'  : Color_Charging_Picker.value,
+			'Color_Error'     : Color_Error_Picker.value,
+			'Color_BatteryLow': Color_BatteryLow_Picker.value,
+			'TemperatureInCelcius'     : Celcius_Checkbox.checked.toString(),
+			'Clock24h': Clock24h_Checkbox.checked.toString(),
+			'Bluetooth_VibrationEnabled': Bluetooth_VibrationEnabled_Checkbox.checked.toString(),
+			'Network_VibrationEnabled': Network_VibrationEnabled_Checkbox.checked.toString()
+		};
+
+		// Save for next launch
+		SaveData();
+
+		//console.log('Got options: ' + JSON.stringify(options));
+		return options;
+	}
+	
+	function SetDefaults()
+	{
+		console.log('Defaults: loading');
+		
+		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
+		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
+		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
+		var Color_Window_Picker = document.getElementById('Color_Window_Picker');
+		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
+		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
+		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
+		
+		Color_Background_Picker.value = "0x0055FF";
+		Color_Text_Picker.value       = "0xFF5555";
+		Color_Image_Picker.value      = "0xFF5555";
+		Color_Window_Picker.value     = "0x000000";
+		Color_Charging_Picker.value   = "0x00FF00";
+		Color_Error_Picker.value      = "0xFF0000";
+		Color_BatteryLow_Picker.value = "0xFF0000";
+		
+		Celcius_Checkbox.checked = true;
+		Clock24h_Checkbox.checked = true;
+		Bluetooth_VibrationEnabled_Checkbox.checked = true;
+		Network_VibrationEnabled_Checkbox.checked = true;
+		console.log('Defaults: loading finished');
+		return true;
+	}
+	
+	function LoadData()
+	{
+		console.log('Reload: loading');
+		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
+		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
+		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
+		var Color_Window_Picker = document.getElementById('Color_Window_Picker');
+		var Color_Charging_Picker = document.getElementById('Color_Charging_Picker');
+		var Color_Error_Picker = document.getElementById('Color_Error_Picker');
+		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
+		
+		var Celcius_Checkbox = document.getElementById('celcius_checkbox');
+		var Clock24h_Checkbox = document.getElementById('clock24h_checkbox');
+		
+		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('bluetooth_vibrationenabled_checkbox');
+		var Network_VibrationEnabled_Checkbox = document.getElementById('network_vibrationenabled_checkbox');
+		
+		
+		if(localStorage['Color_Background']) 
+			Color_Background_Picker.value = localStorage['Color_Background'];
+		if(localStorage['Color_Text']) 
+			Color_Text_Picker.value       = localStorage['Color_Text'];
+		if(localStorage['Color_Image']) 
+			Color_Image_Picker.value      = localStorage['Color_Image'];
+		if(localStorage['Color_Window']) 
+			Color_Window_Picker.value     = localStorage['Color_Window'];
+		if(localStorage['Color_Charging']) 
+			Color_Charging_Picker.value   = localStorage['Color_Charging'];
+		if(localStorage['Color_Error']) 
+			Color_Error_Picker.value      = localStorage['Color_Error'];
+		if(localStorage['Color_BatteryLow']) 
+			Color_BatteryLow_Picker.value = localStorage['Color_BatteryLow'];
+			
+		if(localStorage['TemperatureInCelcius']) 
+			Celcius_Checkbox.checked = (localStorage['TemperatureInCelcius'] === 'true'); 
+		if(localStorage['Clock24h']) 
+			Clock24h_Checkbox.checked = (localStorage['Clock24h'] === 'true');
+		if(localStorage['Bluetooth_VibrationEnabled']) 
+			Bluetooth_VibrationEnabled_Checkbox.checked = (localStorage['Bluetooth_VibrationEnabled'] === 'true'); 
+		if(localStorage['Network_VibrationEnabled']) 
+			Network_VibrationEnabled_Checkbox.checked = (localStorage['Network_VibrationEnabled'] === 'true'); 
+		
+		
+		console.log('Reload: loading finished');
+		return true;
+	}
+	
+	function getQueryParam(variable, defaultValue) 
+	{
+		var query = location.search.substring(1);
+		var vars = query.split('&');
+		for (var i = 0; i < vars.length; i++) 
+		{
+			var pair = vars[i].split('=');
+			if (pair[0] === variable) 
+			{
+				return decodeURIComponent(pair[1]);
+			}
+		}
+		return defaultValue || false;
+	}
+	
+	var Button_Reset = document.getElementById('Button_Reset');
+	Button_Reset.addEventListener('click', function() 
+	{
+		console.log('Defaults: Button');
+		SetDefaults();
+		SaveData();
+		ReDraw();
+	});
+ 
+	var Button_Reload = document.getElementById('Button_Reload');
+	Button_Reload.addEventListener('click', function() 
+	{
+		console.log('Reload: Button');
+		ReDraw();
+	});
+ 
+ 
+	var Button_Submit = document.getElementById('Button_Submit');
+	Button_Submit.addEventListener('click', function() 
+	{
+		console.log('Submit: Button');
+
+		// Set the return URL depending on the runtime environment
+		var return_to = getQueryParam('return_to', 'pebblejs://close#');
+		document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+	});
+
+  
+	  function main() 
+	  {
+		console.log('main: Starting');
+		SetDefaults();
+		LoadData();
+		// Load any previously saved configuration, if available
+		//Reload();
+		console.log('main: finished');
+	  }
+  
+  
+  main();
+  </script>
+</html>
