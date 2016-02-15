@@ -102,6 +102,16 @@
       <div class='item-container-footer'>
         This switches between Celcius and Fahrenheit.
       </div>
+      
+      <div class='item-container-content'>
+        <label class='item'>
+          Retry weather update
+          <input id='Weather_RetryUpdate_Checkbox' type='checkbox' class='item-toggle'>
+        </label>
+      </div>
+      <div class='item-container-footer'>
+        Check if you want to retry the weather update if it failed before.
+      </div>
 	  
 	  <div class='item-container-content'>
         <label class='item'>
@@ -212,6 +222,7 @@
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
@@ -222,7 +233,7 @@
 		var Bluetooth_VibrationEnabled_Checkbox = document.getElementById('Bluetooth_VibrationEnabled_Checkbox');
 		
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
-		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
+		var Network_Refreshtime_Input localStorage['Weather_TemperatureCelcius'] = Weather_TemperatureCelcius_Checkbox.checked.toString();= document.getElementById('Network_Refreshtime_Input');
 		
 		localStorage['Color_Background'] = Color_Background_Picker.value;
 		localStorage['Color_Text'] 	     = Color_Text_Picker.value;
@@ -234,6 +245,7 @@
 		
 		localStorage['Weather_TemperatureCelcius'] = Weather_TemperatureCelcius_Checkbox.checked.toString();
 		localStorage['Weather_Refreshtime'] = Weather_Refreshtime_Input.value;
+		localStorage['Weather_RetryUpdate'] = Weather_RetryUpdate_Checkbox.checked.toString();
 		
 		localStorage['Clock_Clock24h'] = Clock_Clock24h_Checkbox.checked.toString();
 		localStorage['Clock_Datestyle_ddmmyy'] = Clock_Datestyle_ddmmyy_Radio.checked.toString();
@@ -257,6 +269,7 @@
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
@@ -281,6 +294,7 @@
 			
 			'Weather_TemperatureCelcius'     : Weather_TemperatureCelcius_Checkbox.checked.toString(),
 			'Weather_Refreshtime' : Weather_Refreshtime_Input.value,
+			'Weather_RetryUpdate' : Weather_RetryUpdate_Checkbox.checked.toString(),
 			
 			'Clock_Clock24h': Clock_Clock24h_Checkbox.checked.toString(),
 			'Clock_Datestyle_ddmmyy': Clock_Datestyle_ddmmyy_Radio.checked.toString(),
@@ -313,6 +327,7 @@
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
@@ -336,6 +351,7 @@
 		
 		Weather_TemperatureCelcius_Checkbox.checked = true;
 		Weather_Refreshtime_Input.value = "30";
+		Weather_RetryUpdate_Checkbox.checked = true;
 		
 		Clock_Clock24h_Checkbox.checked = true;
 		Clock_Datestyle_ddmmyy_Radio.checked = true;
@@ -363,6 +379,7 @@
 		var Color_BatteryLow_Picker = document.getElementById('Color_BatteryLow_Picker');
 		
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
+		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
@@ -395,6 +412,9 @@
 			Weather_TemperatureCelcius_Checkbox.checked = (localStorage['Weather_TemperatureCelcius'] === 'true');
 		if(localStorage['Weather_Refreshtime']) 
 			Weather_Refreshtime_Input.value = localStorage['Weather_Refreshtime'];			
+		if(localStorage['Weather_RetryUpdate']) 
+			Weather_RetryUpdate_Checkbox.checked = (localStorage['Weather_RetryUpdate'] === 'true');
+		
 			
 		if(localStorage['Clock_Clock24h']) 
 			Clock_Clock24h_Checkbox.checked = (localStorage['Clock_Clock24h'] === 'true');
