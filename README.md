@@ -25,6 +25,10 @@ ToDo:
 - Customize network refresh time
 - Customize date display (dd-mm-yy / yy-mm-dd / mm-dd-yy)
 
+Links:
+- Discussion: [Pebble forums] (https://forums.getpebble.com/discussion/31262/watchface-trekvolle#latest)
+- Store: [Pebble Store] (https://apps.getpebble.com/applications/56bb35ee90610aa83400000f)
+
 Credits & Thanks to:
 
 * Idea: [chops's Trekv3](http://www.markspebblefaces.com/)
