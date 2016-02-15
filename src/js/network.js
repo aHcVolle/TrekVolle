@@ -1,4 +1,4 @@
-
+//
 function Network_GetData()
 {
    if (m_b_LastOnlineCheck === false)
