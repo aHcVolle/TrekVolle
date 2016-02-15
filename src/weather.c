@@ -1,7 +1,7 @@
 #include "weather.h"
-TextLayer* m_Weather_Text_Layer;
+TextLayer* m_Weather_Text_Layer = NULL;
 static BitmapLayer* m_Weather_Image_Layer = NULL;
-static GBitmap *m_Weather_Image;
+static GBitmap *m_Weather_Image = NULL;
 
 static char m_s_Weather_ConditionBuffer[32];
 static char m_s_Weather_LocationBuffer[32];
@@ -11,12 +11,15 @@ int m_i_Weather_WeatherImage;
 int m_i_Weather_Temperature;
 
 void Weather_RedrawText()
-{
+{   
+   
    if (!m_b_Weather_LastUpdateWasOK)
    {
       Weather_Request();
       return;
    }
+   if (m_b_Debug)
+         printf("[WTHR] Redrawing text\n");
       
    if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
    {
@@ -37,11 +40,15 @@ void Weather_RedrawText()
 
 void Weather_RedrawImage()
 {
+   if (m_b_Debug)
+         printf("[WTHR] Redrawing image\n");
    Redraw_Image(m_Weather_Image_Layer,m_Weather_Image,m_i_Weather_WeatherImage,Color_Image);
 }
 
 void Weather_Redraw()
 {
+   if (m_b_Debug)
+         printf("[WTHR] Redrawing everything\n");
    Weather_RedrawText();
    Weather_RedrawImage();
 }
@@ -49,28 +56,38 @@ void Weather_Redraw()
 
 void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple)
 {
+   if (m_b_Debug)
+         printf("[WTHR] Handler\n");
    if(Temperature_tuple) 
    {
       m_i_Weather_Temperature = (int)Temperature_tuple->value->int32;
       m_b_Weather_LastUpdateWasOK = true;
+      if (m_b_Debug)
+         printf("[WTHR] Handler: Got temp\n");
    }
    
    if(Condition_tuple)
    {
       snprintf(m_s_Weather_ConditionBuffer, sizeof(m_s_Weather_ConditionBuffer), "%s", Condition_tuple->value->cstring);
       m_b_Weather_LastUpdateWasOK = true;
+      if (m_b_Debug)
+         printf("[WTHR] Handler: Got condition\n");
    }
       
    if(Location_tuple) 
    {
       snprintf(m_s_Weather_LocationBuffer, sizeof(m_s_Weather_LocationBuffer), "%s", Location_tuple->value->cstring);
       m_b_Weather_LastUpdateWasOK = true;
+      if (m_b_Debug)
+         printf("[WTHR] Handler: Got location\n");
    }
    
    if (Image_tuple)
    {  
       m_i_Weather_WeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
       Weather_RedrawImage();
+      if (m_b_Debug)
+         printf("[WTHR] Handler: Got imageid\n");
    }
    
    Weather_RedrawText();
@@ -78,6 +95,8 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
 
 void Weather_Init()
 {
+   if (m_b_Debug)
+         printf("[WTHR] Init\n");
    m_b_Weather_LastUpdateWasOK = false;
    m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
    m_Weather_Text_Layer = GetWeatherTextLayer();
@@ -89,6 +108,8 @@ void Weather_Init()
 
 void Weather_DeInit()
 {
+   if (m_b_Debug)
+         printf("[WTHR] Deinit\n");
    if (m_Weather_Image)
    {
       gbitmap_destroy(m_Weather_Image);
@@ -98,9 +119,13 @@ void Weather_DeInit()
 
 void Weather_Request()
 {
+   if (!m_b_Bluetooth_ConnectionState)
+      return;
+   
    m_b_Weather_LastUpdateWasOK = false;
 
-   //printf("C: requesting weather update...\n");
+   if (m_b_Debug)
+         printf("[WTHR] Request\n");
    // Begin dictionary
    DictionaryIterator *iter;
    app_message_outbox_begin(&iter);

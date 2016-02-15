@@ -17,29 +17,38 @@ struct BatteryData m_BatteryPebble;
 
 void BatteryRedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
 {
+   if (m_b_Debug)
+      printf("[BATT] Redrawing battery image\n");
    Redraw_Image(Battery->l_Image,Battery->bmp_Image,Image_ID,Color);
 }
 
 void Battery_RequestPhone()
 {
-     // Begin dictionary
-     DictionaryIterator *iter;
-     app_message_outbox_begin(&iter);
+   if (!m_b_Bluetooth_ConnectionState)
+      return;
    
-     // Add a key-value pair
-     dict_write_uint8(iter, KEY_BATTERY_CHARGE, 0);
-   
-     // Send the message!
-     app_message_outbox_send();
+   if (m_b_Debug)
+      printf("[BATT] Phone battery requested\n");
+   // Begin dictionary
+   DictionaryIterator *iter;
+   app_message_outbox_begin(&iter);
+
+   // Add a key-value pair
+   dict_write_uint8(iter, KEY_BATTERY_CHARGE, 0);
+
+   // Send the message!
+   app_message_outbox_send();
 }
 
 
 
 void Battery_Redraw(struct BatteryData* Battery)
 {
-   
    if (Battery->l_Text == NULL)
       return;
+   
+   if (m_b_Debug)
+      printf("[BATT] Redrawing battery\n");
   
    if (Battery->i_BatteryLevel < 30)
    {
@@ -73,6 +82,8 @@ void Battery_Redraw(struct BatteryData* Battery)
 
 static void Battery_Handle_Pebble(BatteryChargeState charge_state) 
 {
+   if (m_b_Debug)
+      printf("[BATT] Pebble battery handler: %d %d\n",charge_state.charge_percent,(int)charge_state.is_charging);
    m_BatteryPebble.i_BatteryLevel = charge_state.charge_percent;
    m_BatteryPebble.b_ChargingState = charge_state.is_charging;
    Battery_Redraw(&m_BatteryPebble);
@@ -80,6 +91,8 @@ static void Battery_Handle_Pebble(BatteryChargeState charge_state)
 
 void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState)
 {
+   if (m_b_Debug)
+      printf("[BATT] Phone battery handler: %d %d\n",i_BatteryLevel,(int)b_ChargingState);
    show_PhoneBattery(true);
    
    m_BatteryPhone.i_BatteryLevel = i_BatteryLevel;
@@ -89,6 +102,8 @@ void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState)
 
 void Battery_RedrawAll()
 {
+   if (m_b_Debug)
+      printf("[BATT] Redrawing everything\n");
    Battery_Redraw(&m_BatteryPhone);
    Battery_Redraw(&m_BatteryPebble);
 }
@@ -96,6 +111,8 @@ void Battery_RedrawAll()
 
 void Battery_Init()
 {
+   if (m_b_Debug)
+      printf("[BATT] Init\n");
    m_BatteryPebble.l_Text =  GetBatteryTextLayerPebble();
    m_BatteryPebble.l_Image = GetBatteryImageLayerPebble();
    m_BatteryPhone.l_Text =   GetBatteryTextLayerPhone();
@@ -107,6 +124,8 @@ void Battery_Init()
 
 void Battery_Deinit()
 {
+   if (m_b_Debug)
+      printf("[BATT] Deinit\n");
    battery_state_service_unsubscribe();
    if (m_BatteryPhone.bmp_Image)
    {

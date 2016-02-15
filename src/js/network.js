@@ -2,6 +2,9 @@ var m_b_LastOnlineCheck = false;
 
 function Network_GetData()
 {
+   if (m_b_Debug)
+         console.log("[JS:NET] Getting network data");
+   
    if (m_b_LastOnlineCheck === false)
    {
       var dictionary ={'KEY_ONLINE': 0};

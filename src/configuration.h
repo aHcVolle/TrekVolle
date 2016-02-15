@@ -9,6 +9,8 @@
 #include "network.h"
 #include "clock.h"
 
+bool m_b_Debug;
+
 void LoadConfigFromStorage();
 void SaveConfigToStorage();
 void LoadDefaultConfig();

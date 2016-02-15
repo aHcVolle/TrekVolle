@@ -21,12 +21,15 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Color_Error_tuple = dict_find(iterator,KEY_COLOR_ERROR);
    Tuple *Color_BatteryLow_tuple = dict_find(iterator,KEY_COLOR_BATTERYLOW);
    
-   Tuple *TemperatureInCelcius_tuple = dict_find(iterator,KEY_TEMPERATURE_CELCIUS);
-   Tuple *Clock24h_tuple = dict_find(iterator,KEY_CLOCK_24H);
-   Tuple *DateStyle_tuple = dict_find(iterator,KEY_DATE_STYLE);
-   Tuple *NetworkRefresh_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);
+   Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,KEY_WEATHER_TEMPERATURECELCIUS);
+   Tuple *Weather_Refreshtime_tuple = dict_find(iterator,KEY_WEATHER_REFRESHTIME);
    
+   Tuple *Clock_Clock24h_tuple = dict_find(iterator,KEY_CLOCK_CLOCK24H);
+   Tuple *Clock_DateStyle_tuple = dict_find(iterator,KEY_CLOCK_DATESTYLE);
+   
+   Tuple *Network_Refreshtime_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);   
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
+   
    Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
@@ -97,36 +100,39 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    }
       
    
-   if (TemperatureInCelcius_tuple)
+   if (Weather_TemperatureCelcius_tuple)
    {
-      
-      m_b_Weather_TemperatureInCelcius = (bool)TemperatureInCelcius_tuple->value->int32;
+      m_b_Weather_TemperatureInCelcius = (bool)Weather_TemperatureCelcius_tuple->value->int32;
       Weather_RedrawText();
    }
-      
-   bool b_TimeChanged = false;
-   if (Clock24h_tuple)
+   if (Weather_Refreshtime_tuple)
    {
-      m_b_Time_Clock24h = (bool)Clock24h_tuple->value->int32;
-      b_TimeChanged = true;
+      m_i_Weather_RefreshTime = (int)Weather_Refreshtime_tuple->value->int32;
+   }
+      
+   bool b_ClockChanged = false;
+   if (Clock_Clock24h_tuple)
+   {
+      m_b_Clock_Clock24h = (bool)Clock_Clock24h_tuple->value->int32;
+      b_ClockChanged = true;
    }
       
    
-   if (DateStyle_tuple)
+   if (Clock_DateStyle_tuple)
    {
-      m_i_Time_DateStyle = (int)DateStyle_tuple->value->int32;
-      b_TimeChanged = true;
+      m_i_Clock_DateStyle = (int)Clock_DateStyle_tuple->value->int32;
+      b_ClockChanged = true;
    }
    
-   if (b_TimeChanged)
+   if (b_ClockChanged)
    {
       Time_Redraw();
    }
       
    
-   if (NetworkRefresh_tuple)
+   if (Network_Refreshtime_tuple)
    {
-      m_i_Network_RefreshTime = (int)NetworkRefresh_tuple->value->int32;
+      m_i_Network_RefreshTime = (int)Network_Refreshtime_tuple->value->int32;
    }
    
    if (Network_VibrationEnabled_tuple)

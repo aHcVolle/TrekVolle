@@ -2,6 +2,9 @@ var Weather_APIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d'; // Please use your own.
 
 function Weather_LocationSuccess(pos) 
 {
+   if (m_b_Debug)
+         console.log("[JS:WTHR] Got location, getting weather data");
+   
   // Construct URL
   var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
       pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + Weather_APIKey;
@@ -10,6 +13,9 @@ function Weather_LocationSuccess(pos)
   xhrRequest(url, 'GET', 
     function(responseText) 
       {
+         if (m_b_Debug)
+         console.log("[JS:WTHR] Got weather data");
+         
           m_b_LastOnlineCheck = true;
           //console.log('JS: Received weather update...');
          
@@ -48,10 +54,14 @@ function Weather_LocationSuccess(pos)
 function Weather_LocationError(err) 
 {
   //console.log('Error requesting location!');
+   if (m_b_Debug)
+         console.log("[JS:WTHR] Could not get location data");
 }
 
 function Weather_GetData() 
 {
+   if (m_b_Debug)
+         console.log("[JS:WTHR] Getting weather data");
    //console.log('JS: Requesting weather update...');
   navigator.geolocation.getCurrentPosition(
     Weather_LocationSuccess,

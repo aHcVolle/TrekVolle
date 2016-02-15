@@ -8,10 +8,12 @@
 #include "network.h"
 #include "communication.h"
 #include "acceleration.h"
-
+#include "configuration.h"
 
 static void init() 
 {
+   m_b_Debug = true;
+   
    // UI 
    show_mainwindow();
    // Set Color

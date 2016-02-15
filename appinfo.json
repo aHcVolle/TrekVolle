@@ -3,7 +3,8 @@
         "KEY_BATTERY_CHARGE": 5,
         "KEY_BATTERY_STATE": 6,
         "KEY_BLUETOOTH_VIBRATIONENABLED": 18,
-        "KEY_CLOCK_24H": 15,
+        "KEY_CLOCK_CLOCK24H": 15,
+        "KEY_CLOCK_DATESTYLE": 16,
         "KEY_COLOR_BACKGROUND": 7,
         "KEY_COLOR_BATTERYLOW": 13,
         "KEY_COLOR_CHARGING": 11,
@@ -12,14 +13,14 @@
         "KEY_COLOR_TEXT": 8,
         "KEY_COLOR_WINDOW": 10,
         "KEY_CONDITIONS": 1,
-        "KEY_DATE_STYLE": 16,
         "KEY_ICON": 2,
         "KEY_LOCATION": 3,
         "KEY_NETWORK_REFRESHTIME": 17,
         "KEY_NETWORK_VIBRATIONENABLED": 19,
         "KEY_ONLINE": 4,
         "KEY_TEMPERATURE": 0,
-        "KEY_TEMPERATURE_CELCIUS": 14
+        "KEY_WEATHER_REFRESHTIME": 20,
+        "KEY_WEATHER_TEMPERATURECELCIUS": 14
     },
     "capabilities": [
         "location",

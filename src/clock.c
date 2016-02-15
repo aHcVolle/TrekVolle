@@ -1,11 +1,17 @@
 #include "clock.h"
 
-TextLayer* m_Time_Text_Layer;
-TextLayer* m_Date_Text_Layer;
-TextLayer* m_Day_Text_Layer;
+TextLayer* m_Time_Text_Layer = NULL;
+TextLayer* m_Date_Text_Layer = NULL;
+TextLayer* m_Day_Text_Layer = NULL;
+
+int m_i_WeatherTimer = 0;
+int m_i_NetworkTimer = 0;
 
 void Time_Redraw() 
 {
+   if (m_b_Debug)
+         printf("[CLOCK] Redrawing\n");
+   
    // Get a tm structure
    time_t Time_Temp = time(NULL);
    struct tm* Time_Tick = localtime(&Time_Temp);
@@ -13,7 +19,7 @@ void Time_Redraw()
    // Write the current hours and minutes into a buffer
    static char s_TimeBuffer[8];
    
-   if (m_b_Time_Clock24h)
+   if (m_b_Clock_Clock24h)
       strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%H:%M", Time_Tick);
    else
    {
@@ -24,9 +30,9 @@ void Time_Redraw()
    text_layer_set_text(m_Time_Text_Layer, s_TimeBuffer);
    
    static char s_DateBuffer[20];
-   if (m_i_Time_DateStyle == DATE_DD_MM_YY)
+   if (m_i_Clock_DateStyle == DATE_DD_MM_YY)
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %d.%m.%y", Time_Tick);
-   else if (m_i_Time_DateStyle == DATE_YY_MM_DD)
+   else if (m_i_Clock_DateStyle == DATE_YY_MM_DD)
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %y-%m-%d", Time_Tick);
    else // if DATE_MM_DD_YY
       strftime(s_DateBuffer, sizeof(s_DateBuffer), "%a, %m/%d/%y", Time_Tick);
@@ -44,21 +50,31 @@ void Time_Redraw()
 
 static void Time_Handle(struct tm *tick_time, TimeUnits units_changed) 
 {
+   if (m_b_Debug)
+         printf("[CLOCK] Handler\n");
+   
    Time_Redraw();
    
-   if (tick_time->tm_min % m_i_Network_RefreshTime == 0)
-      Network_Request();
-   
-   // Get weather update every 30 minutes
-   if ((!m_b_Weather_LastUpdateWasOK) || (tick_time->tm_min % 30 == 0))
+   m_i_NetworkTimer++;
+   if (m_i_NetworkTimer >= m_i_Network_RefreshTime)
    {
-     Weather_Request();
+      Network_Request();
+      m_i_NetworkTimer = 0;
    }
-   
+        
+   m_i_WeatherTimer++;
+   if ((!m_b_Weather_LastUpdateWasOK) || (m_i_WeatherTimer >= m_i_Weather_RefreshTime))
+   {
+      Weather_Request();
+      m_i_WeatherTimer = 0;     
+   }   
 }
 
 void Time_Init()
 {
+   if (m_b_Debug)
+         printf("[CLOCK] Init\n");
+   
    m_Time_Text_Layer = GetTimeTextLayer();
    m_Date_Text_Layer = GetDateTextLayer();
    m_Day_Text_Layer  = GetDayTextLayer();
@@ -75,5 +91,7 @@ void Time_Init()
 
 void Time_DeInit()
 {
+   if (m_b_Debug)
+         printf("[CLOCK] Deinit\n");
    tick_timer_service_unsubscribe();
 }

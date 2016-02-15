@@ -3,15 +3,18 @@
 BitmapLayer* m_Bluetooth_Image_Layer = NULL;
 GBitmap* m_Bluetooth_Image = NULL;
 
-bool m_b_Bluetooth_LastConnectionState;
+
 
 void Bluetooth_Redraw()
 {
    if (m_Bluetooth_Image_Layer == NULL)
       return;
    
+   if (m_b_Debug)
+         printf("[BT] Redrawing\n");
+   
    GColor Color;
-   if (m_b_Bluetooth_LastConnectionState)
+   if (m_b_Bluetooth_ConnectionState)
    {
       Color = Color_Image;
    }
@@ -24,31 +27,40 @@ void Bluetooth_Redraw()
 }
 
 
-static void Bluetooth_Handle(bool connected) 
+static void Bluetooth_Handle(bool b_ConnectionState) 
 {
-   if (m_b_Bluetooth_LastConnectionState == connected)
+   if (m_b_Bluetooth_ConnectionState == b_ConnectionState)
       return;
    
-   m_b_Bluetooth_LastConnectionState = connected;
-   if (connected && m_b_Bluetooth_VibrationEnabled)
+   if (m_b_Debug)
+         printf("[BT] BT handler\n");
+   
+   m_b_Bluetooth_ConnectionState = b_ConnectionState;
+   if (b_ConnectionState && m_b_Bluetooth_VibrationEnabled)
    {
-      
+      if (m_b_Debug)
+         printf("[BT] BT handler: Connection OK\n");
       vibes_short_pulse();
       //printf("BT connected");
    }
    else if (m_b_Bluetooth_VibrationEnabled)
    {
+      if (m_b_Debug)
+         printf("[BT] BT handler: Connection failed\n");
       vibes_double_pulse();
       //printf("BT disconnected");
    }
    Bluetooth_Redraw();
+   Network_Request();
 }
 
 
 
 void Bluetooth_Init()
 {
-   m_b_Bluetooth_LastConnectionState = true;
+   if (m_b_Debug)
+         printf("[BT] Init\n");
+   m_b_Bluetooth_ConnectionState = true;
    m_Bluetooth_Image_Layer = NULL;
    m_Bluetooth_Image_Layer = GetBluetoothImageLayer();
    Bluetooth_Handle(connection_service_peek_pebble_app_connection());
@@ -58,6 +70,8 @@ void Bluetooth_Init()
 
 void Bluetooth_DeInit()
 {
+   if (m_b_Debug)
+         printf("[BT] Deinit\n");
    connection_service_unsubscribe();
    if (m_Bluetooth_Image)
    {

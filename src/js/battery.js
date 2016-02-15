@@ -22,6 +22,8 @@ function Battery_InitSuccess(batteryManager)
 {
    // Assign batteryManager to globally 
    //   available `battery` variable.
+   if (m_b_Debug)
+         console.log("[JS:BATT] Init OK");
    m_Battery = batteryManager;
    m_b_Battery_Availiable = true;
    Battery_GetData();
@@ -29,11 +31,15 @@ function Battery_InitSuccess(batteryManager)
 
 function Battery_InitFailure()
 {
+   if (m_b_Debug)
+         console.log("[JS:BATT] Init failed");
    m_b_Battery_Availiable = false;
 }
 
 function Battery_Init()
 {
+   if (m_b_Debug)
+         console.log("[JS:BATT] Init...");
    if("getBattery" in navigator) 
    {
       // Request battery manager object.
@@ -42,16 +48,17 @@ function Battery_Init()
    else 
    {
       // API is not supported, fail gracefully.
-      console.log("Battery API not supported!");
+      console.log("[JS:BATT] Battery API not supported!");
    }
 }
 
 function Battery_GetData()
 {   
-   //console.log("Getting battery info...");
-   //navigator.getBattery().level;
    if (m_b_Battery_Availiable && m_b_MessagingAvailiable)
    {
+      if (m_b_Debug)
+         console.log("[JS:BATT] Getting battery data");
+      
       var charging = 0;
       if (m_Battery.charging)
          charging = 1;

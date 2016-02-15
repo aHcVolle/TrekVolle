@@ -1,28 +1,38 @@
 #include "network.h"
 
-BitmapLayer* m_Network_Image_Layer = NULL;
-GBitmap* m_Network_Image;
 
-bool m_b_Network_LastConnectionState;
+BitmapLayer* m_Network_Image_Layer = NULL;
+GBitmap* m_Network_Image = NULL;
 
 void Network_Request()
 {
-      // Begin dictionary
-     DictionaryIterator *iter;
-     app_message_outbox_begin(&iter);
+   if (!m_b_Bluetooth_ConnectionState)
+   {
+      m_b_Network_ConnectionState = false;
+      Network_Redraw();
+      return;
+   }
+     
+   if (m_b_Debug)
+         printf("[NET] Connection request\n");
    
-     // Add a key-value pair
-     dict_write_uint8(iter, KEY_ONLINE, 0);
-   
-     // Send the message!
-     app_message_outbox_send();
+   // Begin dictionary
+   DictionaryIterator *iter;
+   app_message_outbox_begin(&iter);
+
+   // Add a key-value pair
+   dict_write_uint8(iter, KEY_ONLINE, 0);
+
+   // Send the message!
+   app_message_outbox_send();
 }
 
 void Network_Redraw()
 {
-  
+   if (m_b_Debug)
+         printf("[NET] Redrawing\n");
    GColor Color;
-   if (m_b_Network_LastConnectionState)
+   if (m_b_Network_ConnectionState)
    {
       Color = Color_Image;
    }
@@ -37,18 +47,25 @@ void Network_Redraw()
 
 void Network_Handle_Reply(Tuple *network_tuple)
 {
-   bool b_Connected = (bool)network_tuple->value->int32;
+   bool b_ConnectionState = (bool)network_tuple->value->int32;
    
-   if (m_b_Network_LastConnectionState == b_Connected)
+   if (m_b_Network_ConnectionState == b_ConnectionState)
       return;
    
-   m_b_Network_LastConnectionState = b_Connected;
-   if (b_Connected && m_b_Network_VibrationEnabled)
+   if (m_b_Debug)
+         printf("[NET] Handler\n");
+   
+   m_b_Network_ConnectionState = b_ConnectionState;
+   if (m_b_Network_ConnectionState && m_b_Network_VibrationEnabled)
    {
+      if (m_b_Debug)
+         printf("[NET] Handler: Connection OK\n");
       vibes_short_pulse();  
    }
    else if (m_b_Network_VibrationEnabled)
    {
+      if (m_b_Debug)
+         printf("[NET] Handler: Connection failed\n");
       vibes_double_pulse();
    }
    
@@ -57,7 +74,9 @@ void Network_Handle_Reply(Tuple *network_tuple)
 
 void Network_Init()
 {
-   m_b_Network_LastConnectionState = true;
+   if (m_b_Debug)
+         printf("[NET] Init\n");
+   m_b_Network_ConnectionState = true;
    m_Network_Image = NULL;
    m_Network_Image_Layer = GetNetworkImageLayer();
    Network_Redraw();
@@ -65,6 +84,8 @@ void Network_Init()
 
 void Network_DeInit()
 {
+   if (m_b_Debug)
+         printf("[NET] Deinit\n");
    if (m_Network_Image)
    {
       gbitmap_destroy(m_Network_Image);

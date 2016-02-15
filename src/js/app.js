@@ -1,11 +1,12 @@
 var m_b_MessagingAvailiable = false;
+var m_b_Debug = true;
 
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
 {
    m_b_MessagingAvailiable = true;
-   // Get the initial online status
-   //getOnline();
+   if (m_b_Debug)
+         console.log("[JS:APP] JS ready...");
    
    Battery_Init();
    
@@ -18,16 +19,20 @@ Pebble.addEventListener('appmessage',function(e)
 {
    if ('KEY_TEMPERATURE' in e.payload)
    {
-      //console.log("Getting Weather info...");
+      if (m_b_Debug)
+         console.log("[JS:APP] Weather info requested...");
       Weather_GetData();
    }
    else if ('KEY_ONLINE' in e.payload)
    {
-      //console.log("Getting Online info...");
+      if (m_b_Debug)
+         console.log("[JS:APP] Online info requested...");
       Network_GetData();
    }
    else if ('KEY_BATTERY_CHARGE' in e.payload)
    {
+      if (m_b_Debug)
+         console.log("[JS:APP] Battery info requested...");
       Battery_GetData();
    }
    
@@ -36,7 +41,8 @@ Pebble.addEventListener('appmessage',function(e)
 
 var xhrRequest = function (url, type, callback) 
 {
-  
+  if (m_b_Debug)
+     console.log("[JS:APP] xhr request: " + url );
   var xhr = new XMLHttpRequest();
   xhr.onload = function () 
      {
