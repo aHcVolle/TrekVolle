@@ -280,6 +280,12 @@ input[type=date] {
   position: absolute;
   color: #F7F7F7 !important; }
 
+.item-number {
+  position: absolute;
+  color: #000000;
+  right: 10px;}
+
+
 .item-styled-date, .item-styled-time {
   position: absolute;
   top: 13px;
