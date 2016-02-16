@@ -283,8 +283,14 @@ input[type=date] {
 .item-number {
   position: absolute;
   color: #000000;
-  right: 10px;}
+  right: 10px;
+  font-size: 1em; }
 
+.item-text {
+  position: absolute;
+  color: #000000;
+  right: 10px;
+  font-size: 1em;}
 
 .item-styled-date, .item-styled-time {
   position: absolute;
