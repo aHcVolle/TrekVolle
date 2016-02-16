@@ -1,4 +1,4 @@
-var ConfigVersion = '1_2';
+var ConfigVersion = '1_3';
 
 
 Pebble.addEventListener('showConfiguration', function() 
@@ -28,6 +28,7 @@ Pebble.addEventListener('webviewclosed', function(e)
    var Weather_TemperatureCelcius = configData.Weather_TemperatureCelcius;
    var Weather_Refreshtime = configData.Weather_Refreshtime;
    var Weather_RetryUpdate = configData.Weather_RetryUpdate;
+   var Weather_Location = configData.Weather_Location;
    
    var Clock_Clock24h = configData.Clock_Clock24h;
    var Clock_Sleep = configData.Clock_Sleep;
@@ -51,7 +52,15 @@ Pebble.addEventListener('webviewclosed', function(e)
    var i_Weather_TemperatureCelcius = (Weather_TemperatureCelcius === 'true') ? 1 : 0;
    var i_Weather_Refreshtime = parseInt(Weather_Refreshtime, 10);
    var i_Weather_RetryUpdate = (Weather_RetryUpdate === 'true') ? 1 : 0;
-     
+   var b_Weather_Location_Changed = false;
+   if (Weather_Location != m_s_Weather_Location_Name)
+   {
+      b_Weather_Location_Changed = true;
+      Weather_SaveData(Weather_Location);
+      Weather_LoadData();
+   }
+   
+   
    var i_Clock_Clock24h = (Clock_Clock24h === 'true') ? 1 : 0;
    var i_Clock_Sleep = (Clock_Sleep === 'true') ? 1 : 0;
    var i_Clock_Datestyle_ddmmyy = (Clock_Datestyle_ddmmyy === 'true') ? 1 : 0;
@@ -89,6 +98,7 @@ Pebble.addEventListener('webviewclosed', function(e)
       console.log("[JS:CONF] Config: i_Weather_TemperatureCelcius "+i_Weather_TemperatureCelcius.toString());
       console.log("[JS:CONF] Config: i_Weather_Refreshtime "+i_Weather_Refreshtime.toString());
       console.log("[JS:CONF] Config: i_Weather_RetryUpdate "+i_Weather_RetryUpdate.toString());
+      console.log("[JS:CONF] Config:   Weather_Location "+m_s_Weather_Location_Name);
       
       console.log("[JS:CONF] Config: i_Clock_Clock24h "+i_Clock_Clock24h.toString());
       console.log("[JS:CONF] Config: i_Clock_Sleep "+i_Clock_Sleep.toString());
@@ -126,4 +136,8 @@ Pebble.addEventListener('webviewclosed', function(e)
 
    // Send to watchapp
    Pebble.sendAppMessage(dictionary, function(){}, function(){});
+   
+   // Get weather data if location changed
+   if (b_Weather_Location_Changed)
+      Weather_GetData();
 });
