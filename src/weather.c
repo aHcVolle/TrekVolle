@@ -11,8 +11,8 @@ static char m_s_Weather_LocationBuffer[32];
 static char m_s_Weather_TextBuffer[32];
 
 // Used variables
-int m_i_Weather_WeatherImage;
-int m_i_Weather_Temperature;
+int m_i_Weather_WeatherImage = -1;
+int m_i_Weather_Temperature = 999;
 
 // Redraw the weather text
 void Weather_RedrawText()

@@ -15,8 +15,8 @@ struct BatteryData
 };
 
 // Battery vars
-struct BatteryData m_BatteryPhone;
-struct BatteryData m_BatteryPebble;
+struct BatteryData m_BatteryPhone = {NULL,NULL,NULL,999,false,true,{0,0,0,0,0},{0},-1};
+struct BatteryData m_BatteryPebble = {NULL,NULL,NULL,999,false,true,{0,0,0,0,0},{0},-1};
 
 // Redraw an battery image
 void Battery_RedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
