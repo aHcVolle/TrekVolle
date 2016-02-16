@@ -2,7 +2,7 @@
 <html>
   <head>
   <title>TrekVolle Configuration</title>
-  <link rel='stylesheet' type='text/css' href='css/slate.css'>
+  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
   <script src='js/slate.js'></script>
   <style>
   .title {
@@ -14,6 +14,18 @@
     color: #888888;
     text-align: center;
   }
+  .item-number {
+  position: absolute;
+  color: #000000;
+  right: 10px;
+  font-size: 1em; }
+
+.item-text {
+  position: absolute;
+  color: #000000;
+  right: 10px;
+  font-size: 1em;}
+
   </style>
   </head>
 
@@ -113,7 +125,7 @@
         Check if you want to retry the weather update if it failed before.
       </div>
 	  
-	  <div class='item-container-content'>
+      <div class='item-container-content'>
         <label class='item'>
           Weather refresh time
           <input id='Weather_Refreshtime_Input' type='number' class='item-number' min='1' max='99'>
@@ -130,7 +142,7 @@
         </label>
       </div>
       <div class='item-container-footer'>
-        Enter your city id (ex: 2172797) or city name (ex: London or London,uk). Leave blank to use geolocation.
+        Enter your city id (eg: 2172797) or city name (eg: London or London,uk). Leave blank to use geolocation.
       </div>
 	  
       <div class='item-container-content'>
@@ -153,16 +165,16 @@
         This disables all vibrations from 00:00 to 07:00.
       </div>
 	  
-	  <div class='item-container-content'>
+      <div class='item-container-content'>
         <label class='item'>
           Date style DD.MM.YY
           <input id='Clock_Datestyle_ddmmyy_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
         </label>
-		<label class='item'>
+	<label class='item'>
           Date style YY-MM-DD
           <input id='Clock_Datestyle_yymmdd_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
         </label>
-		<label class='item'>
+	<label class='item'>
           Date style MM/DD/YY
           <input id='Clock_Datestyle_mmddyy_Radio' type='radio' class='item-styled-radio' name='clock_datestyle'>
         </label>
@@ -244,6 +256,7 @@
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
 		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
+		var Weather_Location_Input = document.getElementById('Weather_Location_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
 		var Clock_Sleep_Checkbox = document.getElementById('Clock_Sleep_Checkbox');
@@ -267,6 +280,7 @@
 		localStorage['Weather_TemperatureCelcius'] = Weather_TemperatureCelcius_Checkbox.checked.toString();
 		localStorage['Weather_Refreshtime'] = Weather_Refreshtime_Input.value;
 		localStorage['Weather_RetryUpdate'] = Weather_RetryUpdate_Checkbox.checked.toString();
+		localStorage['Weather_Location'] = Weather_Location_Input.value;
 		
 		localStorage['Clock_Clock24h'] = Clock_Clock24h_Checkbox.checked.toString();
 		localStorage['Clock_Sleep'] = Clock_Sleep_Checkbox.checked.toString();
@@ -293,6 +307,7 @@
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
 		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
+		var Weather_Location_Input = document.getElementById('Weather_Location_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
 		var Clock_Sleep_Checkbox = document.getElementById('Clock_Sleep_Checkbox');
@@ -318,6 +333,7 @@
 			'Weather_TemperatureCelcius'     : Weather_TemperatureCelcius_Checkbox.checked.toString(),
 			'Weather_Refreshtime' : Weather_Refreshtime_Input.value,
 			'Weather_RetryUpdate' : Weather_RetryUpdate_Checkbox.checked.toString(),
+			'Weather_Location' : Weather_Location_Input.value,
 			
 			'Clock_Clock24h': Clock_Clock24h_Checkbox.checked.toString(),
 			'Clock_Sleep': Clock_Sleep_Checkbox.checked.toString(),
@@ -353,6 +369,7 @@
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
 		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
+		var Weather_Location_Input = document.getElementById('Weather_Location_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
 		var Clock_Sleep_Checkbox = document.getElementById('Clock_Sleep_Checkbox');
@@ -377,6 +394,7 @@
 		Weather_TemperatureCelcius_Checkbox.checked = true;
 		Weather_Refreshtime_Input.value = "30";
 		Weather_RetryUpdate_Checkbox.checked = true;
+		Weather_Location_Input.value = "";
 		
 		Clock_Clock24h_Checkbox.checked = true;
 		Clock_Sleep_Checkbox.checked = true;
@@ -407,6 +425,7 @@
 		var Weather_TemperatureCelcius_Checkbox = document.getElementById('Weather_TemperatureCelcius_Checkbox');
 		var Weather_RetryUpdate_Checkbox = document.getElementById('Weather_RetryUpdate_Checkbox');
 		var Weather_Refreshtime_Input = document.getElementById('Weather_Refreshtime_Input');
+		var Weather_Location_Input = document.getElementById('Weather_Location_Input');
 		
 		var Clock_Clock24h_Checkbox = document.getElementById('Clock_Clock24h_Checkbox');
 		var Clock_Sleep_Checkbox = document.getElementById('Clock_Sleep_Checkbox');
@@ -438,9 +457,11 @@
 		if(localStorage['Weather_TemperatureCelcius']) 
 			Weather_TemperatureCelcius_Checkbox.checked = (localStorage['Weather_TemperatureCelcius'] === 'true');
 		if(localStorage['Weather_Refreshtime']) 
-			Weather_Refreshtime_Input.value = localStorage['Weather_Refreshtime'];			
+			Weather_Refreshtime_Input.value = localStorage['Weather_Refreshtime'];
 		if(localStorage['Weather_RetryUpdate']) 
 			Weather_RetryUpdate_Checkbox.checked = (localStorage['Weather_RetryUpdate'] === 'true');
+                if(localStorage['Weather_Location']) 
+			Weather_Location_Input.value = localStorage['Weather_Location'];
 		
 			
 		if(localStorage['Clock_Clock24h']) 
