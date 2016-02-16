@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+// Bitmaps to store the loaded images
 GBitmap* m_Background_Image;
 GBitmap* m_Steps_Image;
 
@@ -170,20 +171,27 @@ static void handle_window_unload(Window* window)
   destroy_ui();
 }
 
+// Display the main window
 void show_mainwindow(void) 
 {
-  initialise_ui();
-  LoadConfigFromStorage();
-  
-  window_set_window_handlers(s_window, (WindowHandlers) {
-    .unload = handle_window_unload,
-  });
-  window_stack_push(s_window, true);
+   // Init theui
+   initialise_ui();
+   // Load stored values
+   LoadConfigFromStorage();
+
+   window_set_window_handlers(s_window, (WindowHandlers) {
+      .unload = handle_window_unload,
+   });
+   window_stack_push(s_window, true);
 }
 
+// Hide the main window
 void hide_mainwindow(void) 
 {
+   // Save vars to the storage
    SaveConfigToStorage();
+   
+   // Kill all ze thingz!
    if (m_Background_Image)
    {
       gbitmap_destroy(m_Background_Image);
@@ -195,34 +203,45 @@ void hide_mainwindow(void)
       gbitmap_destroy(m_Steps_Image);
       m_Steps_Image = NULL;
    }      
-      
-  window_stack_remove(s_window, true);
+   // Kill the window
+   window_stack_remove(s_window, true);
 }
 
+// Redraw the specified image
 void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color)
 {
+   // Get out of here if the image layer is not initialized
    if (l_Image == NULL)
       return;
-   
+   // Clear the image layer
    bitmap_layer_set_bitmap(l_Image, NULL);
+   
+   // Clear the image storage
    if (Bitmap)
    {
       gbitmap_destroy(Bitmap);
       Bitmap = NULL;
    }
-   Bitmap = gbitmap_create_with_resource(ImageID);
-   replace_gbitmap_color(GColorWhite, Color, Bitmap, NULL);
-   replace_gbitmap_color(GColorBlack,  Color_Window, Bitmap, NULL);
-   bitmap_layer_set_bitmap(l_Image, Bitmap);
    
+   // Create the image storage
+   Bitmap = gbitmap_create_with_resource(ImageID);
+   // Replace white with the image color
+   replace_gbitmap_color(GColorWhite, Color, Bitmap, NULL);
+   // Replace black with the watchface background color
+   replace_gbitmap_color(GColorBlack,  Color_Window, Bitmap, NULL);
+   // Set the image to the layer
+   bitmap_layer_set_bitmap(l_Image, Bitmap);
+   // Let the layer be redrawn
    layer_mark_dirty(bitmap_layer_get_layer(l_Image));
 }
 
-
+// Set all the text's color
 void Color_SetTextColor()
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[MAIN] Setting text color");
+   // Set the text color
    text_layer_set_text_color(Layer_Time_Text, Color_Text);
    layer_mark_dirty(text_layer_get_layer(Layer_Time_Text));
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
@@ -239,24 +258,31 @@ void Color_SetTextColor()
    layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
 }
 
+// Set all the images color
 void Color_SetImageColor()
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[MAIN] Setting image color");
+   // Redraw all the images
    Battery_RedrawAll();
    
    Redraw_Image(Layer_Steps_Image,m_Steps_Image,RESOURCE_ID_IMAGE_STEPS,Color_Image);
    Redraw_Image(Layer_Background_Image,m_Background_Image,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }
 
+// Display the phone battery's image
 void show_PhoneBattery(bool show)
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[MAIN] Setting phone battery display");
+   // Set the layers hidde attribute
    layer_set_hidden((Layer *)Layer_Battery_Text_Phone, !show);
    layer_set_hidden((Layer *)Layer_Battery_Image_Phone, !show);
 }
 
+// Return all the layer's pointers
 TextLayer* GetTimeTextLayer()
 {   return Layer_Time_Text;}
 TextLayer* GetWeatherTextLayer()

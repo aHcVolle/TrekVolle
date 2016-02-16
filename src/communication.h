@@ -1,11 +1,13 @@
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
+
 #include <pebble.h>
 #include "weather.h"
 #include "network.h"
 #include "battery.h"
 #include "configuration.h"
 
+// Lots of defines....
 #define KEY_TEMPERATURE 0
 #define KEY_CONDITIONS 1
 #define KEY_ICON 2
@@ -36,12 +38,8 @@
 
 #define KEY_BLUETOOTH_VIBRATIONENABLED 18
 
-
-
-
+// Functions used in other files 
 void Communication_Init();
 void Communication_DeInit();
-
-
 
 #endif

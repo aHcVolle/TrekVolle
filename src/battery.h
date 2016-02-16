@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "communication.h"
 
+// Functions used in other files
 void Battery_Init();
 void Battery_Deinit();
 void Battery_RedrawAll();

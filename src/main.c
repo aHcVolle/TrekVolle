@@ -10,6 +10,7 @@
 #include "acceleration.h"
 #include "configuration.h"
 
+// Init all the modules
 static void init() 
 {
    m_b_Debug = false;
@@ -45,6 +46,7 @@ static void init()
    Acceleration_Init();
 }
 
+// Deinit all the functions
 static void deinit() 
 {
    Weather_DeInit();
@@ -59,8 +61,7 @@ static void deinit()
    hide_mainwindow();
 }
 
-
-
+// We start here
 int main(void) 
 {
    init();

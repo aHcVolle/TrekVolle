@@ -6,9 +6,11 @@
 #include "configuration.h"
 #include "network.h"
 
+// Vars used int other files
 bool m_b_Bluetooth_VibrationEnabled;
 bool m_b_Bluetooth_ConnectionState;
 
+// Functions used in other files
 void Bluetooth_Init();
 void Bluetooth_DeInit();
 void Bluetooth_Redraw();

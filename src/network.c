@@ -1,18 +1,21 @@
 #include "network.h"
 
-
+// Variables to store the layers
 BitmapLayer* m_Network_Image_Layer = NULL;
 GBitmap* m_Network_Image = NULL;
 
+// Request a net work check
 void Network_Request()
 {
+   // But only if we have a bluetooth connection
    if (!m_b_Bluetooth_ConnectionState)
    {
       m_b_Network_ConnectionState = false;
       Network_Redraw();
       return;
    }
-     
+   
+   // Debug printout
    if (m_b_Debug)
          printf("[NET] Connection request");
    
@@ -27,10 +30,14 @@ void Network_Request()
    app_message_outbox_send();
 }
 
+// Redraw the network image
 void Network_Redraw()
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[NET] Redrawing");
+   
+   // We're going to store the color here
    GColor Color;
    if (m_b_Network_ConnectionState)
    {
@@ -41,21 +48,29 @@ void Network_Redraw()
       Color = Color_Error;
    }     
    
+   // Redraw the image
    Redraw_Image(m_Network_Image_Layer,m_Network_Image,RESOURCE_ID_IMAGE_NETWORK,Color);
    
 }
 
+// Handle network updates here
 void Network_Handle_Reply(Tuple *network_tuple)
 {
+   // Save the net network state
    bool b_ConnectionState = (bool)network_tuple->value->int32;
    
+   // Get out of here if there was no change
    if (m_b_Network_ConnectionState == b_ConnectionState)
       return;
    
+   // Debug printout
    if (m_b_Debug)
          printf("[NET] Handler");
    
+   // Save the new state
    m_b_Network_ConnectionState = b_ConnectionState;
+   
+   // Vibrate if the user wants us to
    if (m_b_Network_ConnectionState && m_b_Network_VibrationEnabled)
    {
       if (m_b_Debug)
@@ -69,23 +84,30 @@ void Network_Handle_Reply(Tuple *network_tuple)
       vibes_double_pulse();
    }
    
-  Network_Redraw();
-}
-
-void Network_Init()
-{
-   if (m_b_Debug)
-         printf("[NET] Init");
-   m_b_Network_ConnectionState = true;
-   m_Network_Image = NULL;
-   m_Network_Image_Layer = GetNetworkImageLayer();
+   // Redraw the image
    Network_Redraw();
 }
 
+// Init the network variables
+void Network_Init()
+{
+   // Debug printout
+   if (m_b_Debug)
+         printf("[NET] Init");
+   // Init the vars
+   m_b_Network_ConnectionState = true;
+   m_Network_Image = NULL;
+   m_Network_Image_Layer = GetNetworkImageLayer();
+   // Redraw the image
+   Network_Redraw();
+}
+
+// Deinitthe variables
 void Network_DeInit()
 {
    if (m_b_Debug)
          printf("[NET] Deinit");
+   // Kill all ze thingz!
    if (m_Network_Image)
    {
       gbitmap_destroy(m_Network_Image);

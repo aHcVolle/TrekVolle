@@ -1,13 +1,16 @@
 #include "configuration.h"
 
+// Load the stored vars from the non volatile storage
 void LoadConfigFromStorage()
 {
-   
+   // First load the default variables
    LoadDefaultConfig();
    
+   // Debug printout
    if (m_b_Debug)
          printf("[CONF] Loading");
    
+   // And now load the saved vars
    if (persist_exists(KEY_COLOR_BACKGROUND)) 
    {
      Color_Background.argb = persist_read_int(KEY_COLOR_BACKGROUND);
@@ -76,11 +79,14 @@ void LoadConfigFromStorage()
    
 }
 
+// Save all the variables to the storage
 void SaveConfigToStorage()
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[CONF] Saving");
    
+   // And save
    persist_write_int(KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
    persist_write_int(KEY_COLOR_TEXT, (int)Color_Text.argb);
    persist_write_int(KEY_COLOR_IMAGE, (int)Color_Image.argb);
@@ -104,11 +110,14 @@ void SaveConfigToStorage()
    
 }
 
+// Init all variables to their default value
 void LoadDefaultConfig()
 {
+   // Debug printout
    if (m_b_Debug)
          printf("[CONF] Setting defaults");
    
+   // Set the vars
    Color_Background = GColorBlueMoon;
    Color_Text = GColorSunsetOrange;
    Color_Image = GColorSunsetOrange;
