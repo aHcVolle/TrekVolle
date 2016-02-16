@@ -14,6 +14,8 @@ Features:
 - Customizable colors
 - Display temperature in °C or °F
 - Display time in 24H / 12H
+- Customizable vibration options
+- Sleep mode
 
 Usage:
 
@@ -22,8 +24,7 @@ Usage:
 - If the phone's battery is displayed depends on your phone. Its working on android cm-12.1, not tested anywhere else.
 
 ToDo:
-- Customize network refresh time
-- Customize date display (dd-mm-yy / yy-mm-dd / mm-dd-yy)
+- Nothing todo right now
 
 Links:
 - Discussion: [Pebble forums] (https://forums.getpebble.com/discussion/31262/watchface-trekvolle#latest)
