@@ -47,7 +47,7 @@ var xhrRequest = function (url, type, callback)
      {
        callback(this.responseText);
      };  
-  xhr.timeout = 5000; 
+  xhr.timeout = 30000; 
   xhr.ontimeout = function () { Network_SendReply(false); }; 
   xhr.onerror = function () { Network_SendReply(false); };  
   xhr.open(type, url);
