@@ -28,6 +28,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    
    Tuple *Clock_Clock24h_tuple = dict_find(iterator,KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,KEY_CLOCK_DATESTYLE);
+   Tuple *Clock_Sleep_tuple = dict_find(iterator,KEY_CLOCK_SLEEP);
    
    Tuple *Network_Refreshtime_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);   
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
@@ -131,6 +132,11 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    {
       m_i_Clock_DateStyle = (int)Clock_DateStyle_tuple->value->int32;
       b_ClockChanged = true;
+   }
+   // The sleep mode was changed
+   if (Clock_Sleep_tuple)
+   {
+      m_b_Clock_Sleep = (bool)Clock_Sleep_tuple->value->int32;
    }
    
    // If there was a change in the clock 

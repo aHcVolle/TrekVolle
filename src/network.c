@@ -70,14 +70,22 @@ void Network_Handle_Reply(Tuple *network_tuple)
    // Save the new state
    m_b_Network_ConnectionState = b_ConnectionState;
    
+   bool b_Vibrate = m_b_Network_VibrationEnabled;
+   if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
+   {
+      if (m_b_Debug && b_Vibrate)
+         printf("[NET] Blocked vibration due to sleep mode");
+      b_Vibrate = false;
+   }
+   
    // Vibrate if the user wants us to
-   if (m_b_Network_ConnectionState && m_b_Network_VibrationEnabled)
+   if (m_b_Network_ConnectionState && b_Vibrate)
    {
       if (m_b_Debug)
          printf("[NET] Handler: Connection OK");
       vibes_short_pulse();  
    }
-   else if (m_b_Network_VibrationEnabled)
+   else if (b_Vibrate)
    {
       if (m_b_Debug)
          printf("[NET] Handler: Connection failed");

@@ -79,6 +79,16 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
       Weather_Request();
       m_i_Weather_Counter = 0;     
    }   
+   
+   // Check the sleep mode
+   if ((tick_time->tm_hour >= 0) && (tick_time->tm_hour < 7))
+   {
+      m_b_Clock_SleepEnabled = true;
+   }
+   else
+   {
+      m_b_Clock_SleepEnabled = false;
+   }
 }
 
 // Init the used variables and register with the time service

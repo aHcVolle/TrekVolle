@@ -1,5 +1,5 @@
 var m_b_MessagingAvailable = false;
-var m_b_Debug = false;
+var m_b_Debug = true;
 
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
@@ -44,12 +44,22 @@ var xhrRequest = function (url, type, callback)
      console.log("[JS:APP] xhr request: " + url );
   var xhr = new XMLHttpRequest();
   xhr.onload = function () 
-     {
-       callback(this.responseText);
-     };  
+  {
+     callback(this.responseText);
+  };  
   xhr.timeout = 30000; 
-  xhr.ontimeout = function () { Network_SendReply(false); }; 
-  xhr.onerror = function () { Network_SendReply(false); };  
+  xhr.ontimeout = function () 
+  {   
+     if (m_b_Debug)
+         console.log("[JS:APP] Request timed out...");
+     Network_SendReply(false);
+  }; 
+  xhr.onerror = function () 
+  { 
+     if (m_b_Debug)
+         console.log("[JS:APP] Request failed...");   
+     Network_SendReply(false); 
+  };  
   xhr.open(type, url);
   xhr.send();
    

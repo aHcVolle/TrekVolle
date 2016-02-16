@@ -16,6 +16,9 @@
 int m_i_Clock_DateStyle;
 bool m_b_Clock_Clock24h;
 
+bool m_b_Clock_Sleep;
+bool m_b_Clock_SleepEnabled;
+
 // Functions used in other files
 void Time_Redraw();
 void Time_Init();

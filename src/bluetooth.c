@@ -44,15 +44,24 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    // Save the current state
    m_b_Bluetooth_ConnectionState = b_ConnectionState;
    
+   bool b_Vibrate = m_b_Bluetooth_VibrationEnabled;
+   if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
+   {
+      if (m_b_Debug && b_Vibrate)
+         printf("[BT] Blocked vibration due to sleep mode");
+      b_Vibrate = false;
+   }
+      
+   
    // Vibrate if the option is enabled
-   if (b_ConnectionState && m_b_Bluetooth_VibrationEnabled)
+   if (b_ConnectionState && b_Vibrate)
    {
       if (m_b_Debug)
          printf("[BT] BT handler: Connection OK");
       vibes_short_pulse();
       //printf("BT connected");
    }
-   else if (m_b_Bluetooth_VibrationEnabled)
+   else if (b_Vibrate)
    {
       if (m_b_Debug)
          printf("[BT] BT handler: Connection failed");

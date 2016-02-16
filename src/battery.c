@@ -19,7 +19,7 @@ struct BatteryData m_BatteryPhone;
 struct BatteryData m_BatteryPebble;
 
 // Redraw an battery image
-void BatteryRedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
+void Battery_RedrawImage(struct BatteryData* Battery,int Image_ID,GColor Color)
 {
    if (m_b_Debug)
       printf("[BATT] Redrawing battery image");
@@ -91,7 +91,7 @@ void Battery_Redraw(struct BatteryData* Battery)
          printf("[BATT] Redrawing battery image");
       Battery->c_Color = BatteryColor;
       Battery->i_ImageID = i_ImageID;
-      BatteryRedrawImage(Battery,Battery->i_ImageID,Battery->c_Color);
+      Battery_RedrawImage(Battery,Battery->i_ImageID,Battery->c_Color);
    }
 
    // Cap the displayed text at 3 chars
