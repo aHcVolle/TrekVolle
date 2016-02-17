@@ -1,7 +1,7 @@
 var m_b_MessagingAvailable = false;
 var m_b_Debug = true;
 
-
+// dummytext
 // Set the used OpenWeatherMap.org API key
 // Please use your own if you copy this code
 var m_s_Weather_APIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d'; 
