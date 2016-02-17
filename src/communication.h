@@ -40,6 +40,7 @@
 #define KEY_BLUETOOTH_VIBRATIONENABLED 18
 
 // Functions used in other files 
+void Communication_Send(int i_MessageID);
 void Communication_Init();
 void Communication_DeInit();
 

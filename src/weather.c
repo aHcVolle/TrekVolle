@@ -162,15 +162,9 @@ void Weather_Request()
    // Debug printout
    if (m_b_Debug)
          printf("[WTHR] Request");
-   // Begin dictionary
-   DictionaryIterator *iter;
-   app_message_outbox_begin(&iter);
    
-   // Add a key-value pair
-   dict_write_uint8(iter, KEY_TEMPERATURE, 0);
-   
-   // Send the message!
-   app_message_outbox_send();
+   // Send Request
+   Communication_Send(KEY_TEMPERATURE);
 }
 
 // Convert an image name to a resource id

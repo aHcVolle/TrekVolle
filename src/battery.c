@@ -35,13 +35,8 @@ void Battery_RequestPhone()
    
    if (m_b_Debug)
       printf("[BATT] Phone battery requested");
-   // Begin a dictionary
-   DictionaryIterator *iter;
-   app_message_outbox_begin(&iter);
-   // Add a key-value pair
-   dict_write_uint8(iter, KEY_BATTERY_CHARGE, 0);
-   // Send the message!
-   app_message_outbox_send();
+   // Send the request
+   Communication_Send(KEY_BATTERY_CHARGE);
 }
 
 // Redraw all battery related things

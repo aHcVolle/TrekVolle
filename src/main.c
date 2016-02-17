@@ -13,7 +13,7 @@
 // Init all the modules
 static void init() 
 {
-   m_b_Debug = false;
+   m_b_Debug = true;
    
    // UI 
    show_mainwindow();

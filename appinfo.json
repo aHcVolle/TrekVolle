@@ -30,7 +30,7 @@
         "health"
     ],
     "companyName": "volle",
-    "enableMultiJS": false,
+    "enableMultiJS": true,
     "longName": "TrekVolle",
     "projectType": "native",
     "resources": {

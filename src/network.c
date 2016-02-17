@@ -19,15 +19,8 @@ void Network_Request()
    if (m_b_Debug)
          printf("[NET] Connection request");
    
-   // Begin dictionary
-   DictionaryIterator *iter;
-   app_message_outbox_begin(&iter);
-
-   // Add a key-value pair
-   dict_write_uint8(iter, KEY_ONLINE, 0);
-
-   // Send the message!
-   app_message_outbox_send();
+   // Send the request
+   Communication_Send(KEY_ONLINE);
 }
 
 // Redraw the network image

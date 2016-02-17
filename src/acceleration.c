@@ -21,7 +21,7 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
 void Acceleration_Init(void)
 {
    if (m_b_Debug)
-         printf("[ACC] Init");
+         printf("[ACC] Init"); 
    accel_tap_service_subscribe(Acceleration_Handle);
 }
 

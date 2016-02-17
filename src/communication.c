@@ -163,6 +163,19 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
 
 }
 
+void Communication_Send(int i_MessageID)
+{
+   // Begin dictionary
+   DictionaryIterator *iter;
+   app_message_outbox_begin(&iter);
+   
+   // Add a key-value pair
+   dict_write_uint8(iter,i_MessageID , 0);
+   
+   // Send the message!
+   app_message_outbox_send();
+}
+
 // Nothing to see here...
 static void Communication_InboxDropped(AppMessageResult reason, void *context) {}
 static void Communication_OutboxFailed(DictionaryIterator *iterator, AppMessageResult reason, void *context) {}
