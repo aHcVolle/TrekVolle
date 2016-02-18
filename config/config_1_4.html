@@ -354,7 +354,7 @@
 		return options;
 	}
 	
-	function SetDefaults()
+	function SetDefaults(colortype)
 	{
 		console.log('Defaults: loading');
 		
@@ -382,14 +382,27 @@
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
 		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
+		if (colortype == "color")
+		{
+			Color_Background_Picker.value = "0x0055FF";
+			Color_Text_Picker.value       = "0xFF5555";
+			Color_Image_Picker.value      = "0xFF5555";
+			Color_Window_Picker.value     = "0x000000";
+			Color_Charging_Picker.value   = "0x00FF00";
+			Color_Error_Picker.value      = "0xFF0000";
+			Color_BatteryLow_Picker.value = "0xFF0000";
+		}
+		else
+		{
+			Color_Background_Picker.value = "0xFFFFFF";
+			Color_Text_Picker.value       = "0xFFFFFF";
+			Color_Image_Picker.value      = "0xFFFFFF";
+			Color_Window_Picker.value     = "0x000000";
+			Color_Charging_Picker.value   = "0xFFFFFF";
+			Color_Error_Picker.value      = "0x000000";
+			Color_BatteryLow_Picker.value = "0xFFFFFF";
+		}
 		
-		Color_Background_Picker.value = "0x0055FF";
-		Color_Text_Picker.value       = "0xFF5555";
-		Color_Image_Picker.value      = "0xFF5555";
-		Color_Window_Picker.value     = "0x000000";
-		Color_Charging_Picker.value   = "0x00FF00";
-		Color_Error_Picker.value      = "0xFF0000";
-		Color_BatteryLow_Picker.value = "0xFF0000";
 		
 		Weather_TemperatureCelcius_Checkbox.checked = true;
 		Weather_Refreshtime_Input.value = "30";
@@ -534,7 +547,8 @@
 	  function main() 
 	  {
 		console.log('main: Starting');
-		SetDefaults();
+		var colortype = getQueryParam("color", "color");
+		SetDefaults(colortype);
 		LoadData();
 		// Load any previously saved configuration, if available
 		//Reload();
