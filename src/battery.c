@@ -21,6 +21,10 @@ void Battery_RequestPhone()
    if (!m_b_Bluetooth_ConnectionState)
       return;
    
+   // Only do this if the communication is already initialized
+   if (!m_b_CommunicationIsInit)
+      return;
+   
    if (m_b_Debug)
       printf("[BATT][Battery_RequestPhone] Phone battery requested");
    // Send the request

@@ -1,9 +1,8 @@
 
-var ConfigVersion = '1_4';
-
-
 Pebble.addEventListener('showConfiguration', function() 
 {
+   var ConfigVersion = '1_4';
+   
    var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
    // var url = 'https://www.vllmr.eu/pebble/config/index.html';
    

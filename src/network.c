@@ -11,6 +11,10 @@ void Network_Request()
       return;
    }
    
+   // Only do this if the communication is already initialized
+   if (!m_b_CommunicationIsInit)
+      return;
+   
    // Debug printout
    if (m_b_Debug)
          printf("[NET][Network_Request] Connection request");

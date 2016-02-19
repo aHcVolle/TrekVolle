@@ -23,4 +23,5 @@ void Battery_Init();
 void Battery_Deinit();
 void Battery_RedrawAll();
 void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState);
+void Battery_RequestPhone();
 #endif

@@ -16,6 +16,7 @@ struct ImageData
 {
    BitmapLayer* thisLayer;
    GBitmap*     thisBitmap;
+   char s_Name[5];
 };
 
 struct ImageData m_Image_BatteryPebble;

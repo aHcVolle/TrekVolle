@@ -1,5 +1,5 @@
-var m_b_MessagingAvailable = false;
-var m_b_Debug = true;
+var m_b_MessagingAvailable;
+var m_b_Debug;
 
    
    
@@ -35,49 +35,101 @@ var xhrRequest = function (url, type, callback)
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
 {
-   m_b_MessagingAvailable = true;
-
+   m_b_Debug = true;   
+   
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");
+   
+   // Init the messaging
+   Messaging_Init();
+
+   // Init the battery service
+   Battery_Init();
+   
+   // Init the weather
+   Weather_Init();
+
+   // DoPong
+   Messaging_DoPong()
+   
+});
+
+
+function Messaging_DoPong()
+{
+   if ((typeof m_b_MessagingAvailable === "undefined") || (m_b_MessagingAvailable === false))
+   {
+      if (m_b_Debug)
+         console.log("[JS:APP] Messaging is not yet initialized!");
+      return;
+   } 
+   var dictionary ={'KEY_PINGPONG': 1};
+   Pebble.sendAppMessage(dictionary,
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:APP] Sent message with ID " + e.data.transactionId);
+                         },
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:APP] Could not send message with ID " + e.data.transactionId + " Error is: " + e.error);
+                         });  
+   
+}
+
+function Messaging_Init()
+{
+   if (m_b_Debug)
+         console.log("[JS:APP] Messaging init...");
+   
+   m_b_MessagingAvailable = false;
    
    // Listen for when an AppMessage is received
    Pebble.addEventListener('appmessage',function(e) 
    {
       if (m_b_MessagingAvailable)
       {
+         var b_Found = false;
          if ('KEY_TEMPERATURE' in e.payload)
          {
             if (m_b_Debug)
                console.log("[JS:APP] Weather info requested...");
             Weather_GetData();
+            b_Found = true;
          }
-         else if ('KEY_ONLINE' in e.payload)
+         if ('KEY_ONLINE' in e.payload)
          {
             if (m_b_Debug)
                console.log("[JS:APP] Online info requested...");
             Network_GetData();
+            b_Found = true;
          }
-         else if ('KEY_BATTERY_CHARGE' in e.payload)
+         if ('KEY_BATTERY_CHARGE' in e.payload)
          {
             if (m_b_Debug)
                console.log("[JS:APP] Battery info requested...");
             Battery_GetData();
+            b_Found = true;
          }
-         else
+         if ('KEY_PINGPONG' in e.payload)
          {
-            if (m_b_Debug)
-               console.log("[JS:APP] Unkown info requested..." +e.payload.toString());
+             if (m_b_Debug)
+               console.log("[JS:APP] Got Ping, lets pong");
+            Messaging_DoPong();
+            b_Found = true;
          }
+         
+
+         if (!b_Found && m_b_Debug)
+               console.log("[JS:APP] Unkown info requested..." +e.payload.toString());
+
       }
    });
-     
-   // Init the battery service
-   Battery_Init();
    
-   // Get the initial weather
-   Weather_GetData();
-});
-
+   m_b_MessagingAvailable = true;
+   
+}
 
 
 

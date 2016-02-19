@@ -39,9 +39,15 @@
 
 #define KEY_BLUETOOTH_VIBRATIONENABLED 18
 
+#define KEY_PINGPONG 23
+
 // Functions used in other files 
+
+bool m_b_CommunicationIsInit;
+
 void Communication_Send(int i_MessageID);
 void Communication_Init();
+void Communication_OnInit();
 void Communication_DeInit();
 
 #endif

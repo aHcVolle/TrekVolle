@@ -2,45 +2,50 @@
 // This will hold the battery manager object
 var m_Battery;
 // Simple var to save if the battery manager is available
-var m_b_Battery_Available = false;
-
-
+var m_b_Battery_Available;
+// Store the battery init status
+var m_b_Battery_IsInit;
 
 function Battery_GetData()
 {   
-   if (m_b_Battery_Available && m_b_MessagingAvailable)
+   // Did we init yet?
+   if ((typeof m_b_Battery_IsInit === "undefined") || (m_b_Battery_IsInit === false))
    {
       if (m_b_Debug)
-         console.log("[JS:BATT] Getting battery data");
-      
-      var charging = 0;
-      if (m_Battery.charging)
-         charging = 1;
-      var dictionary = 
-             {
-                'KEY_BATTERY_CHARGE': m_Battery.level * 100,
-                'KEY_BATTERY_STATE': charging
-             };
-      
-      // Send to Pebble
-      Pebble.sendAppMessage(dictionary,
-            function(e)
-            {
-               if (m_b_Debug)
-                  console.log("[JS:BATT] Sent message with ID " + e.data.transactionId);
-            },
-            function(e)
-            {
-               if (m_b_Debug)
-                  console.log("[JS:BATT] Could not send message with ID " + e.data.transactionId + " Error is: " + e.error.message);
-            });
+         console.log("[JS:BATT] Battery is not yet initialized!");
+      return;
    }
+   
+   if (!m_b_Battery_Available)
+      return;
+   
+   if (m_b_Debug)
+         console.log("[JS:BATT] Getting battery data");
+   
+   
+   
+
+      
+   var dictionary = 
+       {
+          'KEY_BATTERY_CHARGE': m_Battery.level * 100,
+          'KEY_BATTERY_STATE': m_Battery.charging ? 1 : 0
+       };
+
+   // Send to Pebble
+   Pebble.sendAppMessage(dictionary,
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:BATT] Sent message with ID " + e.data.transactionId);
+                         },
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:BATT] Could not send message with ID " + e.data.transactionId + " Error is: " + e.error);
+                         });
+   
 }
-
-
-
-
-
 
 function Battery_InitSuccess(batteryManager) 
 {
@@ -50,20 +55,23 @@ function Battery_InitSuccess(batteryManager)
          console.log("[JS:BATT] Init OK");
    m_Battery = batteryManager;
    m_b_Battery_Available = true;
-   Battery_GetData();
+
 }
 
 function Battery_InitFailure()
 {
    if (m_b_Debug)
          console.log("[JS:BATT] Init failed");
-   m_b_Battery_Available = false;
 }
 
 function Battery_Init()
 {
    if (m_b_Debug)
          console.log("[JS:BATT] Init...");
+   
+   m_b_Battery_Available = false;
+   
+   
    if("getBattery" in navigator) 
    {
       // Request battery manager object.
@@ -90,35 +98,9 @@ function Battery_Init()
       // API is not supported, fail gracefully.
       console.log("[JS:BATT] Battery API not supported!");
    }
+   
+   m_b_Battery_IsInit = true;
+   
 }
 
-function Battery_GetData()
-{   
-   if (m_b_Battery_Available && m_b_MessagingAvailable)
-   {
-      if (m_b_Debug)
-         console.log("[JS:BATT] Getting battery data");
-      
-      var i_charging = m_Battery.charging ? 1 : 0;
-
-      var dictionary = 
-             {
-                'KEY_BATTERY_CHARGE': m_Battery.level * 100,
-                'KEY_BATTERY_STATE': i_charging
-             };
-      
-      // Send to Pebble
-      Pebble.sendAppMessage(dictionary,
-            function(e)
-            {
-               if (m_b_Debug)
-                  console.log("[JS:BATT] Sent message with ID " + e.data.transactionId);
-            },
-            function(e)
-            {
-               if (m_b_Debug)
-                  console.log("[JS:BATT] Could not send message with ID " + e.data.transactionId + " Error is: " + e.error.message);
-            });
-   }
-}
 

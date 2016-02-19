@@ -30,6 +30,9 @@ static void init()
    Color_SetTextColor();   
    Color_SetImageColor();
  
+   // Communication
+   Communication_Init();
+   
    // Network
    Network_Init();
    
@@ -48,11 +51,13 @@ static void init()
    // Weather
    Weather_Init();
    
-   // Communication
-   Communication_Init();
+   
         
    // Acceleration
    Acceleration_Init();
+   
+   // Do Ping
+   Communication_Send(KEY_PINGPONG);
 }
 
 // Deinit all the functions

@@ -18,9 +18,7 @@ void Weather_RedrawText()
    // Only redraw if the last update as successful
    if (!m_b_Weather_LastUpdateWasOK)
    {
-      // If not request an update
-      Weather_Request();
-      return;
+       return;
    }
    // Debug printout
    if (m_b_Debug)
@@ -148,6 +146,11 @@ void Weather_Request()
    // But only if there is a bluetooth connection
    if (!m_b_Bluetooth_ConnectionState)
       return;
+   
+   // Only do this if the communication is already initialized
+   if (!m_b_CommunicationIsInit)
+      return;
+   
    // We haven't got data yet
    m_b_Weather_LastUpdateWasOK = false;
 
@@ -162,6 +165,8 @@ void Weather_Request()
 // Convert an image name to a resource id
 int Weather_GetImageID(char* s_WeatherImageName)
 {
+   if (m_b_Debug)
+      printf("[WEATHER][Weather_GetImageID] Gettings id for %s",s_WeatherImageName);
    // Compare the image name
    if (strcmp(s_WeatherImageName,"01d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
@@ -201,6 +206,7 @@ int Weather_GetImageID(char* s_WeatherImageName)
       return RESOURCE_ID_IMAGE_WEATHER_50;
    
    // This imagename is unknown!
+   if (m_b_Debug)
    printf("[WEATHER][Weather_GetImageID] Unknown weather image %s",s_WeatherImageName);
    return RESOURCE_ID_IMAGE_ERROR;
 }

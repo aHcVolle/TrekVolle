@@ -37,44 +37,43 @@ static void initialise_ui(void)
    // Layer_Background_Image
    m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
-   //bitmap_layer_set_bitmap(Layer_Background_Image, s_res_image_background);
-   //layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Background_Image);
+   snprintf(m_Image_Background.s_Name,sizeof(m_Image_Background.s_Name),"BCKG");
    Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
 
    // Layer_Bluetooth_Image
    m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Bluetooth_Image, s_res_image_bluetooth);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
+   snprintf(m_Image_Bluetooth.s_Name,sizeof(m_Image_Bluetooth.s_Name),"BT");
    Redraw_Image(&m_Image_Bluetooth, RESOURCE_ID_IMAGE_BLUETOOTH, GColorWhite);
 
    // Layer_Weather_Image
    m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Weather_Image, s_res_image_weather_01);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Weather.thisLayer);
+   snprintf(m_Image_Weather.s_Name,sizeof(m_Image_Weather.s_Name),"WTHR");
    Redraw_Image(&m_Image_Weather, RESOURCE_ID_IMAGE_ERROR, GColorWhite);
 
    // Layer_Steps_Image
    m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Steps_Image, s_res_image_steps);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
+   snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
    Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
 
    // Layer_Battery_Image_Pebble
    m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Battery_Image_Pebble, s_res_image_battery_high);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPebble.thisLayer);
+   snprintf(m_Image_BatteryPebble.s_Name,sizeof(m_Image_BatteryPebble.s_Name),"BAT1");
    Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
 
    // Layer_Battery_Image_Phone
    m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Battery_Image_Phone, s_res_image_battery_high);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
+   snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
    Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
    
    // Layer_Network_Image
    m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
-   //bitmap_layer_set_bitmap(Layer_Network_Image, s_res_image_network);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Network.thisLayer);
+   snprintf(m_Image_Network.s_Name,sizeof(m_Image_Network.s_Name),"NET");
    Redraw_Image(&m_Image_Network, RESOURCE_ID_IMAGE_NETWORK, GColorWhite);
    
    
@@ -219,7 +218,7 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
       return;
    
    if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: L: %p B: %p R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->thisLayer,Image->thisBitmap,ImageID );
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
    
    // Clear the image layer
    bitmap_layer_set_bitmap(Image->thisLayer, NULL);
@@ -249,6 +248,13 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
    mResource_size = resource_size(resource_get_handle(ImageID));
    if (m_b_Debug)
       printf("[MAIN][Redraw_Image] resource_size: %d", (int) mResource_size);
+   
+   if (mResource_size == 0)
+   {
+      if (m_b_Debug)
+         printf("[MAIN][Redraw_Image] resource size of %d is 0!!!! ",ImageID);
+      return;
+   }
    if (m_b_Debug)
       printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Got resource size",(int) heap_bytes_used(),(int) heap_bytes_free() );
    size_t png_size;
@@ -257,15 +263,18 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
       printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
    
    Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+   
    
    if (Image->thisBitmap == NULL)
    {
       if (m_b_Debug)
-         printf("[MAIN][Redraw_Image] Could not create bitmap!!!");
+         printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Could not create bitmap!!!",(int) heap_bytes_used(),(int) heap_bytes_free());
       return;
    }
+   if (m_b_Debug)
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+   
+   
    
    
    #ifdef PBL_COLOR   
@@ -332,7 +341,7 @@ void Color_SetImageColor()
          printf("[MAIN][Color_SetImageColor] Setting image color");
    // Redraw all the images
    Battery_RedrawAll();
-   
+      
    Redraw_Image(&m_Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
    Redraw_Image(&m_Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }

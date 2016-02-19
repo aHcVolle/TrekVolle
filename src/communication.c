@@ -38,41 +38,66 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    
    Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
+   Tuple *PingPong_tuple = dict_find(iterator,KEY_PINGPONG);
+   
    // Process the received tuples
    
    // If there was a weather update send the data
    if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_TEMPERATURE,KEY_CONDITIONS,KEY_ICON,KEY_LOCATION");
       Weather_Handle(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
+   }
+      
 
    // If there was a network check
    if (Network_tuple)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_ONLINE");
       Network_Handle_Reply(Network_tuple);
+   }
+      
    
    // If there were new phone battery status
    if (Batterycharge_tuple && Batterystate_tuple)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_BATTERY_CHARGE,KEY_BATTERY_STATE");
       Battery_Handle_Phone( (int)Batterycharge_tuple->value->int32, (bool)Batterystate_tuple->value->int32);
+   }
+      
    
    // Here are all the color options
    if (Color_Background_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_BACKGROUND");
       b_NewImageConfig = true;
       Color_Background = GColorFromHEX((int)Color_Background_tuple->value->int32);
    }
       
    if (Color_Text_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_TEXT");
       b_NewImageConfig = true;
       Color_Text = GColorFromHEX((int)Color_Text_tuple->value->int32);
    }  
    
    if (Color_Image_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_IMAGE");
       b_NewImageConfig = true;
       Color_Image = GColorFromHEX((int)Color_Image_tuple->value->int32);
    }  
       
    if (Color_Window_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_WINDOW");
       b_NewImageConfig = true;
       Color_Window = GColorFromHEX((int)Color_Window_tuple->value->int32);
    }
@@ -81,16 +106,22 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    {
       b_NewImageConfig = true;
       Color_Charging = GColorFromHEX((int)Color_Charging_tuple->value->int32);
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_CHARGING");
    }
       
    if (Color_Error_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_ERROR");
       b_NewImageConfig = true;
       Color_Error = GColorFromHEX((int)Color_Error_tuple->value->int32);
    }
        
    if (Color_BatteryLow_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_BATTERYLOW");
       b_NewImageConfig = true;
       Color_BatteryLow = GColorFromHEX((int)Color_BatteryLow_tuple->value->int32);
    }
@@ -108,17 +139,24 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // If the temperature unit was changed
    if (Weather_TemperatureCelcius_tuple)
    {
+      
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_TEMPERATURECELCIUS");
       m_b_Weather_TemperatureInCelcius = (bool)Weather_TemperatureCelcius_tuple->value->int32;
       Weather_RedrawText();
    }
    // If the weather redrawtime was changed
    if (Weather_Refreshtime_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_REFRESHTIME");
       m_i_Weather_RefreshTime = (int)Weather_Refreshtime_tuple->value->int32;
    }
    // If the option to retry the weather update was changed
    if (Weather_RetryUpdate_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_RETRYUPDATE");
       m_b_Weather_RetryUpdate = (bool)Weather_RetryUpdate_tuple->value->int32;
    }
    
@@ -127,18 +165,24 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // The clock mode was changed
    if (Clock_Clock24h_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_CLOCK24H");
       m_b_Clock_Clock24h = (bool)Clock_Clock24h_tuple->value->int32;
       b_ClockChanged = true;
    }      
    // The datestyle was changed
    if (Clock_DateStyle_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_DATESTYLE");
       m_i_Clock_DateStyle = (int)Clock_DateStyle_tuple->value->int32;
       b_ClockChanged = true;
    }
    // The sleep mode was changed
    if (Clock_Sleep_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP");
       m_b_Clock_Sleep = (bool)Clock_Sleep_tuple->value->int32;
    }
    
@@ -151,25 +195,40 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // The network refresh time was changed
    if (Network_Refreshtime_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_NETWORK_REFRESHTIME");
       m_i_Network_RefreshTime = (int)Network_Refreshtime_tuple->value->int32;
    }
    // The network vibration settings have been changed
    if (Network_VibrationEnabled_tuple)
    {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_NETWORK_VIBRATIONENABLED");
       m_b_Network_VibrationEnabled = (bool)Network_VibrationEnabled_tuple->value->int32;
    }
    // The bluetooth vibration option has been changed
    if (Bluetooth_VibrationEnabled_tuple)
-   {
-      m_b_Bluetooth_VibrationEnabled = (bool)Bluetooth_VibrationEnabled_tuple->value->int32;  
+   {  
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_BLUETOOTH_VIBRATIONENABLED");
+      m_b_Bluetooth_VibrationEnabled = (bool)Bluetooth_VibrationEnabled_tuple->value->int32;
    }
-
+   
+   
+   if (PingPong_tuple)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_PINGPONG");
+      Communication_OnInit();      
+   }
+   
 }
 
 void Communication_Send(int i_MessageID)
 {
+  
    if (m_b_Debug)
-      printf("[COM][Communication_Send] Sending data");
+      printf("[COM][Communication_Send] Sending data %d",i_MessageID);
    // Begin dictionary
    DictionaryIterator *iter;
    app_message_outbox_begin(&iter);
@@ -186,11 +245,32 @@ static void Communication_InboxDropped(AppMessageResult reason, void *context) {
 static void Communication_OutboxFailed(DictionaryIterator *iterator, AppMessageResult reason, void *context) {}
 static void Communication_OutboxSent(DictionaryIterator *iterator, void *context) {}
 
+// What todo if the communication is initialized
+void Communication_OnInit()
+{
+   m_b_CommunicationIsInit = true  ;
+   
+   DictionaryIterator *iter;
+   app_message_outbox_begin(&iter);
+   
+   // Add a key-value pair
+   dict_write_uint8(iter,KEY_BATTERY_CHARGE , 0);
+   dict_write_uint8(iter,KEY_ONLINE , 0);
+   dict_write_uint8(iter,KEY_TEMPERATURE , 0);
+   
+   // Send the message!
+   app_message_outbox_send();
+}
+
 // Register with the app messaging service
 void Communication_Init()
 {
    if (m_b_Debug)
       printf("[COM][Communication_Init] COM Init");
+   
+   // Store the communcation state
+   m_b_CommunicationIsInit = false;
+   
    // Register callbacks
    app_message_register_inbox_received(Communication_InboxReceived);
    app_message_register_inbox_dropped(Communication_InboxDropped);

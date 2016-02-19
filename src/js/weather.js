@@ -1,32 +1,52 @@
 // Set the used OpenWeatherMap.org API key
 // Please use your own if you copy this code
-var m_s_Weather_APIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d'; 
+var m_s_Weather_APIKey; 
 
 // Weather location types
-var Weather_Location_Type_GeoLocation = 0;
-var Weather_Location_Type_CityName = 1;
-var Weather_Location_Type_CityID = 2;
+var Weather_Location_Type_GeoLocation;
+var Weather_Location_Type_CityName;
+var Weather_Location_Type_CityID;
 // Var to store the location settings
-var m_i_Weather_Location_StorageID = 0;
-var m_s_Weather_Location_Name = '';
-var m_i_Weather_Location_Type = Weather_Location_Type_GeoLocation;
-// Variable to store if this is the first request
-var m_b_Weather_FirstRequest = true;
+var m_i_Weather_Location_StorageID;
+var m_s_Weather_Location_Name;
+var m_i_Weather_Location_Type;
+
+// Store the weather init status
+var m_b_WeatherIsInit;
+
+
+function Weather_Init()
+{
+   if (m_b_Debug)
+         console.log("[JS:WTHR] Init");
+   
+   m_s_Weather_APIKey = 'f06b4db6cb8de4768d84e8af5b20ae6d'; 
+   
+   Weather_Location_Type_GeoLocation = 0;
+   Weather_Location_Type_CityName = 1;
+   Weather_Location_Type_CityID = 2;
+   
+   m_i_Weather_Location_StorageID = 0;
+   m_s_Weather_Location_Name = '';
+   m_i_Weather_Location_Type = Weather_Location_Type_GeoLocation;
+   
+
+   // And load the data from storage
+   Weather_LoadData();
+   
+   
+   m_b_WeatherIsInit = true;
+   
+}
 
 function Weather_DownloadData(RequestString )
 {
    // Construct the OpenWeatherMap.org URL
   var url = 'http://api.openweathermap.org/data/2.5/weather?' + RequestString + '&appid=' + m_s_Weather_APIKey;
-  
-  if(typeof m_s_Weather_APIKey === "undefined")
-  { 
-     if (m_b_Debug)
-        console.log("[JS:WTHR] Got no api key?");
-     return;
-  }
+     
    
-  // Send request to OpenWeatherMap
-  xhrRequest(url, 'GET', function(responseText) 
+   // Send request to OpenWeatherMap
+   xhrRequest(url, 'GET', function(responseText) 
       {
          if (m_b_Debug)
             console.log("[JS:WTHR] Got weather data");
@@ -167,18 +187,13 @@ function Weather_SaveData(LocationName)
 
 function Weather_GetData() 
 {
-   // Check if this was the first weather request 
-   if (m_b_Weather_FirstRequest)
+   if ((typeof m_b_WeatherIsInit === "undefined") || (m_b_WeatherIsInit === false))
    {
       if (m_b_Debug)
-         console.log("[JS:WTHR] First run, loading data");
-      // Yes it was the first request 
-      m_b_Weather_FirstRequest = false;
-      // And load the data from storage
-      Weather_LoadData();
-      
-   }
-      
+         console.log("[JS:WTHR] Weather is not yet initialized!");
+      return;
+   } 
+   
    if (m_b_MessagingAvailable)
    {
       // Lets see what type of location we have
