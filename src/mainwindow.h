@@ -6,6 +6,26 @@
 #include "configuration.h"
 #include "battery.h"
 
+
+// Heap fragmentation help
+#define PNG_BUFFER_SIZE 300
+uint8_t* ui_PNG_Loadbuffer;
+
+// Structures to hold all image informations
+struct ImageData
+{
+   BitmapLayer* thisLayer;
+   GBitmap*     thisBitmap;
+};
+
+struct ImageData m_Image_BatteryPebble;
+struct ImageData m_Image_BatteryPhone;
+struct ImageData m_Image_Network;
+struct ImageData m_Image_Weather;
+struct ImageData m_Image_Steps;
+struct ImageData m_Image_Background;
+struct ImageData m_Image_Bluetooth;
+
 // Variables to store the configurated colors
 GColor Color_Background;
 GColor Color_Text;
@@ -22,15 +42,9 @@ void show_PhoneBattery(bool show);
 void Color_SetTextColor();
 void Color_SetImageColor();
 
-void Redraw_Image(BitmapLayer* l_Image, GBitmap* Bitmap, int ImageID, GColor Color);
+void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color);
 
-// Functions to return all the image pointers
-BitmapLayer* GetWeatherImageLayer();
-BitmapLayer* GetBluetoothImageLayer();
-BitmapLayer* GetNetworkImageLayer();
-BitmapLayer* GetBatteryImageLayerPebble();
-BitmapLayer* GetBatteryImageLayerPhone();
-
+// Functions to return all the text pointers
 TextLayer* GetStepTextLayer();
 TextLayer* GetTimeTextLayer();
 TextLayer* GetDateTextLayer();
@@ -38,5 +52,4 @@ TextLayer* GetDayTextLayer();
 TextLayer* GetBatteryTextLayerPebble();
 TextLayer* GetBatteryTextLayerPhone();
 TextLayer* GetWeatherTextLayer();
-
 #endif

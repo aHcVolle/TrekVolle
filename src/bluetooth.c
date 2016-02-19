@@ -1,19 +1,12 @@
 #include "bluetooth.h"
 
-// Used variables
-BitmapLayer* m_Bluetooth_Image_Layer = NULL;
-GBitmap* m_Bluetooth_Image = NULL;
-
 // Redraw the bluetooth image
 void Bluetooth_Redraw()
 {
-   // But only if the layer is already initialized
-   if (m_Bluetooth_Image_Layer == NULL)
-      return;
    
    // Debug printout
    if (m_b_Debug)
-         printf("[BT] Redrawing");
+         printf("[BT][Bluetooth_Redraw] Redrawing");
    
    // Variable to store the image color
    GColor Color;
@@ -27,7 +20,7 @@ void Bluetooth_Redraw()
       Color = Color_Error;
    }
    // Redraw the image
-   Redraw_Image(m_Bluetooth_Image_Layer,m_Bluetooth_Image,RESOURCE_ID_IMAGE_BLUETOOTH,Color);
+   Redraw_Image(&m_Image_Bluetooth,RESOURCE_ID_IMAGE_BLUETOOTH,Color);
 }
 
 // Bluetooth connection changes are processed here
@@ -39,7 +32,7 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    
    // Debug printout
    if (m_b_Debug)
-         printf("[BT] BT handler");
+         printf("[BT][Bluetooth_Handle] BT handler");
    
    // Save the current state
    m_b_Bluetooth_ConnectionState = b_ConnectionState;
@@ -48,7 +41,7 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
    {
       if (m_b_Debug && b_Vibrate)
-         printf("[BT] Blocked vibration due to sleep mode");
+         printf("[BT][Bluetooth_Handle] Blocked vibration due to sleep mode");
       b_Vibrate = false;
    }
       
@@ -57,14 +50,14 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    if (b_ConnectionState && b_Vibrate)
    {
       if (m_b_Debug)
-         printf("[BT] BT handler: Connection OK");
+         printf("[BT][Bluetooth_Handle] BT handler: Connection OK");
       vibes_short_pulse();
       //printf("BT connected");
    }
    else if (b_Vibrate)
    {
       if (m_b_Debug)
-         printf("[BT] BT handler: Connection failed");
+         printf("[BT][Bluetooth_Handle] BT handler: Connection failed");
       vibes_double_pulse();
       //printf("BT disconnected");
    }
@@ -80,11 +73,10 @@ void Bluetooth_Init()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[BT] Init");
+         printf("[BT][Bluetooth_Init] Init");
    // Init vars
    m_b_Bluetooth_ConnectionState = true;
-   m_Bluetooth_Image_Layer = NULL;
-   m_Bluetooth_Image_Layer = GetBluetoothImageLayer();
+
    // Register to the service
    Bluetooth_Handle(connection_service_peek_pebble_app_connection());
    connection_service_subscribe((ConnectionHandlers) {.pebble_app_connection_handler = Bluetooth_Handle});
@@ -97,14 +89,9 @@ void Bluetooth_DeInit()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[BT] Deinit");
+         printf("[BT][Bluetooth_DeInit] Deinit");
    // Unregister from the bluetooth service
    connection_service_unsubscribe();
    
-   // Kill all ze thingz!
-   if (m_Bluetooth_Image)
-   {
-      gbitmap_destroy(m_Bluetooth_Image);
-      m_Bluetooth_Image = NULL;
-   }
+   
 }

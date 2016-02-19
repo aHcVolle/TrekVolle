@@ -9,11 +9,20 @@
 #include "communication.h"
 #include "acceleration.h"
 #include "configuration.h"
+#include "e_memory_tools.h"
 
 // Init all the modules
 static void init() 
 {
+   ui_PNG_Loadbuffer = malloc_low(PNG_BUFFER_SIZE);
    m_b_Debug = true;
+
+
+   if (m_b_Debug)
+      printf("\n\n\n\nTrekvolle is starting\n\n\n\n");
+
+   if (m_b_Debug)
+         printf("[MAIN][init] First image loaded, reserving %dB of memory",PNG_BUFFER_SIZE);
    
    // UI 
    show_mainwindow();
@@ -64,6 +73,8 @@ static void deinit()
 // We start here
 int main(void) 
 {
+   
+   
    init();
    app_event_loop();
    deinit();

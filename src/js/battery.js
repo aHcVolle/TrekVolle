@@ -2,7 +2,7 @@
 // This will hold the battery manager object
 var m_Battery;
 // Simple var to save if the battery manager is available
-var m_b_Battery_Available;
+var m_b_Battery_Available = false;
 
 
 

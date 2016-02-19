@@ -1,12 +1,23 @@
 
-var ConfigVersion = '1_3';
+var ConfigVersion = '1_4';
 
 
 Pebble.addEventListener('showConfiguration', function() 
 {
    var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
-  // var url = 'https://www.vllmr.eu/pebble/config/index.html';
-
+   // var url = 'https://www.vllmr.eu/pebble/config/index.html';
+   
+   var watch = Pebble.getActiveWatchInfo();
+   if (watch.platform == "aplite")
+   {
+      // Pebble 1 -> black & white default values
+      url = url + "?color=bw";
+   }
+   else
+   {
+      url = url + "?color=color";
+   }
+   
    if (m_b_Debug)
          console.log("[JS:CONF] Sending to "+url);
    Pebble.openURL(url);
@@ -181,7 +192,7 @@ Pebble.addEventListener('webviewclosed', function(e)
    }
    
    // Send to watchapp
-   Pebble.sendAppMessage(dictionary, function(){}, function(){});
+   Pebble.sendAppMessage(dictionary, function(){}, function(){}); 
    
    // Get weather data if location changed
    if (b_Weather_Location_Changed)

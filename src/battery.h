@@ -5,6 +5,19 @@
 #include "mainwindow.h"
 #include "communication.h"
 
+// Battery struct
+struct BatteryData
+{
+   TextLayer* l_Text;
+   struct ImageData* p_ImageData; 
+   int i_BatteryLevel;
+   bool b_ChargingState;
+   bool b_FirstValue;
+   char s_Text[5];
+   GColor c_Color;
+   int i_ImageID;
+};
+
 // Functions used in other files
 void Battery_Init();
 void Battery_Deinit();

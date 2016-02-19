@@ -1,6 +1,8 @@
 var m_b_MessagingAvailable = false;
 var m_b_Debug = true;
 
+   
+   
 
 var xhrRequest = function (url, type, callback) 
 {
@@ -34,6 +36,7 @@ var xhrRequest = function (url, type, callback)
 Pebble.addEventListener('ready', function(e) 
 {
    m_b_MessagingAvailable = true;
+
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");
    
@@ -59,6 +62,11 @@ Pebble.addEventListener('ready', function(e)
             if (m_b_Debug)
                console.log("[JS:APP] Battery info requested...");
             Battery_GetData();
+         }
+         else
+         {
+            if (m_b_Debug)
+               console.log("[JS:APP] Unkown info requested..." +e.payload.toString());
          }
       }
    });

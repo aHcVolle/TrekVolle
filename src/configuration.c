@@ -8,7 +8,7 @@ void LoadConfigFromStorage()
    
    // Debug printout
    if (m_b_Debug)
-         printf("[CONF] Loading");
+         printf("[CONF][LoadConfigFromStorage] Loading");
    
    // And now load the saved vars
    if (persist_exists(KEY_COLOR_BACKGROUND)) 
@@ -88,7 +88,7 @@ void SaveConfigToStorage()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CONF] Saving");
+         printf("[CONF][SaveConfigToStorage] Saving");
    
    // And save
    persist_write_int(KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
@@ -120,9 +120,10 @@ void LoadDefaultConfig()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CONF] Setting defaults");
+         printf("[CONF][LoadDefaultConfig] Setting defaults");
    
    // Set the vars
+   #ifdef PBL_COLOR
    Color_Background = GColorBlueMoon;
    Color_Text = GColorSunsetOrange;
    Color_Image = GColorSunsetOrange;
@@ -130,6 +131,16 @@ void LoadDefaultConfig()
    Color_Charging = GColorGreen;
    Color_Error = GColorRed;
    Color_BatteryLow = GColorRed;
+   #else
+   Color_Background = GColorWhite;
+   Color_Text = GColorWhite;
+   Color_Image = GColorWhite;
+   Color_Window = GColorBlack;
+   Color_Charging = GColorWhite;
+   Color_Error = GColorBlack;
+   Color_BatteryLow = GColorWhite;
+   
+   #endif
    
    m_b_Weather_TemperatureInCelcius = true;
    m_i_Weather_RefreshTime = 30;

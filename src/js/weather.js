@@ -13,7 +13,6 @@ var m_i_Weather_Location_Type = Weather_Location_Type_GeoLocation;
 // Variable to store if this is the first request
 var m_b_Weather_FirstRequest = true;
 
-
 function Weather_DownloadData(RequestString )
 {
    // Construct the OpenWeatherMap.org URL
@@ -73,7 +72,7 @@ function Weather_DownloadData(RequestString )
                function(e)
                {
                   if (m_b_Debug)
-                     console.log("[JS:WTHR] Could not send message with ID " + e.data.transactionId + " Error is: " + e.error.message);
+                     console.log("[JS:WTHR] Could not send message with ID " + e.data.transactionId + " error: " + e.error);
                });
          } 
          else

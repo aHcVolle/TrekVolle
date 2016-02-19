@@ -3,6 +3,9 @@
 // Replies from javascript will be processed here 
 static void Communication_InboxReceived(DictionaryIterator *iterator, void *context) 
 {
+   if (m_b_Debug)
+      printf("[COM][Communication_InboxReceived] Received data");
+   
    // Var to save if an image has been altered
    bool b_NewImageConfig = false;
    // Read tuples for data
@@ -165,6 +168,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
 
 void Communication_Send(int i_MessageID)
 {
+   if (m_b_Debug)
+      printf("[COM][Communication_Send] Sending data");
    // Begin dictionary
    DictionaryIterator *iter;
    app_message_outbox_begin(&iter);
@@ -184,7 +189,8 @@ static void Communication_OutboxSent(DictionaryIterator *iterator, void *context
 // Register with the app messaging service
 void Communication_Init()
 {
-   
+   if (m_b_Debug)
+      printf("[COM][Communication_Init] COM Init");
    // Register callbacks
    app_message_register_inbox_received(Communication_InboxReceived);
    app_message_register_inbox_dropped(Communication_InboxDropped);
@@ -192,12 +198,16 @@ void Communication_Init()
    app_message_register_outbox_sent(Communication_OutboxSent);
    
    // Open AppMessage
-   app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+   //app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+   app_message_open(1000, 1000);
    
 }
 
 // Unregister from the messaging service
 void Communication_DeInit()
 {
+   if (m_b_Debug)
+      printf("[COM][Communication_DeInit] COM Deinit");
+   
    app_message_deregister_callbacks();   
 }

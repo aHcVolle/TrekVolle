@@ -1,9 +1,5 @@
 #include "network.h"
 
-// Variables to store the layers
-BitmapLayer* m_Network_Image_Layer = NULL;
-GBitmap* m_Network_Image = NULL;
-
 // Request a net work check
 void Network_Request()
 {
@@ -17,7 +13,7 @@ void Network_Request()
    
    // Debug printout
    if (m_b_Debug)
-         printf("[NET] Connection request");
+         printf("[NET][Network_Request] Connection request");
    
    // Send the request
    Communication_Send(KEY_ONLINE);
@@ -28,7 +24,7 @@ void Network_Redraw()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[NET] Redrawing");
+         printf("[NET][Network_Redraw] Redrawing");
    
    // We're going to store the color here
    GColor Color;
@@ -42,7 +38,7 @@ void Network_Redraw()
    }     
    
    // Redraw the image
-   Redraw_Image(m_Network_Image_Layer,m_Network_Image,RESOURCE_ID_IMAGE_NETWORK,Color);
+   Redraw_Image(&m_Image_Network,RESOURCE_ID_IMAGE_NETWORK,Color);
    
 }
 
@@ -58,7 +54,7 @@ void Network_Handle_Reply(Tuple *network_tuple)
    
    // Debug printout
    if (m_b_Debug)
-         printf("[NET] Handler");
+         printf("[NET][Network_Handle_Reply] Handler");
    
    // Save the new state
    m_b_Network_ConnectionState = b_ConnectionState;
@@ -67,7 +63,7 @@ void Network_Handle_Reply(Tuple *network_tuple)
    if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
    {
       if (m_b_Debug && b_Vibrate)
-         printf("[NET] Blocked vibration due to sleep mode");
+         printf("[NET][Network_Handle_Reply] Blocked vibration due to sleep mode");
       b_Vibrate = false;
    }
    
@@ -75,13 +71,13 @@ void Network_Handle_Reply(Tuple *network_tuple)
    if (m_b_Network_ConnectionState && b_Vibrate)
    {
       if (m_b_Debug)
-         printf("[NET] Handler: Connection OK");
+         printf("[NET][Network_Handle_Reply] Handler: Connection OK");
       vibes_short_pulse();  
    }
    else if (b_Vibrate)
    {
       if (m_b_Debug)
-         printf("[NET] Handler: Connection failed");
+         printf("[NET][Network_Handle_Reply] Handler: Connection failed");
       vibes_double_pulse();
    }
    
@@ -94,11 +90,10 @@ void Network_Init()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[NET] Init");
+         printf("[NET][Network_Init] Init");
    // Init the vars
    m_b_Network_ConnectionState = true;
-   m_Network_Image = NULL;
-   m_Network_Image_Layer = GetNetworkImageLayer();
+
    // Redraw the image
    Network_Redraw();
 }
@@ -107,11 +102,5 @@ void Network_Init()
 void Network_DeInit()
 {
    if (m_b_Debug)
-         printf("[NET] Deinit");
-   // Kill all ze thingz!
-   if (m_Network_Image)
-   {
-      gbitmap_destroy(m_Network_Image);
-      m_Network_Image = NULL;
-   }         
+         printf("[NET][Network_DeInit] Deinit");
 }

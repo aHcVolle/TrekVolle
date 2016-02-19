@@ -8,7 +8,7 @@ void Health_GetMovementData(void)
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[HEALTH] Getting data");
+         printf("[HEALTH][Health_GetMovementData] Getting data");
    
    // Get the step count and distance
    HealthMetric Step_Metric_Count = HealthMetricStepCount;
@@ -53,7 +53,7 @@ static void Health_Handler(HealthEventType event, void *context)
     case HealthEventMovementUpdate:
       // Debug printout
       if (m_b_Debug)
-         printf("[HEALTH] Handler");
+         printf("[HEALTH][Health_Handler] Handler");
       // Request the new data
       Health_GetMovementData();
       break;
@@ -68,7 +68,7 @@ void Health_Init()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[HEALTH] Init");
+         printf("[HEALTH][Health_Init] Init");
    
    // Get the layer
    m_Health_Text_Layer = GetStepTextLayer();
@@ -84,7 +84,7 @@ void Health_DeInit()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[HEALTH] Deinit");
+         printf("[HEALTH][Health_DeInit] Deinit");
    // Unregister from the health service
    health_service_events_unsubscribe();
 }

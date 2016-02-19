@@ -14,7 +14,7 @@ void Time_Redraw()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK] Redrawing");
+         printf("[CLOCK][Time_Redraw] Redrawing");
    
    // Get a tm structure
    time_t Time_Temp = time(NULL);
@@ -59,7 +59,7 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
 {
    // Debug printout 
    if (m_b_Debug)
-         printf("[CLOCK] Handler");
+         printf("[CLOCK][Time_Handle] Handler");
    
    // Redraw the time
    Time_Redraw();
@@ -89,6 +89,9 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
    {
       m_b_Clock_SleepEnabled = false;
    }
+   
+   if (m_b_Debug)
+      printf("[CLOCK][Time_Handle] After Heap Used: %d, Free: %d",(int) heap_bytes_used(), (int)heap_bytes_free() );
 }
 
 // Init the used variables and register with the time service
@@ -96,7 +99,7 @@ void Time_Init()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK] Init");
+         printf("[CLOCK][Time_Init] Init");
    
    // Init the vars
    m_Time_Text_Layer = GetTimeTextLayer();
@@ -117,7 +120,7 @@ void Time_DeInit()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK] Deinit");
+         printf("[CLOCK][Time_DeInit] Deinit");
    // Unregister from the service
    tick_timer_service_unsubscribe();
 }

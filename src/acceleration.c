@@ -6,7 +6,7 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
    if  (axis == ACCEL_AXIS_Y)  
    {
       if (m_b_Debug)
-         printf("[ACC] Device accelerated");
+         printf("[ACC][Acceleration_Handle] Device accelerated");
       // Switch display state
       if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
          m_i_Weather_DisplayState = DISPLAY_LOCATION;
@@ -21,7 +21,7 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
 void Acceleration_Init(void)
 {
    if (m_b_Debug)
-         printf("[ACC] Init"); 
+         printf("[ACC][Acceleration_Init] Init"); 
    accel_tap_service_subscribe(Acceleration_Handle);
 }
 
@@ -29,6 +29,6 @@ void Acceleration_Init(void)
 void Acceleration_DeInit(void)
 {
    if (m_b_Debug)
-         printf("[ACC] Deinit");
+         printf("[ACC][Acceleration_DeInit] Deinit");
    accel_tap_service_unsubscribe();
 }
