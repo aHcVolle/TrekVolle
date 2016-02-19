@@ -236,6 +236,8 @@
   </body>
   
   <script>
+  	var m_ColorType = "";
+  
 	function ReDraw()
 	{
 		console.log('ReDraw: starting');
@@ -354,7 +356,7 @@
 		return options;
 	}
 	
-	function SetDefaults(colortype)
+	function SetDefaults()
 	{
 		console.log('Defaults: loading');
 		
@@ -382,7 +384,7 @@
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
 		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
-		if (colortype == "color")
+		if (m_ColorType == "color")
 		{
 			console.log('Defaults: using color defaults');
 			Color_Background_Picker.value = "0x0055FF";
@@ -549,8 +551,8 @@
 	  function main() 
 	  {
 		console.log('main: Starting');
-		var colortype = getQueryParam("color", "color");
-		SetDefaults(colortype);
+		var m_ColorType = getQueryParam("color", "color");
+		SetDefaults();
 		LoadData();
 		// Load any previously saved configuration, if available
 		//Reload();
