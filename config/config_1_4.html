@@ -247,6 +247,7 @@
 	
 	function SaveData()
 	{
+		console.log('Save: starting');
 		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
 		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
 		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
@@ -294,10 +295,12 @@
 		
 		localStorage['Network_VibrationEnabled'] = Network_VibrationEnabled_Checkbox.checked.toString();
 		localStorage['Network_Refreshtime'] = Network_Refreshtime_Input.value;
+		console.log('Save: done');
 	}
   
 	function getConfigData() 
 	{
+		console.log('getConfigData: starting');
 		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
 		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
 		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
@@ -353,12 +356,13 @@
 		SaveData();
 
 		//console.log('Got options: ' + JSON.stringify(options));
+		console.log('getConfigData: done');
 		return options;
 	}
 	
 	function SetDefaults()
 	{
-		console.log('Defaults: loading');
+		console.log('SetDefaults: loading');
 		
 		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
 		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
@@ -386,7 +390,7 @@
 		
 		if (m_ColorType == "color")
 		{
-			console.log('Defaults: using color defaults');
+			console.log('SetDefaults: using color defaults');
 			Color_Background_Picker.value = "0x0055FF";
 			Color_Text_Picker.value       = "0xFF5555";
 			Color_Image_Picker.value      = "0xFF5555";
@@ -397,7 +401,7 @@
 		}
 		else
 		{
-			console.log('Defaults: using mono defaults');
+			console.log('SetDefaults: using mono defaults');
 			Color_Background_Picker.value = "0xFFFFFF";
 			Color_Text_Picker.value       = "0xFFFFFF";
 			Color_Image_Picker.value      = "0xFFFFFF";
@@ -423,14 +427,13 @@
 		
 		Network_VibrationEnabled_Checkbox.checked = true;
 		Network_Refreshtime_Input.value = "1";
-		
-		console.log('Defaults: loading finished');
+		console.log('SetDefaults: done');
 		return true;
 	}
 	
 	function LoadData()
 	{
-		console.log('Reload: loading');
+		console.log('LoadData: start');
 		var Color_Background_Picker = document.getElementById('Color_Background_Picker');
 		var Color_Text_Picker = document.getElementById('Color_Text_Picker');
 		var Color_Image_Picker = document.getElementById('Color_Image_Picker');
@@ -501,7 +504,7 @@
 			Network_Refreshtime_Input.value = localStorage['Network_Refreshtime'];	
 		
 		
-		console.log('Reload: loading finished');
+		console.log('LoadData: done');
 		return true;
 	}
 	
@@ -523,7 +526,7 @@
 	var Button_Reset = document.getElementById('Button_Reset');
 	Button_Reset.addEventListener('click', function() 
 	{
-		console.log('Defaults: Button');
+		console.log('Button: Defaults');
 		SetDefaults();
 		SaveData();
 		ReDraw();
@@ -532,7 +535,7 @@
 	var Button_Reload = document.getElementById('Button_Reload');
 	Button_Reload.addEventListener('click', function() 
 	{
-		console.log('Reload: Button');
+		console.log('Button: Load stored data');
 		ReDraw();
 	});
  
@@ -540,7 +543,7 @@
 	var Button_Submit = document.getElementById('Button_Submit');
 	Button_Submit.addEventListener('click', function() 
 	{
-		console.log('Submit: Button');
+		console.log('Button: Save');
 
 		// Set the return URL depending on the runtime environment
 		var return_to = getQueryParam('return_to', 'pebblejs://close#');
@@ -556,7 +559,7 @@
 		LoadData();
 		// Load any previously saved configuration, if available
 		//Reload();
-		console.log('main: finished');
+		console.log('main: done');
 	  }
   
   
