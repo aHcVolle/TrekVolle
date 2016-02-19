@@ -96,7 +96,8 @@ function Battery_Init()
    else 
    {
       // API is not supported, fail gracefully.
-      console.log("[JS:BATT] Battery API not supported!");
+      if (m_b_Debug)
+         console.log("[JS:BATT] Battery API not supported!");
    }
    
    m_b_Battery_IsInit = true;
