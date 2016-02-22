@@ -1,5 +1,8 @@
 #include "communication.h"
 
+// Var to save communication state
+bool m_b_DataHasBeenSent;
+
 // Replies from javascript will be processed here 
 static void Communication_InboxReceived(DictionaryIterator *iterator, void *context) 
 {
@@ -261,20 +264,40 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    
 }
 
+void Communication_TimerCallback(void *data)
+{
+   int* i_data = data;
+   if (!m_b_DataHasBeenSent)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_TimerCallback] Delaying data %d",*i_data);
+      app_timer_register(500, Communication_TimerCallback, data);
+   }
+   else
+   {
+      m_b_DataHasBeenSent = false;
+      if (m_b_Debug)
+         printf("[COM][Communication_TimerCallback] Sending data %d",*i_data);
+      DictionaryIterator *iter;
+      app_message_outbox_begin(&iter);
+      
+      // Add a key-value pair
+      dict_write_uint8(iter,*i_data , 0);
+      dict_write_end(iter);
+      // Send the message!
+      app_message_outbox_send();
+      free(data);
+   }
+}
+
+
 void Communication_Send(int i_MessageID)
 {
-  
    if (m_b_Debug)
       printf("[COM][Communication_Send] Sending data %d",i_MessageID);
-   // Begin dictionary
-   DictionaryIterator *iter;
-   app_message_outbox_begin(&iter);
-   
-   // Add a key-value pair
-   dict_write_uint8(iter,i_MessageID , 0);
-   
-   // Send the message!
-   app_message_outbox_send();
+   int* data = malloc (sizeof(*data));
+   *data = i_MessageID;
+   Communication_TimerCallback((void*)data);
 }
 
 // Nothing to see here...
@@ -288,7 +311,14 @@ static void Communication_OutboxFailed(DictionaryIterator *iterator, AppMessageR
    if (m_b_Debug)
          printf("[COM][Communication_OutboxFailed] %d",reason);   
 }
-static void Communication_OutboxSent(DictionaryIterator *iterator, void *context) {}
+static void Communication_OutboxSent(DictionaryIterator *iterator, void *context) 
+{
+   if (m_b_Debug)
+   {
+      printf("[COM][Communication_OutboxSent] ");
+   }
+    m_b_DataHasBeenSent = true;
+}
 
 // What todo if the communication is initialized
 void Communication_OnInit()
@@ -314,6 +344,7 @@ void Communication_Init()
       printf("[COM][Communication_Init] COM Init");
    
    // Store the communcation state
+   m_b_DataHasBeenSent = true;
    m_b_CommunicationIsInit = false;
    
    // Register callbacks

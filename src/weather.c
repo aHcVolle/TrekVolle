@@ -106,10 +106,14 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
    // If we have info about the image to use
    if (Image_tuple)
    {  
-      m_i_Weather_WeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
+      int i_NewWeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
       if (m_b_Debug)
-         printf("[WEATHER][Weather_Handle] Handler: Got imageid");
-      Weather_RedrawImage();
+         printf("[WEATHER][Weather_Handle] Handler: Got imageid %d",i_NewWeatherImage);
+      if (i_NewWeatherImage != m_i_Weather_WeatherImage)
+      {
+         m_i_Weather_WeatherImage = i_NewWeatherImage;
+         Weather_RedrawImage();
+      }
    }
    // Redraw the text
    Weather_RedrawText();
@@ -167,7 +171,7 @@ void Weather_Request()
 int Weather_GetImageID(char* s_WeatherImageName)
 {
    if (m_b_Debug)
-      printf("[WEATHER][Weather_GetImageID] Gettings id for %s",s_WeatherImageName);
+      printf("[WEATHER][Weather_GetImageID] Getting id for %s",s_WeatherImageName);
    // Compare the image name
    if (strcmp(s_WeatherImageName,"01d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
