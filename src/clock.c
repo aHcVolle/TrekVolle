@@ -69,7 +69,7 @@ void Clock_Redraw()
          TempMin = (float) TempMin * 1.8 + 32;
          TempMax = (float) TempMax * 1.8 + 32;
       }
-      snprintf(s_DayBuffer, sizeof(s_DayBuffer), "%03d - %03d", TempMin,TempMax);
+      snprintf(s_DayBuffer, sizeof(s_DayBuffer), "%3d - %3d", TempMin,TempMax);
    }
    
    
