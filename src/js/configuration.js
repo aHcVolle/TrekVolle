@@ -1,7 +1,7 @@
 
 Pebble.addEventListener('showConfiguration', function() 
 {
-   var ConfigVersion = '1_4';
+   var ConfigVersion = '1_5';
    
    var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
    // var url = 'https://www.vllmr.eu/pebble/config/index.html';
@@ -88,6 +88,22 @@ Pebble.addEventListener('webviewclosed', function(e)
       dictionary['KEY_COLOR_BATTERYLOW'] = i_Color_BatteryLow;
    }
    
+   if(typeof configData.Color_ClockHour !== "undefined")
+   { 
+      var Color_ClockHour = configData.Color_ClockHour;
+      var i_Color_ClockHour = parseInt(Color_ClockHour.substring(2), 16);
+      if (m_b_Debug) console.log("[JS:CONF] Config: i_Color_ClockHour "+i_Color_ClockHour.toString());
+      dictionary['KEY_COLOR_CLOCK_HOUR'] = i_Color_ClockHour;
+   }
+   
+   if(typeof configData.Color_ClockMinute !== "undefined")
+   { 
+      var Color_ClockMinute = configData.Color_ClockMinute;
+      var i_Color_ClockMinute = parseInt(Color_ClockMinute.substring(2), 16);
+      if (m_b_Debug) console.log("[JS:CONF] Config: i_Color_ClockMinute "+i_Color_ClockMinute.toString());
+      dictionary['KEY_COLOR_CLOCK_MIN'] = i_Color_ClockMinute;
+   }
+   
    if(typeof configData.Weather_TemperatureCelcius !== "undefined")
    { 
       var Weather_TemperatureCelcius = configData.Weather_TemperatureCelcius;
@@ -164,6 +180,14 @@ Pebble.addEventListener('webviewclosed', function(e)
       
       if (m_b_Debug) console.log("[JS:CONF] Config: i_Clock_Datestyle "+i_Clock_Datestyle.toString());
       dictionary['KEY_CLOCK_DATESTYLE'] = i_Clock_Datestyle;
+   }
+   
+   if(typeof configData.Clock_DayOfYearStyle !== "undefined")
+   { 
+      var Clock_DayOfYearStyle = configData.Clock_DayOfYearStyle;
+      var i_Clock_DayOfYearStyle = (Clock_DayOfYearStyle === 'true') ? 0 : 1;
+      if (m_b_Debug) console.log("[JS:CONF] Config: i_Clock_DayOfYearStyle "+i_Clock_DayOfYearStyle.toString());
+      dictionary['KEY_CLOCK_DAYOFYEARSTYLE'] = i_Clock_DayOfYearStyle;
    }
    
    if(typeof configData.Bluetooth_VibrationEnabled !== "undefined")

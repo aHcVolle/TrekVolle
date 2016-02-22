@@ -12,9 +12,13 @@
 #define DATE_YY_MM_DD 1
 #define DATE_MM_DD_YY 2
 
+#define DAY_DAYOFYEAR 0
+#define DAY_TEMPHIGHLOW 1
+
 // Vars used in other files
 int m_i_Clock_DateStyle;
 bool m_b_Clock_Clock24h;
+int m_i_Clock_DayOfYearStyle;
 
 bool m_b_Clock_Sleep;
 bool m_b_Clock_SleepEnabled;

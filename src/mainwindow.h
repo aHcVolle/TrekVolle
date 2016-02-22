@@ -35,6 +35,8 @@ GColor Color_Window;
 GColor Color_Charging;
 GColor Color_Error;
 GColor Color_BatteryLow;
+GColor Color_ClockHour;
+GColor Color_ClockMin;
 
 // Functions used in other files
 void show_mainwindow(void);

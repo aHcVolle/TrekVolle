@@ -15,7 +15,7 @@
 static void init() 
 {
    ui_PNG_Loadbuffer = malloc_low(PNG_BUFFER_SIZE);
-   m_b_Debug = false;
+   m_b_Debug = true;
 
 
    if (m_b_Debug)

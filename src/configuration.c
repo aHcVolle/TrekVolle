@@ -39,7 +39,14 @@ void LoadConfigFromStorage()
    {
      Color_BatteryLow.argb = persist_read_int(KEY_COLOR_BATTERYLOW);
    }
-   
+   if (persist_exists(KEY_COLOR_CLOCK_HOUR)) 
+   {
+     Color_ClockHour.argb = persist_read_int(KEY_COLOR_CLOCK_HOUR);
+   }
+   if (persist_exists(KEY_COLOR_CLOCK_MIN)) 
+   {
+     Color_ClockMin.argb = persist_read_int(KEY_COLOR_CLOCK_MIN);
+   }
    
    if (persist_exists(KEY_WEATHER_TEMPERATURECELCIUS)) 
    {
@@ -53,6 +60,7 @@ void LoadConfigFromStorage()
    {
      m_b_Weather_RetryUpdate = persist_read_bool(KEY_WEATHER_RETRYUPDATE);
    }
+
    
    if (persist_exists(KEY_CLOCK_CLOCK24H)) 
    {
@@ -65,6 +73,10 @@ void LoadConfigFromStorage()
    if (persist_exists(KEY_CLOCK_SLEEP)) 
    {
      m_b_Clock_Sleep = persist_read_bool(KEY_CLOCK_SLEEP);
+   }
+   if (persist_exists(KEY_CLOCK_DAYOFYEARSTYLE)) 
+   {
+     m_i_Clock_DayOfYearStyle = persist_read_int(KEY_CLOCK_DAYOFYEARSTYLE);
    }
    
    if (persist_exists(KEY_NETWORK_REFRESHTIME)) 
@@ -98,6 +110,8 @@ void SaveConfigToStorage()
    persist_write_int(KEY_COLOR_CHARGING, (int)Color_Charging.argb);
    persist_write_int(KEY_COLOR_ERROR, (int)Color_Error.argb);
    persist_write_int(KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
+   persist_write_int(KEY_COLOR_CLOCK_HOUR, (int)Color_ClockHour.argb);
+   persist_write_int(KEY_COLOR_CLOCK_MIN,  (int)Color_ClockMin.argb);
          
    persist_write_bool(KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
    persist_write_int(KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
@@ -106,6 +120,7 @@ void SaveConfigToStorage()
    persist_write_bool(KEY_CLOCK_CLOCK24H, m_b_Clock_Clock24h);
    persist_write_int(KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
    persist_write_bool(KEY_CLOCK_SLEEP, m_b_Clock_Sleep);
+   persist_write_int(KEY_CLOCK_DAYOFYEARSTYLE, m_i_Clock_DayOfYearStyle);
    
    persist_write_int(KEY_NETWORK_REFRESHTIME, m_i_Network_RefreshTime);
    persist_write_bool(KEY_NETWORK_VIBRATIONENABLED, m_b_Network_VibrationEnabled);   
@@ -131,6 +146,8 @@ void LoadDefaultConfig()
    Color_Charging = GColorGreen;
    Color_Error = GColorRed;
    Color_BatteryLow = GColorRed;
+   Color_ClockHour = GColorSunsetOrange;
+   Color_ClockMin = GColorSunsetOrange;
    #else
    Color_Background = GColorWhite;
    Color_Text = GColorWhite;
@@ -139,7 +156,8 @@ void LoadDefaultConfig()
    Color_Charging = GColorWhite;
    Color_Error = GColorBlack;
    Color_BatteryLow = GColorWhite;
-   
+   Color_ClockHour = GColorWhite;
+   Color_ClockMin = GColorWhite;
    #endif
    
    m_b_Weather_TemperatureInCelcius = true;
@@ -149,6 +167,7 @@ void LoadDefaultConfig()
    m_i_Clock_DateStyle = DATE_DD_MM_YY;
    m_b_Clock_Clock24h = true;
    m_b_Clock_Sleep = true;
+   m_i_Clock_DayOfYearStyle = DAY_DAYOFYEAR;
    
    m_i_Network_RefreshTime = 1;
    m_b_Network_VibrationEnabled = true;

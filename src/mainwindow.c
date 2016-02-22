@@ -316,7 +316,7 @@ void Color_SetTextColor()
    if (m_b_Debug)
          printf("[MAIN][Color_SetTextColor] Setting text color");
    // Set the text color
-   text_layer_set_text_color(Layer_Time_Text, Color_Text);
+   text_layer_set_text_color(Layer_Time_Text, Color_ClockHour);
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
    text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
    text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);

@@ -63,7 +63,10 @@ function Weather_DownloadData(RequestString )
             // Conditions
             var conditions = json.weather[0].main;      
             //console.log('Conditions are ' + conditions);
-   
+            
+            // MinMax
+            var Temp_Min = Math.round(json.main.temp_min - 273.15);
+            var Temp_Max = Math.round(json.main.temp_max - 273.15);
             // Icon
             var iconname = json.weather[0].icon;
    
@@ -79,7 +82,9 @@ function Weather_DownloadData(RequestString )
                    'KEY_CONDITIONS': conditions,
                    'KEY_ICON': iconname,
                    'KEY_LOCATION': location,
-                   'KEY_ONLINE': 1
+                   'KEY_ONLINE': 1,
+                   'KEY_WEATHER_TEMPERATURE_MIN' : Temp_Min,
+                   'KEY_WEATHER_TEMPERATURE_MAX' : Temp_Max
                 };
    
             // Send to Pebble

@@ -124,7 +124,8 @@ void Weather_Init()
    // Init the vars
    m_b_Weather_LastUpdateWasOK = false;
    m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
-
+   m_i_Weather_Temperature_Min = 0;
+   m_i_Weather_Temperature_Max = 0;
    m_Weather_Text_Layer = GetWeatherTextLayer();
    
    m_i_Weather_WeatherImage = RESOURCE_ID_IMAGE_ERROR;

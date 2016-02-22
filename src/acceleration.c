@@ -2,6 +2,10 @@
 
 static void Acceleration_Handle(AccelAxisType axis, int32_t direction) 
 {
+   if (m_b_Debug)
+         printf("[ACC][Acceleration_Handle] Axis: %d Direction: %d",(int)axis,(int)direction); 
+   
+   
    // Check if the axis was the y axis
    if  (axis == ACCEL_AXIS_Y)  
    {

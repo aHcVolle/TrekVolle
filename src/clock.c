@@ -47,7 +47,23 @@ void Time_Redraw()
    
    // Write the current day/week into a buffer
    static char s_DayBuffer[20];
-   strftime(s_DayBuffer, sizeof(s_DayBuffer), "D%j W%W", Time_Tick);
+   if (m_i_Clock_DayOfYearStyle == DAY_DAYOFYEAR)
+   {
+      strftime(s_DayBuffer, sizeof(s_DayBuffer), "D%j W%W", Time_Tick);
+   }
+   else if (m_i_Clock_DayOfYearStyle == DAY_TEMPHIGHLOW)
+   {
+      int TempMin = m_i_Weather_Temperature_Min;
+      int TempMax = m_i_Weather_Temperature_Max;
+      if (!m_b_Weather_TemperatureInCelcius)
+      {
+         TempMin = (float) TempMin * 1.8 + 32;
+         TempMax = (float) TempMax * 1.8 + 32;
+      }
+      snprintf(s_DayBuffer, sizeof(s_DayBuffer), "%03d - %03d", TempMin,TempMax);
+   }
+   
+   
    
    // Display this buffer on the TextLayer
    text_layer_set_text(m_Day_Text_Layer, s_DayBuffer);

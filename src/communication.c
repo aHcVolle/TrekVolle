@@ -28,10 +28,13 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,KEY_WEATHER_TEMPERATURECELCIUS);
    Tuple *Weather_Refreshtime_tuple = dict_find(iterator,KEY_WEATHER_REFRESHTIME);
    Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,KEY_WEATHER_RETRYUPDATE);
+   Tuple *Weather_TemperatureMax_tuple = dict_find(iterator, KEY_WEATHER_TEMPERATURE_MAX);
+   Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, KEY_WEATHER_TEMPERATURE_MIN);
    
    Tuple *Clock_Clock24h_tuple = dict_find(iterator,KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,KEY_CLOCK_DATESTYLE);
    Tuple *Clock_Sleep_tuple = dict_find(iterator,KEY_CLOCK_SLEEP);
+   Tuple *Clock_DayOfYearStyle_tuple = dict_find(iterator,KEY_CLOCK_DAYOFYEARSTYLE);
    
    Tuple *Network_Refreshtime_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);   
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
@@ -139,7 +142,6 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // If the temperature unit was changed
    if (Weather_TemperatureCelcius_tuple)
    {
-      
       if (m_b_Debug)
          printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_TEMPERATURECELCIUS");
       m_b_Weather_TemperatureInCelcius = (bool)Weather_TemperatureCelcius_tuple->value->int32;
@@ -184,6 +186,20 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       if (m_b_Debug)
          printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP");
       m_b_Clock_Sleep = (bool)Clock_Sleep_tuple->value->int32;
+   }
+   // If the DayOfYearStyle was changed
+   if (Clock_DayOfYearStyle_tuple)
+   {
+      m_i_Clock_DayOfYearStyle = (int)Clock_DayOfYearStyle_tuple->value->int32;
+      b_ClockChanged = true;
+   }
+   // If we have new min max weather data
+   if (Weather_TemperatureMin_tuple && Weather_TemperatureMax_tuple)
+   {
+      m_i_Weather_Temperature_Min = (int)Weather_TemperatureMin_tuple->value->int32;
+      m_i_Weather_Temperature_Max = (int)Weather_TemperatureMax_tuple->value->int32;
+      if (m_i_Clock_DayOfYearStyle == DAY_TEMPHIGHLOW)
+         b_ClockChanged = true;
    }
    
    // If there was a change in the clock 

@@ -35,7 +35,7 @@ var xhrRequest = function (url, type, callback)
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
 {
-   m_b_Debug = false;   
+   m_b_Debug = true;   
    
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");

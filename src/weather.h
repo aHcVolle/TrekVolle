@@ -19,6 +19,9 @@ bool m_b_Weather_RetryUpdate;
 bool m_b_Weather_TemperatureInCelcius;
 int m_i_Weather_RefreshTime;
 
+int m_i_Weather_Temperature_Min;
+int m_i_Weather_Temperature_Max;
+
 // Functions used in other files
 void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple);
 
