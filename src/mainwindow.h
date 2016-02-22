@@ -49,7 +49,8 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color);
 
 // Functions to return all the text pointers
 TextLayer* GetStepTextLayer();
-TextLayer* GetTimeTextLayer();
+TextLayer* GetTimeHourTextLayer();
+TextLayer* GetTimeMinuteTextLayer();
 TextLayer* GetDateTextLayer();
 TextLayer* GetDayTextLayer();
 TextLayer* GetBatteryTextLayerPebble();

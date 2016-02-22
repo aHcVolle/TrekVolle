@@ -6,7 +6,8 @@ static Window *s_window;
 static GFont s_res_roboto_bold_subset_49;
 static GFont s_res_gothic_18_bold;
 
-static TextLayer *Layer_Time_Text;
+static TextLayer *Layer_TimeHour_Text;
+static TextLayer *Layer_TimeMinute_Text;
 static TextLayer *Layer_Weather_Text;
 static TextLayer *Layer_Day_Text;
 static TextLayer *Layer_Steps_Text;
@@ -81,14 +82,23 @@ static void initialise_ui(void)
    if (m_b_Debug)
          printf("[MAIN][initialise_ui] Creating text layers");
    
-   // Layer_Time_Text
-   Layer_Time_Text = text_layer_create(GRect(0, 4, 144, 49));
-   text_layer_set_background_color(Layer_Time_Text, GColorClear);
-   text_layer_set_text_color(Layer_Time_Text, GColorWhite);
-   text_layer_set_text(Layer_Time_Text, "30:80");
-   text_layer_set_text_alignment(Layer_Time_Text, GTextAlignmentRight);
-   text_layer_set_font(Layer_Time_Text, s_res_roboto_bold_subset_49);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Time_Text);
+   // Layer_TimeHour_Text
+   Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 75, 49));
+   text_layer_set_background_color(Layer_TimeHour_Text, GColorClear);
+   text_layer_set_text_color(Layer_TimeHour_Text, GColorWhite);
+   text_layer_set_text(Layer_TimeHour_Text, "30");
+   text_layer_set_text_alignment(Layer_TimeHour_Text, GTextAlignmentRight);
+   text_layer_set_font(Layer_TimeHour_Text, s_res_roboto_bold_subset_49);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);
+   
+   // Layer_TimeMinute_Text
+   Layer_TimeMinute_Text = text_layer_create(GRect(0, 4, 144, 49));
+   text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
+   text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
+   text_layer_set_text(Layer_TimeMinute_Text, ":80");
+   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentRight);
+   text_layer_set_font(Layer_TimeMinute_Text, s_res_roboto_bold_subset_49);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
 
    // Layer_Weather_Text
    Layer_Weather_Text = text_layer_create(GRect(24, 93, 119, 22));
@@ -149,7 +159,8 @@ static void destroy_ui(void)
    // Destroy all ze thingz
    window_destroy(s_window);
 
-   text_layer_destroy(Layer_Time_Text);
+   text_layer_destroy(Layer_TimeHour_Text);
+   text_layer_destroy(Layer_TimeMinute_Text);
    text_layer_destroy(Layer_Weather_Text);
    text_layer_destroy(Layer_Day_Text);
    text_layer_destroy(Layer_Steps_Text);
@@ -316,7 +327,8 @@ void Color_SetTextColor()
    if (m_b_Debug)
          printf("[MAIN][Color_SetTextColor] Setting text color");
    // Set the text color
-   text_layer_set_text_color(Layer_Time_Text, Color_ClockHour);
+   text_layer_set_text_color(Layer_TimeHour_Text, Color_ClockHour);
+   text_layer_set_text_color(Layer_TimeMinute_Text, Color_ClockMin);
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
    text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
    text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
@@ -324,7 +336,8 @@ void Color_SetTextColor()
    text_layer_set_text_color(Layer_Day_Text, Color_Text); 
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
       
-   layer_mark_dirty(text_layer_get_layer(Layer_Time_Text));
+   layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
+   layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Phone));
    layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
@@ -364,8 +377,10 @@ void show_PhoneBattery(bool show)
 }
 
 // Return all the layer's pointers
-TextLayer* GetTimeTextLayer()
-{   return Layer_Time_Text;}
+TextLayer* GetTimeHourTextLayer()
+{   return Layer_TimeHour_Text;}
+TextLayer* GetTimeMinuteTextLayer()
+{   return Layer_TimeMinute_Text;}
 TextLayer* GetWeatherTextLayer()
 {   return Layer_Weather_Text;}
 TextLayer*  GetBatteryTextLayerPhone()

@@ -24,6 +24,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Color_Charging_tuple = dict_find(iterator,KEY_COLOR_CHARGING);
    Tuple *Color_Error_tuple = dict_find(iterator,KEY_COLOR_ERROR);
    Tuple *Color_BatteryLow_tuple = dict_find(iterator,KEY_COLOR_BATTERYLOW);
+   Tuple *Color_ClockHour_tuple = dict_find(iterator,KEY_COLOR_CLOCK_HOUR);
+   Tuple *Color_ClockMin_tuple = dict_find(iterator,KEY_COLOR_CLOCK_MIN);
    
    Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,KEY_WEATHER_TEMPERATURECELCIUS);
    Tuple *Weather_Refreshtime_tuple = dict_find(iterator,KEY_WEATHER_REFRESHTIME);
@@ -42,6 +44,9 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
    Tuple *PingPong_tuple = dict_find(iterator,KEY_PINGPONG);
+   
+   // Save if there was a change in the clock display   
+   bool b_ClockChanged = false;
    
    // Process the received tuples
    
@@ -129,6 +134,22 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       Color_BatteryLow = GColorFromHEX((int)Color_BatteryLow_tuple->value->int32);
    }
    
+   if (Color_ClockHour_tuple)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_CLOCK_HOUR");
+      b_ClockChanged = true;
+      Color_ClockHour = GColorFromHEX((int)Color_ClockHour_tuple->value->int32);
+   }
+   
+   if (Color_ClockMin_tuple)
+   {
+      if (m_b_Debug)
+         printf("[COM][Communication_InboxReceived] Received data KEY_COLOR_CLOCK_MIN");
+      b_ClockChanged = true;
+      Color_ClockMin = GColorFromHEX((int)Color_ClockMin_tuple->value->int32);
+   }
+   
    // If the image color was changed lets redraw the images
    if (b_NewImageConfig)
    {
@@ -162,8 +183,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       m_b_Weather_RetryUpdate = (bool)Weather_RetryUpdate_tuple->value->int32;
    }
    
-   // Save if there was a change in the clock display   
-   bool b_ClockChanged = false;
+   
    // The clock mode was changed
    if (Clock_Clock24h_tuple)
    {
@@ -205,7 +225,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // If there was a change in the clock 
    if (b_ClockChanged)
    {
-      Time_Redraw();
+      Color_SetTextColor();
+      Clock_Redraw();
    }
       
    // The network refresh time was changed
@@ -257,8 +278,16 @@ void Communication_Send(int i_MessageID)
 }
 
 // Nothing to see here...
-static void Communication_InboxDropped(AppMessageResult reason, void *context) {}
-static void Communication_OutboxFailed(DictionaryIterator *iterator, AppMessageResult reason, void *context) {}
+static void Communication_InboxDropped(AppMessageResult reason, void *context) 
+{
+   if (m_b_Debug)
+         printf("[COM][Communication_InboxDropped] %d",reason);
+}
+static void Communication_OutboxFailed(DictionaryIterator *iterator, AppMessageResult reason, void *context) 
+{
+   if (m_b_Debug)
+         printf("[COM][Communication_OutboxFailed] %d",reason);   
+}
 static void Communication_OutboxSent(DictionaryIterator *iterator, void *context) {}
 
 // What todo if the communication is initialized

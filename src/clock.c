@@ -1,37 +1,46 @@
 #include "clock.h"
 
 // Used layers
-TextLayer* m_Time_Text_Layer = NULL;
+TextLayer* m_TimeHour_Text_Layer = NULL;
+TextLayer* m_TimeMinute_Text_Layer = NULL;
 TextLayer* m_Date_Text_Layer = NULL;
 TextLayer* m_Day_Text_Layer = NULL;
 
 // Used variables 
 int m_i_Weather_Counter = 0;
 int m_i_Network_Counter = 0;
+int m_i_LastMinute = -1;
+
 
 // Redraw the clocks text
-void Time_Redraw() 
+void Clock_Redraw() 
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK][Time_Redraw] Redrawing");
+         printf("[CLOCK][Clock_Redraw] Redrawing");
    
    // Get a tm structure
    time_t Time_Temp = time(NULL);
    struct tm* Time_Tick = localtime(&Time_Temp);
 
    // Write the current hours and minutes into a buffer
-   static char s_TimeBuffer[8];
+   static char s_TimeHourBuffer[3];
+   static char s_TimeMinuteBuffer[5];
    // Distinguish betwwen 24 and 12 hour mode
    if (m_b_Clock_Clock24h)
-      strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%H:%M", Time_Tick);
+   {
+      strftime(s_TimeHourBuffer, sizeof(s_TimeHourBuffer), "%H", Time_Tick);
+      strftime(s_TimeMinuteBuffer, sizeof(s_TimeMinuteBuffer), ":%M", Time_Tick);
+   }      
    else
    {
-      strftime(s_TimeBuffer, sizeof(s_TimeBuffer), "%I:%M", Time_Tick);
+      strftime(s_TimeHourBuffer, sizeof(s_TimeHourBuffer), "%I", Time_Tick);
+      strftime(s_TimeMinuteBuffer, sizeof(s_TimeMinuteBuffer), ":%M", Time_Tick);
    }
 
    // Display this time on the TextLayer
-   text_layer_set_text(m_Time_Text_Layer, s_TimeBuffer);
+   text_layer_set_text(m_TimeHour_Text_Layer, s_TimeHourBuffer);
+   text_layer_set_text(m_TimeMinute_Text_Layer, s_TimeMinuteBuffer);
    
    // Write the current date into a buffer based on the options
    static char s_DateBuffer[20];
@@ -71,14 +80,20 @@ void Time_Redraw()
 }
 
 // A new time tick will be processed here
-static void Time_Handle(struct tm *tick_time, TimeUnits units_changed) 
+static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed) 
 {
+   if (m_i_LastMinute == tick_time->tm_min)
+   {
+      return;
+   }
+   m_i_LastMinute = tick_time->tm_min;
+   
    // Debug printout 
    if (m_b_Debug)
-         printf("[CLOCK][Time_Handle] Handler");
+         printf("[CLOCK][Clock_Handle] Handler %d:%d:%d",tick_time->tm_hour,tick_time->tm_min,tick_time->tm_sec);
    
    // Redraw the time
-   Time_Redraw();
+   Clock_Redraw();
    
    // See if we want to request a network check
    m_i_Network_Counter++;
@@ -107,36 +122,37 @@ static void Time_Handle(struct tm *tick_time, TimeUnits units_changed)
    }
    
    if (m_b_Debug)
-      printf("[CLOCK][Time_Handle] After Heap Used: %d, Free: %d",(int) heap_bytes_used(), (int)heap_bytes_free() );
+      printf("[CLOCK][Clock_Handle] After Heap Used: %d, Free: %d",(int) heap_bytes_used(), (int)heap_bytes_free() );
 }
 
 // Init the used variables and register with the time service
-void Time_Init()
+void Clock_Init()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK][Time_Init] Init");
+         printf("[CLOCK][Clock_Init] Init");
    
    // Init the vars
-   m_Time_Text_Layer = GetTimeTextLayer();
+   m_TimeHour_Text_Layer = GetTimeHourTextLayer();
+   m_TimeMinute_Text_Layer = GetTimeMinuteTextLayer();
    m_Date_Text_Layer = GetDateTextLayer();
    m_Day_Text_Layer  = GetDayTextLayer();
    
    
    // Make sure the time is displayed from the start
-   Time_Redraw();
+   Clock_Redraw();
 
    
    // Register with TickTimerService
-   tick_timer_service_subscribe(MINUTE_UNIT, Time_Handle);
+   tick_timer_service_subscribe(MINUTE_UNIT, Clock_Handle);
 }
 
 // Unregister from the service
-void Time_DeInit()
+void Clock_DeInit()
 {
    // Debug printout
    if (m_b_Debug)
-         printf("[CLOCK][Time_DeInit] Deinit");
+         printf("[CLOCK][Clock_DeInit] Deinit");
    // Unregister from the service
    tick_timer_service_unsubscribe();
 }

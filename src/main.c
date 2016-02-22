@@ -37,7 +37,7 @@ static void init()
    Network_Init();
    
    // Time 
-   Time_Init();
+   Clock_Init();
    
    // Battery
    Battery_Init();
@@ -67,7 +67,7 @@ static void deinit()
    Bluetooth_DeInit();
    Network_DeInit();
    Battery_Deinit();
-   Time_DeInit();
+   Clock_DeInit();
    Communication_DeInit();
    Health_DeInit();
    Acceleration_DeInit();

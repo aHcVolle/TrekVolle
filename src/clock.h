@@ -24,8 +24,8 @@ bool m_b_Clock_Sleep;
 bool m_b_Clock_SleepEnabled;
 
 // Functions used in other files
-void Time_Redraw();
-void Time_Init();
-void Time_DeInit();
+void Clock_Redraw();
+void Clock_Init();
+void Clock_DeInit();
 
 #endif

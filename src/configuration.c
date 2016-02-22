@@ -165,7 +165,7 @@ void LoadDefaultConfig()
    m_b_Weather_RetryUpdate = true;
       
    m_i_Clock_DateStyle = DATE_DD_MM_YY;
-   m_b_Clock_Clock24h = true;
+   m_b_Clock_Clock24h = clock_is_24h_style();
    m_b_Clock_Sleep = true;
    m_i_Clock_DayOfYearStyle = DAY_DAYOFYEAR;
    

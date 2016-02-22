@@ -19,6 +19,10 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
       // Redraw the weather text to display the new data
       Weather_RedrawText();
    }
+   
+   // Try to avoid double switches....
+   accel_tap_service_unsubscribe();
+   accel_tap_service_subscribe(Acceleration_Handle);
 }
 
 // Register to the acceleration service
