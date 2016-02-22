@@ -42,113 +42,130 @@
     "resources": {
         "media": [
             {
+                "file": "images/Overview.png",
+                "name": "IMAGE_OVERVIEW",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
                 "file": "images/Weather_50.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_50",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_13.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_13",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_11.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_11",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_10.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_10",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_09.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_09",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_04.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_04",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_03.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_03",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_02.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_02",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Weather_01.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_WEATHER_01",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Steps.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_STEPS",
                 "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/Overview.png",
-                "menuIcon": true,
-                "name": "IMAGE_OVERVIEW",
-                "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Network.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_NETWORK",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Error.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_ERROR",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Bluetooth.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BLUETOOTH",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/BatteryMid.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BATTERY_MID",
                 "targetPlatforms": null,
-                "type": "png"
-            },
-            {
-                "file": "images/BatteryLow.png",
-                "name": "IMAGE_BATTERY_LOW",
-                "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/BatteryHigh.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BATTERY_HIGH",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
+            },
+            {
+                "file": "images/BatteryLow.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_BATTERY_LOW",
+                "targetPlatforms": null,
+                "type": "bitmap"
             },
             {
                 "file": "images/BackGround.png",
+                "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BACKGROUND",
+                "storageFormat": "png",
                 "targetPlatforms": null,
-                "type": "png"
+                "type": "bitmap"
             }
         ]
     },
