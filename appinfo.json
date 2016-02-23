@@ -196,6 +196,7 @@
     "sdkVersion": "3",
     "shortName": "TrekVolle",
     "targetPlatforms": [
+        "aplite",
         "basalt"
     ],
     "uuid": "2da02267-7a19-4e49-9ed1-439d25db14e4",
