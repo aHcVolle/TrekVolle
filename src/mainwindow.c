@@ -165,8 +165,7 @@ static void initialise_ui(void)
 
 static void destroy_ui(void) 
 {
-   // Destroy all ze thingz
-   window_destroy(s_window);
+   
 
    text_layer_destroy(Layer_TimeHour_Text);
    text_layer_destroy(Layer_TimeMinute_Text);
@@ -199,6 +198,9 @@ static void destroy_ui(void)
    gbitmap_destroy(m_Image_BatteryPhone.thisBitmap);
    gbitmap_destroy(m_Image_BatteryPebble.thisBitmap);
    
+   // Destroy all ze thingz
+   window_destroy(s_window);
+   
 }
 // END AUTO-GENERATED UI CODE
 
@@ -229,8 +231,10 @@ void hide_mainwindow(void)
 
    
    // Free our PNG buffer
+   #ifdef PBL_COLOR
    if (ui_PNG_Loadbuffer != NULL)
       free(ui_PNG_Loadbuffer);
+   #endif
    
    // Kill the window
    window_stack_remove(s_window, true);
@@ -241,48 +245,52 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
 {
    // Get out of here if the image layer is not initialized
    if (Image->thisLayer == NULL)
+   {
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Will not draw on layer that is NULL");
+      #endif
       return;
-   
+   }
+
+   #ifdef DEBUG_IMAGEREDRAW
+   printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
+   #endif
+
+   // Clear the image layer
+   bitmap_layer_set_bitmap(Image->thisLayer, NULL);
+
+   #ifdef DEBUG_IMAGEREDRAW
+   printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Layer is now NULL",(int) heap_bytes_used(),(int) heap_bytes_free() );   
+   #endif
+
+   // Clear the image storage
+   if (Image->thisBitmap)
+   {
+      gbitmap_destroy(Image->thisBitmap);
+      Image->thisBitmap = NULL;
+
+      #ifdef DEBUG_IMAGEREDRAW
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is destroyed",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
+   }
    #ifdef PBL_COLOR
-      #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
-      #endif
-   
-      // Clear the image layer
-      bitmap_layer_set_bitmap(Image->thisLayer, NULL);
-   
-      #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Layer is now NULL",(int) heap_bytes_used(),(int) heap_bytes_free() );   
-      #endif
-      
-      // Clear the image storage
-      if (Image->thisBitmap)
-      {
-         gbitmap_destroy(Image->thisBitmap);
-         Image->thisBitmap = NULL;
-         
-         #ifdef DEBUG_IMAGEREDRAW
-            printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is destroyed",(int) heap_bytes_used(),(int) heap_bytes_free() );
-         #endif
-      }
-   
       // Set the buffer to 0's
       memset(ui_PNG_Loadbuffer, 0, PNG_BUFFER_SIZE);
-      
+   
       #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Buffer is set to 0",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Buffer is set to 0",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
-      
+   
       // Get the size of the resource
       size_t mResource_size;
       mResource_size = resource_size(resource_get_handle(ImageID));
       #ifdef DEBUG_IMAGEREDRAW
-         printf("[MAIN][Redraw_Image] resource_size: %d", (int) mResource_size);
+      printf("[MAIN][Redraw_Image] resource_size: %d", (int) mResource_size);
       #endif
       if (mResource_size == 0)
       {
          #ifdef DEBUG_IMAGEREDRAW
-            printf("[MAIN][Redraw_Image] resource size of %d is 0!!!! ",ImageID);
+         printf("[MAIN][Redraw_Image] resource size of %d is 0!!!! ",ImageID);
          #endif
          return;
       }
@@ -290,30 +298,33 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
       #ifdef DEBUG_IMAGEREDRAW
       printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Got resource size",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
-      
+   
    
       // Load the resource
       size_t png_size;
       png_size = resource_load(resource_get_handle(ImageID),ui_PNG_Loadbuffer, mResource_size);
       #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
    
       // Create the bitmap
       Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);
-      
-      // Check if everything went fine
-      if (Image->thisBitmap == NULL)
-      {
-         #ifdef DEBUG_IMAGEREDRAW
-            printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Could not create bitmap!!!",(int) heap_bytes_used(),(int) heap_bytes_free());
-         #endif
-         return;
-      }
+   #else
+      Image->thisBitmap = gbitmap_create_with_resource(ImageID);
+   #endif
+   // Check if everything went fine
+   if (Image->thisBitmap == NULL)
+   {
       #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Could not create bitmap!!!",(int) heap_bytes_used(),(int) heap_bytes_free());
       #endif
+      return;
+   }
+   #ifdef DEBUG_IMAGEREDRAW
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+   #endif
    
+   #ifdef PBL_COLOR
       // Replace white with the image color
       replace_gbitmap_color(GColorWhite, Color,Image->thisBitmap, NULL);
    
@@ -323,39 +334,25 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
    
       // Replace black with the watchface background color
       replace_gbitmap_color(GColorBlack, Color_Window, Image->thisBitmap, NULL);
-      
+   
       #ifdef DEBUG_IMAGEREDRAW
          printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 2 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
-   
-      // Set the image to the layer
-      bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
-      #ifdef DEBUG_IMAGEREDRAW
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Set bitmap to layer",(int) heap_bytes_used(),(int) heap_bytes_free() );
-      #endif
-   
-      // Let the layer be redrawn
-      layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
-      #ifdef DEBUG_IMAGEREDRAW
-         printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d End",(int) heap_bytes_used(), (int)heap_bytes_free() );
-      #endif
    #else
-      bitmap_layer_set_bitmap(Image->thisLayer, NULL);
-      if (Image->thisBitmap)
-      {
-         gbitmap_destroy(Image->thisBitmap);
-         Image->thisBitmap = NULL;
-      }
-      Image->thisBitmap = gbitmap_create_with_resource(ImageID);
-   if (Image->thisBitmap == NULL)
-      printf("argh?");
-      bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
-      layer_set_hidden((Layer *)Image->thisLayer, !gcolor_equal(Color,GColorWhite));
-      
-   
-   
+      layer_set_hidden((Layer *)Image->thisLayer, gcolor_equal(Color,GColorBlack));
    #endif
    
+   // Set the image to the layer
+   bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
+   #ifdef DEBUG_IMAGEREDRAW
+      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Set bitmap to layer",(int) heap_bytes_used(),(int) heap_bytes_free() );
+   #endif
+
+   // Let the layer be redrawn
+   layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
+   #ifdef DEBUG_IMAGEREDRAW
+      printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d End",(int) heap_bytes_used(), (int)heap_bytes_free() );
+   #endif
 }
 
 // Set all the text's color

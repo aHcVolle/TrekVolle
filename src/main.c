@@ -14,9 +14,9 @@
 // Init all the modules
 static void init() 
 {
-   ui_PNG_Loadbuffer = malloc_low(PNG_BUFFER_SIZE);
-
-
+   #ifdef PBL_COLOR
+      ui_PNG_Loadbuffer = malloc_low(PNG_BUFFER_SIZE);
+   #endif
 
    #ifdef DEBUG_MAINWINDOW
       printf("\n\n\n\nTrekvolle is starting\n\n\n\n");
