@@ -2,13 +2,14 @@
 
 // Layer to display the health info
 TextLayer* m_Health_Text_Layer;
-
+#if defined(PBL_HEALTH)
 // Get the data from the health service
 void Health_GetMovementData(void)
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_HEALTH
          printf("[HEALTH][Health_GetMovementData] Getting data");
+   #endif
    
    // Get the step count and distance
    HealthMetric Step_Metric_Count = HealthMetricStepCount;
@@ -52,8 +53,9 @@ static void Health_Handler(HealthEventType event, void *context)
       break;
     case HealthEventMovementUpdate:
       // Debug printout
-      if (m_b_Debug)
+      #ifdef DEBUG_HEALTH
          printf("[HEALTH][Health_Handler] Handler");
+     #endif
       // Request the new data
       Health_GetMovementData();
       break;
@@ -62,13 +64,15 @@ static void Health_Handler(HealthEventType event, void *context)
       break;
   }
 }
-
+#endif
 // Init the vars and register with the health service
 void Health_Init()
 {
+   #if defined(PBL_HEALTH)
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_HEALTH
          printf("[HEALTH][Health_Init] Init");
+   #endif
    
    // Get the layer
    m_Health_Text_Layer = GetStepTextLayer();
@@ -77,14 +81,18 @@ void Health_Init()
    health_service_events_subscribe(Health_Handler, NULL);
    // Get the initial data
    Health_GetMovementData();
+   #endif
 }
 
 // Unregister from the service
 void Health_DeInit()
 {
+   #if defined(PBL_HEALTH)
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_HEALTH
          printf("[HEALTH][Health_DeInit] Deinit");
+   #endif
    // Unregister from the health service
    health_service_events_unsubscribe();
+   #endif
 }

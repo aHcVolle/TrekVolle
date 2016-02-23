@@ -7,6 +7,10 @@
 #include "battery.h"
 #include "configuration.h"
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_COMMUNICATION
+#endif
+
 // Lots of defines....
 #define KEY_TEMPERATURE 0
 #define KEY_CONDITIONS 1

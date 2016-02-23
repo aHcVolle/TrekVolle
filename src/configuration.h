@@ -9,6 +9,11 @@
 #include "network.h"
 #include "clock.h"
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_CONFIGURATION
+#endif
+
+
 // Variable to set the debug printout (is set in main.c)
 bool m_b_Debug;
 

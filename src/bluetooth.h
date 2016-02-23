@@ -6,6 +6,10 @@
 #include "configuration.h"
 #include "network.h"
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_BLUETOOTH
+#endif
+
 // Vars used int other files
 bool m_b_Bluetooth_VibrationEnabled;
 bool m_b_Bluetooth_ConnectionState;

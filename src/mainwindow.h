@@ -6,9 +6,18 @@
 #include "configuration.h"
 #include "battery.h"
 
+#define DEBUG_ENABLED
+
+#ifdef DEBUG_ENABLED
+   #define DEBUG_MAINWINDOW
+#endif
+
+#ifdef DEBUG_ENABLED
+   #define DEBUG_IMAGEREDRAW
+#endif
 
 // Heap fragmentation help
-#define PNG_BUFFER_SIZE 300
+#define PNG_BUFFER_SIZE 260
 uint8_t* ui_PNG_Loadbuffer;
 
 // Structures to hold all image informations

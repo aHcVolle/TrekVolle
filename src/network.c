@@ -16,8 +16,9 @@ void Network_Request()
       return;
    
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_NETWORK
          printf("[NET][Network_Request] Connection request");
+   #endif
    
    // Send the request
    Communication_Send(KEY_ONLINE);
@@ -27,8 +28,9 @@ void Network_Request()
 void Network_Redraw()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_NETWORK
          printf("[NET][Network_Redraw] Redrawing");
+   #endif
    
    // We're going to store the color here
    GColor Color;
@@ -57,8 +59,9 @@ void Network_Handle_Reply(Tuple *network_tuple)
       return;
    
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_NETWORK
          printf("[NET][Network_Handle_Reply] Handler");
+   #endif
    
    // Save the new state
    m_b_Network_ConnectionState = b_ConnectionState;
@@ -66,22 +69,26 @@ void Network_Handle_Reply(Tuple *network_tuple)
    bool b_Vibrate = m_b_Network_VibrationEnabled;
    if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
    {
-      if (m_b_Debug && b_Vibrate)
+      #ifdef DEBUG_NETWORK
+      if (b_Vibrate)
          printf("[NET][Network_Handle_Reply] Blocked vibration due to sleep mode");
+      #endif
       b_Vibrate = false;
    }
    
    // Vibrate if the user wants us to
    if (m_b_Network_ConnectionState && b_Vibrate)
    {
-      if (m_b_Debug)
+      #ifdef DEBUG_NETWORK
          printf("[NET][Network_Handle_Reply] Handler: Connection OK");
+      #endif
       vibes_short_pulse();  
    }
    else if (b_Vibrate)
    {
-      if (m_b_Debug)
+      #ifdef DEBUG_NETWORK
          printf("[NET][Network_Handle_Reply] Handler: Connection failed");
+      #endif
       vibes_double_pulse();
    }
    
@@ -93,8 +100,9 @@ void Network_Handle_Reply(Tuple *network_tuple)
 void Network_Init()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_NETWORK
          printf("[NET][Network_Init] Init");
+   #endif
    // Init the vars
    m_b_Network_ConnectionState = true;
 
@@ -105,6 +113,8 @@ void Network_Init()
 // Deinitthe variables
 void Network_DeInit()
 {
-   if (m_b_Debug)
+   #ifdef DEBUG_NETWORK
          printf("[NET][Network_DeInit] Deinit");
+   #endif
+   
 }

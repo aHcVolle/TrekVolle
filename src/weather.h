@@ -5,6 +5,10 @@
 #include "mainwindow.h"
 #include "communication.h"
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_WEATHER
+#endif
+
 // Display states
 enum DisplayStates
 {

@@ -21,8 +21,9 @@ void Weather_RedrawText()
        return;
    }
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_RedrawText] Redrawing text");
+   #endif
    
    // If we should display the current conditions
    if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
@@ -56,8 +57,9 @@ void Weather_RedrawText()
 void Weather_RedrawImage()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_RedrawImage] Redrawing image");
+   #endif
    // And redraw
    Redraw_Image(&m_Image_Weather,m_i_Weather_WeatherImage,Color_Image);
 }
@@ -66,8 +68,9 @@ void Weather_RedrawImage()
 void Weather_Redraw()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Redraw] Redrawing everything");
+   #endif
    // And do some work
    Weather_RedrawText();
    Weather_RedrawImage();
@@ -77,38 +80,43 @@ void Weather_Redraw()
 void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Location_tuple,Tuple *Image_tuple)
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler");
+   #endif
    // If we have some temperature information
    if(Temperature_tuple) 
    {
       m_i_Weather_Temperature = (int)Temperature_tuple->value->int32;
-      if (m_b_Debug)
+      #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler: Got temperatue");
+      #endif
       m_b_Weather_LastUpdateWasOK = true; 
    }
    // If we have info about the current condition
    if(Condition_tuple)
    {
       snprintf(m_s_Weather_ConditionBuffer, sizeof(m_s_Weather_ConditionBuffer), "%s", Condition_tuple->value->cstring);
-      if (m_b_Debug)
+      #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler: Got condition");
+      #endif
       m_b_Weather_LastUpdateWasOK = true;
    }
    // If we have info about hte current location
    if(Location_tuple) 
    {
       snprintf(m_s_Weather_LocationBuffer, sizeof(m_s_Weather_LocationBuffer), "%s", Location_tuple->value->cstring);
-      if (m_b_Debug)
+      #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler: Got location");
+      #endif
       m_b_Weather_LastUpdateWasOK = true;
    }
    // If we have info about the image to use
    if (Image_tuple)
    {  
       int i_NewWeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
-      if (m_b_Debug)
+      #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler: Got imageid %d",i_NewWeatherImage);
+      #endif
       if (i_NewWeatherImage != m_i_Weather_WeatherImage)
       {
          m_i_Weather_WeatherImage = i_NewWeatherImage;
@@ -123,8 +131,9 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
 void Weather_Init()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Init] Init");
+   #endif
    // Init the vars
    m_b_Weather_LastUpdateWasOK = false;
    m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
@@ -141,8 +150,9 @@ void Weather_Init()
 void Weather_DeInit()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_DeInit] Deinit");
+   #endif
 }
 
 // Request a weather update
@@ -160,8 +170,9 @@ void Weather_Request()
    m_b_Weather_LastUpdateWasOK = false;
 
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Request] Request");
+   #endif
    
    // Send Request
    Communication_Send(KEY_TEMPERATURE);
@@ -170,8 +181,9 @@ void Weather_Request()
 // Convert an image name to a resource id
 int Weather_GetImageID(char* s_WeatherImageName)
 {
-   if (m_b_Debug)
+   #ifdef DEBUG_WEATHER
       printf("[WEATHER][Weather_GetImageID] Getting id for %s",s_WeatherImageName);
+   #endif
    // Compare the image name
    if (strcmp(s_WeatherImageName,"01d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
@@ -211,7 +223,8 @@ int Weather_GetImageID(char* s_WeatherImageName)
       return RESOURCE_ID_IMAGE_WEATHER_50;
    
    // This imagename is unknown!
-   if (m_b_Debug)
-   printf("[WEATHER][Weather_GetImageID] Unknown weather image %s",s_WeatherImageName);
+   #ifdef DEBUG_WEATHER
+      printf("[WEATHER][Weather_GetImageID] Unknown weather image %s",s_WeatherImageName);
+   #endif
    return RESOURCE_ID_IMAGE_ERROR;
 }

@@ -6,6 +6,10 @@
 #include "communication.h"
 #include "bluetooth.h"
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_NETWORK
+#endif
+
 // Vars used in other files
 int m_i_Network_RefreshTime;
 bool m_b_Network_VibrationEnabled;

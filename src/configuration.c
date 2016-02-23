@@ -7,8 +7,9 @@ void LoadConfigFromStorage()
    LoadDefaultConfig();
    
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_CONFIGURATION
          printf("[CONF][LoadConfigFromStorage] Loading");
+   #endif
    
    // And now load the saved vars
    if (persist_exists(KEY_COLOR_BACKGROUND)) 
@@ -99,8 +100,9 @@ void LoadConfigFromStorage()
 void SaveConfigToStorage()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_CONFIGURATION
          printf("[CONF][SaveConfigToStorage] Saving");
+   #endif
    
    // And save
    persist_write_int(KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
@@ -134,8 +136,9 @@ void SaveConfigToStorage()
 void LoadDefaultConfig()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_CONFIGURATION
          printf("[CONF][LoadDefaultConfig] Setting defaults");
+   #endif
    
    // Set the vars
    #ifdef PBL_COLOR

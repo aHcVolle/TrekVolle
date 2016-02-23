@@ -19,21 +19,24 @@ static TextLayer *Layer_Battery_Text_Phone;
 
 static void initialise_ui(void) 
 {
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating window");
+   #endif
    s_window = window_create();
    window_set_background_color(s_window, GColorBlack);
    /*#ifndef PBL_SDK_3
    window_set_fullscreen(s_window, 1);
    #endif*/
    
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating fonts");
+   #endif
    s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
    s_res_roboto_bold_subset_49 = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
    
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating image layers");
+   #endif
    
    // Layer_Background_Image
    m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
@@ -54,10 +57,12 @@ static void initialise_ui(void)
    Redraw_Image(&m_Image_Weather, RESOURCE_ID_IMAGE_ERROR, GColorWhite);
 
    // Layer_Steps_Image
+   #if defined(PBL_HEALTH)
    m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
    snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
    Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
+   #endif
 
    // Layer_Battery_Image_Pebble
    m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
@@ -79,8 +84,9 @@ static void initialise_ui(void)
    
    
    
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating text layers");
+   #endif
    
    // Layer_TimeHour_Text
    Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 75, 49));
@@ -118,13 +124,15 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Day_Text);
 
    // Layer_Steps_Text
+   #if defined(PBL_HEALTH)
    Layer_Steps_Text = text_layer_create(GRect(24, 147, 123, 20));
    text_layer_set_background_color(Layer_Steps_Text, GColorClear);
    text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
    text_layer_set_text(Layer_Steps_Text, "9999, 9999m");
    text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
-
+   #endif
+   
    // Layer_Date_Text
    Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
    text_layer_set_background_color(Layer_Date_Text, GColorClear);
@@ -150,8 +158,9 @@ static void initialise_ui(void)
    text_layer_set_font(Layer_Battery_Text_Phone, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Phone);
    
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Finished creating");
+   #endif
 }
 
 static void destroy_ui(void) 
@@ -163,7 +172,9 @@ static void destroy_ui(void)
    text_layer_destroy(Layer_TimeMinute_Text);
    text_layer_destroy(Layer_Weather_Text);
    text_layer_destroy(Layer_Day_Text);
+   #if defined(PBL_HEALTH)
    text_layer_destroy(Layer_Steps_Text);
+   #endif
    text_layer_destroy(Layer_Date_Text);
    text_layer_destroy(Layer_Battery_Text_Pebble);
    text_layer_destroy(Layer_Battery_Text_Phone);
@@ -171,7 +182,9 @@ static void destroy_ui(void)
    bitmap_layer_destroy(m_Image_Background.thisLayer);
    bitmap_layer_destroy(m_Image_Bluetooth.thisLayer);
    bitmap_layer_destroy(m_Image_Weather.thisLayer);
+   #if defined(PBL_HEALTH)
    bitmap_layer_destroy(m_Image_Steps.thisLayer);
+   #endif
    bitmap_layer_destroy(m_Image_Network.thisLayer);
    bitmap_layer_destroy(m_Image_BatteryPhone.thisLayer);
    bitmap_layer_destroy(m_Image_BatteryPebble.thisLayer);
@@ -179,7 +192,9 @@ static void destroy_ui(void)
    gbitmap_destroy(m_Image_Background.thisBitmap);
    gbitmap_destroy(m_Image_Bluetooth.thisBitmap);
    gbitmap_destroy(m_Image_Weather.thisBitmap);
+   #if defined(PBL_HEALTH)
    gbitmap_destroy(m_Image_Steps.thisBitmap);
+   #endif
    gbitmap_destroy(m_Image_Network.thisBitmap);
    gbitmap_destroy(m_Image_BatteryPhone.thisBitmap);
    gbitmap_destroy(m_Image_BatteryPebble.thisBitmap);
@@ -228,95 +243,118 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
    if (Image->thisLayer == NULL)
       return;
    
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
+   #ifdef PBL_COLOR
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
+      #endif
    
-   // Clear the image layer
-   bitmap_layer_set_bitmap(Image->thisLayer, NULL);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Layer is now NULL",(int) heap_bytes_used(),(int) heap_bytes_free() );   
-
-   // Clear the image storage
+      // Clear the image layer
+      bitmap_layer_set_bitmap(Image->thisLayer, NULL);
    
-   if (Image->thisBitmap)
-   {
-      gbitmap_destroy(Image->thisBitmap);
-      Image->thisBitmap = NULL;
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Layer is now NULL",(int) heap_bytes_used(),(int) heap_bytes_free() );   
+      #endif
       
-      if (m_b_Debug)
-         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is destroyed",(int) heap_bytes_used(),(int) heap_bytes_free() );
-    
-   }
-     
-   memset(ui_PNG_Loadbuffer, 0, PNG_BUFFER_SIZE);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Buffer is set to 0",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      // Clear the image storage
+      if (Image->thisBitmap)
+      {
+         gbitmap_destroy(Image->thisBitmap);
+         Image->thisBitmap = NULL;
+         
+         #ifdef DEBUG_IMAGEREDRAW
+            printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is destroyed",(int) heap_bytes_used(),(int) heap_bytes_free() );
+         #endif
+      }
    
-   // Create the image storage
-   // Bitmap = gbitmap_create_with_resource(ImageID); // old style
+      // Set the buffer to 0's
+      memset(ui_PNG_Loadbuffer, 0, PNG_BUFFER_SIZE);
+      
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Buffer is set to 0",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
+      
+      // Get the size of the resource
+      size_t mResource_size;
+      mResource_size = resource_size(resource_get_handle(ImageID));
+      #ifdef DEBUG_IMAGEREDRAW
+         printf("[MAIN][Redraw_Image] resource_size: %d", (int) mResource_size);
+      #endif
+      if (mResource_size == 0)
+      {
+         #ifdef DEBUG_IMAGEREDRAW
+            printf("[MAIN][Redraw_Image] resource size of %d is 0!!!! ",ImageID);
+         #endif
+         return;
+      }
    
-   size_t mResource_size;
-   mResource_size = resource_size(resource_get_handle(ImageID));
-   if (m_b_Debug)
-      printf("[MAIN][Redraw_Image] resource_size: %d", (int) mResource_size);
-   
-   if (mResource_size == 0)
-   {
-      if (m_b_Debug)
-         printf("[MAIN][Redraw_Image] resource size of %d is 0!!!! ",ImageID);
-      return;
-   }
-   if (m_b_Debug)
+      #ifdef DEBUG_IMAGEREDRAW
       printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Got resource size",(int) heap_bytes_used(),(int) heap_bytes_free() );
-   size_t png_size;
-   png_size = resource_load(resource_get_handle(ImageID),ui_PNG_Loadbuffer, mResource_size);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
+      
    
-   Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);
+      // Load the resource
+      size_t png_size;
+      png_size = resource_load(resource_get_handle(ImageID),ui_PNG_Loadbuffer, mResource_size);
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
    
+      // Create the bitmap
+      Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);
+      
+      // Check if everything went fine
+      if (Image->thisBitmap == NULL)
+      {
+         #ifdef DEBUG_IMAGEREDRAW
+            printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Could not create bitmap!!!",(int) heap_bytes_used(),(int) heap_bytes_free());
+         #endif
+         return;
+      }
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
    
-   if (Image->thisBitmap == NULL)
-   {
-      if (m_b_Debug)
-         printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Could not create bitmap!!!",(int) heap_bytes_used(),(int) heap_bytes_free());
-      return;
-   }
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Bitmap is created",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      // Replace white with the image color
+      replace_gbitmap_color(GColorWhite, Color,Image->thisBitmap, NULL);
    
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 1 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
    
+      // Replace black with the watchface background color
+      replace_gbitmap_color(GColorBlack, Color_Window, Image->thisBitmap, NULL);
+      
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 2 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
    
+      // Set the image to the layer
+      bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
+      #ifdef DEBUG_IMAGEREDRAW
+         printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Set bitmap to layer",(int) heap_bytes_used(),(int) heap_bytes_free() );
+      #endif
    
-   #ifdef PBL_COLOR   
-   // Replace white with the image color
-   replace_gbitmap_color(GColorWhite, Color,Image->thisBitmap, NULL);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 1 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
-   
-   // Replace black with the watchface background color
-   replace_gbitmap_color(GColorBlack, Color_Window, Image->thisBitmap, NULL);
-   
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 2 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
-   
-   if (m_b_Debug)
-         printf("[MAIN][Redraw_Image] Color replaced.");
+      // Let the layer be redrawn
+      layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
+      #ifdef DEBUG_IMAGEREDRAW
+         printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d End",(int) heap_bytes_used(), (int)heap_bytes_free() );
+      #endif
    #else
-   layer_set_hidden((Layer *)Image->thisLayer, !gcolor_equal(Color,GColorWhite));
-   if (m_b_Debug)
-         printf("[MAIN][Redraw_Image] Mono set.");
+      bitmap_layer_set_bitmap(Image->thisLayer, NULL);
+      if (Image->thisBitmap)
+      {
+         gbitmap_destroy(Image->thisBitmap);
+         Image->thisBitmap = NULL;
+      }
+      Image->thisBitmap = gbitmap_create_with_resource(ImageID);
+   if (Image->thisBitmap == NULL)
+      printf("argh?");
+      bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
+      layer_set_hidden((Layer *)Image->thisLayer, !gcolor_equal(Color,GColorWhite));
+      
+   
+   
    #endif
-   
-   
-   // Set the image to the layer
-   bitmap_layer_set_bitmap(Image->thisLayer, Image->thisBitmap);
-   if (m_b_Debug)
-      printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Set bitmap to layer",(int) heap_bytes_used(),(int) heap_bytes_free() );
-   // Let the layer be redrawn
-   layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
-   if (m_b_Debug)
-      printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d End",(int) heap_bytes_used(), (int)heap_bytes_free() );
    
 }
 
@@ -324,8 +362,9 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
 void Color_SetTextColor()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][Color_SetTextColor] Setting text color");
+   #endif
    // Set the text color
    text_layer_set_text_color(Layer_TimeHour_Text, Color_ClockHour);
    text_layer_set_text_color(Layer_TimeMinute_Text, Color_ClockMin);
@@ -334,8 +373,9 @@ void Color_SetTextColor()
    text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
    text_layer_set_text_color(Layer_Date_Text, Color_Text); 
    text_layer_set_text_color(Layer_Day_Text, Color_Text); 
+   #if defined(PBL_HEALTH)
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
-      
+   #endif
    layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
@@ -343,19 +383,24 @@ void Color_SetTextColor()
    layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
    layer_mark_dirty(text_layer_get_layer(Layer_Date_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
+   #if defined(PBL_HEALTH)
    layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
+   #endif
 }
 
 // Set all the images color
 void Color_SetImageColor()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][Color_SetImageColor] Setting image color");
+   #endif
    // Redraw all the images
    Battery_RedrawAll();
-      
+   
+   #if defined(PBL_HEALTH)
    Redraw_Image(&m_Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
+   #endif
    Redraw_Image(&m_Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }
 
@@ -367,8 +412,9 @@ void show_PhoneBattery(bool show)
    if (layer_get_hidden((Layer *)Layer_Battery_Text_Phone) == show)
    {
       // Debug printout
-      if (m_b_Debug)
+      #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][show_PhoneBattery] Setting phone battery display hide status to %d",(int)!show);
+      #endif
       
       layer_set_hidden((Layer *)Layer_Battery_Text_Phone, !show);
       layer_set_hidden((Layer *)m_Image_BatteryPhone.thisLayer, !show);

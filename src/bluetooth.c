@@ -5,9 +5,9 @@ void Bluetooth_Redraw()
 {
    
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_Redraw] Redrawing");
-   
+   #endif
    // Variable to store the image color
    GColor Color;
    
@@ -31,17 +31,19 @@ static void Bluetooth_Handle(bool b_ConnectionState)
       return;
    
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_Handle] BT handler");
-   
+   #endif
    // Save the current state
    m_b_Bluetooth_ConnectionState = b_ConnectionState;
    
    bool b_Vibrate = m_b_Bluetooth_VibrationEnabled;
    if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
    {
-      if (m_b_Debug && b_Vibrate)
+      #ifdef DEBUG_BLUETOOTH
+      if (b_Vibrate)
          printf("[BT][Bluetooth_Handle] Blocked vibration due to sleep mode");
+      #endif
       b_Vibrate = false;
    }
       
@@ -49,15 +51,17 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    // Vibrate if the option is enabled
    if (b_ConnectionState && b_Vibrate)
    {
-      if (m_b_Debug)
+      #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_Handle] BT handler: Connection OK");
+      #endif
       vibes_short_pulse();
       //printf("BT connected");
    }
    else if (b_Vibrate)
    {
-      if (m_b_Debug)
+      #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_Handle] BT handler: Connection failed");
+      #endif
       vibes_double_pulse();
       //printf("BT disconnected");
    }
@@ -72,8 +76,9 @@ static void Bluetooth_Handle(bool b_ConnectionState)
 void Bluetooth_Init()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_Init] Init");
+   #endif
    // Init vars
    m_b_Bluetooth_ConnectionState = true;
 
@@ -88,8 +93,9 @@ void Bluetooth_Init()
 void Bluetooth_DeInit()
 {
    // Debug printout
-   if (m_b_Debug)
+   #ifdef DEBUG_BLUETOOTH
          printf("[BT][Bluetooth_DeInit] Deinit");
+   #endif
    // Unregister from the bluetooth service
    connection_service_unsubscribe();
    

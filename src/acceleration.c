@@ -12,39 +12,42 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
 {
    if (m_b_Acceleration_Blocked)
    {
-      if (m_b_Debug)
+      #ifdef DEBUG_ACCELERATION 
          printf("[ACC][Acceleration_Handle] Acceleration blocked"); 
+      #endif
       return;
    }
    m_b_Acceleration_Blocked = true;
-   if (m_b_Debug)
-         printf("[ACC][Acceleration_Handle] Axis: %d Direction: %d",(int)axis,(int)direction); 
+   #ifdef DEBUG_ACCELERATION 
+      printf("[ACC][Acceleration_Handle] Axis: %d Direction: %d",(int)axis,(int)direction);  
+   #endif
    
    
    // Check if the axis was the y axis
-   //if  (axis == ACCEL_AXIS_Y)  
-   {
-      if (m_b_Debug)
-         printf("[ACC][Acceleration_Handle] Device accelerated");
-      // Switch display state
-      if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
-         m_i_Weather_DisplayState = DISPLAY_LOCATION;
-      else
-         m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
-      // Redraw the weather text to display the new data
-      Weather_RedrawText();
-   }
+
+
+   #ifdef DEBUG_ACCELERATION 
+      printf("[ACC][Acceleration_Handle] Device accelerated"); 
+   #endif
+   // Switch display state
+   if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
+      m_i_Weather_DisplayState = DISPLAY_LOCATION;
+   else
+      m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
+   // Redraw the weather text to display the new data
+   Weather_RedrawText();
+
    
-   // Try to avoid double switches....
-   
+   // Try to avoid double switches....   
    app_timer_register(1000, Acceleration_TimerCallback, NULL);
 }
 
 // Register to the acceleration service
 void Acceleration_Init(void)
 {
-   if (m_b_Debug)
-         printf("[ACC][Acceleration_Init] Init"); 
+   #ifdef DEBUG_ACCELERATION 
+      printf("[ACC][Acceleration_Init] Init");
+   #endif
    m_b_Acceleration_Blocked = false;
    accel_tap_service_subscribe(Acceleration_Handle);
 }
@@ -52,7 +55,8 @@ void Acceleration_Init(void)
 // Unregister from the acceleration service
 void Acceleration_DeInit(void)
 {
-   if (m_b_Debug)
-         printf("[ACC][Acceleration_DeInit] Deinit");
+   #ifdef DEBUG_ACCELERATION 
+      printf("[ACC][Acceleration_DeInit] Deinit"); 
+   #endif
    accel_tap_service_unsubscribe();
 }

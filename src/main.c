@@ -15,14 +15,14 @@
 static void init() 
 {
    ui_PNG_Loadbuffer = malloc_low(PNG_BUFFER_SIZE);
-   m_b_Debug = false;
 
 
-   if (m_b_Debug)
+
+   #ifdef DEBUG_MAINWINDOW
       printf("\n\n\n\nTrekvolle is starting\n\n\n\n");
+      printf("[MAIN][init] First image loaded, reserving %dB of memory",PNG_BUFFER_SIZE);
+   #endif
 
-   if (m_b_Debug)
-         printf("[MAIN][init] First image loaded, reserving %dB of memory",PNG_BUFFER_SIZE);
    
    // UI 
    show_mainwindow();
