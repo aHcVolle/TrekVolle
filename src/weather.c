@@ -188,11 +188,11 @@ int Weather_GetImageID(char* s_WeatherImageName)
    if (strcmp(s_WeatherImageName,"01d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_01;
    else if (strcmp(s_WeatherImageName,"01n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_01;
+      return RESOURCE_ID_IMAGE_WEATHER_01N;
    else if (strcmp(s_WeatherImageName,"02d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_02;
    else if (strcmp(s_WeatherImageName,"02n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_02;
+      return RESOURCE_ID_IMAGE_WEATHER_02N;
    else if (strcmp(s_WeatherImageName,"03d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_03;
    else if (strcmp(s_WeatherImageName,"03n") == 0)
@@ -208,7 +208,7 @@ int Weather_GetImageID(char* s_WeatherImageName)
    else if (strcmp(s_WeatherImageName,"10d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_10;
    else if (strcmp(s_WeatherImageName,"10n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_10;
+      return RESOURCE_ID_IMAGE_WEATHER_10N;
    else if (strcmp(s_WeatherImageName,"11d") == 0)
       return RESOURCE_ID_IMAGE_WEATHER_11;
    else if (strcmp(s_WeatherImageName,"11n") == 0)

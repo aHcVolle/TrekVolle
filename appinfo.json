@@ -42,6 +42,30 @@
     "resources": {
         "media": [
             {
+                "file": "images/Weather_10N.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_WEATHER_10N",
+                "storageFormat": "png",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/Weather_02N.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_WEATHER_02N",
+                "storageFormat": "png",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/Weather_01N.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_WEATHER_01N",
+                "storageFormat": "png",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
                 "file": "images/Overview.png",
                 "name": "IMAGE_OVERVIEW",
                 "targetPlatforms": null,
