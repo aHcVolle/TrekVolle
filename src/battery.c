@@ -171,6 +171,9 @@ void Battery_Init()
    m_BatteryPhone.p_ImageData = &m_Image_BatteryPhone;
    m_BatteryPhone.l_Text =   GetBatteryTextLayerPhone();
    show_PhoneBattery(false);
+   //show_PhoneBattery(true);
+   
+   
    battery_state_service_subscribe(Battery_Handle_Pebble);
    Battery_Handle_Pebble(battery_state_service_peek());
 }
