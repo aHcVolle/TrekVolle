@@ -153,8 +153,11 @@ void Battery_RedrawAll()
    #ifdef DEBUG_BATTERY
       printf("[BATT][Battery_RedrawAll] Redrawing everything");
    #endif
-   Battery_Redraw(&m_BatteryPhone);
+   // Redraw the pebble battery
    Battery_Redraw(&m_BatteryPebble);
+   // Redraw the phone battery
+   if ((m_BatteryPhone.p_ImageData != NULL) && (m_BatteryPhone.p_ImageData->thisLayer != NULL) && !layer_get_hidden((Layer *)m_BatteryPhone.p_ImageData->thisLayer))
+      Battery_Redraw(&m_BatteryPhone);
 }
 
 // Init the battery layers and register to the pebbles battery service

@@ -49,7 +49,8 @@ void Acceleration_Init(void)
       printf("[ACC][Acceleration_Init] Init");
    #endif
    m_b_Acceleration_Blocked = false;
-   accel_tap_service_subscribe(Acceleration_Handle);
+   if (m_b_Acceleration_Enabled)
+      accel_tap_service_subscribe(Acceleration_Handle);
 }
 
 // Unregister from the acceleration service

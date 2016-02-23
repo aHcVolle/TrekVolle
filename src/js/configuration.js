@@ -1,7 +1,7 @@
 
 Pebble.addEventListener('showConfiguration', function() 
 {
-   var ConfigVersion = '1_5';
+   var ConfigVersion = '1_6';
    
    var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
    // var url = 'https://www.vllmr.eu/pebble/config/index.html';
@@ -213,6 +213,15 @@ Pebble.addEventListener('webviewclosed', function(e)
       if (m_b_Debug) console.log("[JS:CONF] Config: i_Network_RefreshTime "+i_Network_RefreshTime.toString());
       dictionary['KEY_NETWORK_REFRESHTIME'] = i_Network_RefreshTime;
    }
+   
+   if(typeof configData.Acceleration_Enabled !== "undefined")
+   { 
+      var Acceleration_Enabled = configData.Acceleration_Enabled;
+      var i_Acceleration_Enabled = (Acceleration_Enabled === 'true') ? 1 : 0;
+      if (m_b_Debug) console.log("[JS:CONF] Config: i_Acceleration_Enabled "+i_Acceleration_Enabled.toString());
+      dictionary['KEY_ACCELERATION_ENABLE'] = i_Acceleration_Enabled;
+   }
+   
    
    // Send to watchapp
    Pebble.sendAppMessage(dictionary, function(){}, function(){}); 

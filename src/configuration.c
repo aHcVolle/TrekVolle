@@ -94,6 +94,11 @@ void LoadConfigFromStorage()
      m_b_Bluetooth_VibrationEnabled = persist_read_bool(KEY_BLUETOOTH_VIBRATIONENABLED);
    }
    
+   if (persist_exists(KEY_ACCELERATION_ENABLE)) 
+   {
+     m_b_Acceleration_Enabled = persist_read_bool(KEY_ACCELERATION_ENABLE);
+   }
+   
 }
 
 // Save all the variables to the storage
@@ -129,7 +134,8 @@ void SaveConfigToStorage()
    
    persist_write_bool(KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
    
-   
+   persist_write_bool(KEY_ACCELERATION_ENABLE, m_b_Acceleration_Enabled);
+    
 }
 
 // Init all variables to their default value
@@ -177,5 +183,6 @@ void LoadDefaultConfig()
    
    m_b_Bluetooth_VibrationEnabled = true;
    
+   m_b_Acceleration_Enabled = true;
 }
 

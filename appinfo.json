@@ -1,5 +1,6 @@
 {
     "appKeys": {
+        "KEY_ACCELERATION_ENABLE": 29,
         "KEY_BATTERY_CHARGE": 5,
         "KEY_BATTERY_STATE": 6,
         "KEY_BLUETOOTH_VIBRATIONENABLED": 18,

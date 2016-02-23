@@ -7,6 +7,8 @@
 #ifdef DEBUG_ENABLED
    #define DEBUG_ACCELERATION
 #endif
+// Var to control the accelerometer state
+bool m_b_Acceleration_Enabled;
 
 // Functions used in other files
 void Acceleration_Init(void);

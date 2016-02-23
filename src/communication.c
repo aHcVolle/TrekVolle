@@ -48,6 +48,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
 
    Tuple *PingPong_tuple = dict_find(iterator,KEY_PINGPONG);
+   Tuple *Acceleration_Enabled_tuple = dict_find(iterator,KEY_ACCELERATION_ENABLE);
    
    // Save if there was a change in the clock display   
    bool b_ClockChanged = false;
@@ -284,6 +285,31 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
          printf("[COM][Communication_InboxReceived] Received data KEY_PINGPONG");
       #endif
       Communication_OnInit();      
+   }
+   
+   if (Acceleration_Enabled_tuple)
+   {
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_ACCELERATION_ENABLE");
+      #endif
+      
+      bool b_NewValue = (bool)Acceleration_Enabled_tuple->value->int32;
+      
+      if (b_NewValue == m_b_Acceleration_Enabled)
+         return;
+      m_b_Acceleration_Enabled = b_NewValue;
+      if (m_b_Acceleration_Enabled)
+      {
+         Acceleration_Init();
+      }
+      else
+      {         
+         Acceleration_DeInit();
+         m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
+         // Redraw the weather text to display the new data
+         Weather_RedrawText();
+      }
+      
    }
    
 }

@@ -6,6 +6,7 @@
 #include "network.h"
 #include "battery.h"
 #include "configuration.h"
+#include "acceleration.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_COMMUNICATION
@@ -49,6 +50,8 @@
 #define KEY_BLUETOOTH_VIBRATIONENABLED 18
 
 #define KEY_PINGPONG 23
+#define KEY_ACCELERATION_ENABLE 29
+
 
 // Functions used in other files 
 

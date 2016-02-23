@@ -8,6 +8,7 @@
 #include "weather.h"
 #include "network.h"
 #include "clock.h"
+#include "acceleration.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_CONFIGURATION
