@@ -344,6 +344,8 @@
 		localStorage['Network_VibrationEnabled'] = Network_VibrationEnabled_Checkbox.checked.toString();
 		localStorage['Network_Refreshtime'] = Network_Refreshtime_Input.value;
 		
+		localStorage['Acceleration_Enabled'] = Acceleration_Enabled_Checkbox.checked.toString();
+		
 		console.log('Save: done');
 	}
   
@@ -377,6 +379,8 @@
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
 		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
 		
+		var Acceleration_Enabled_Checkbox = document.getElementById('Acceleration_Enabled_Checkbox');
+		
 		var options = 
 		{
 			'Color_Background': Color_Background_Picker.value,
@@ -404,7 +408,8 @@
 			'Bluetooth_VibrationEnabled': Bluetooth_VibrationEnabled_Checkbox.checked.toString(),
 			
 			'Network_VibrationEnabled': Network_VibrationEnabled_Checkbox.checked.toString(),
-			'Network_Refreshtime' : Network_Refreshtime_Input.value
+			'Network_Refreshtime' : Network_Refreshtime_Input.value,
+			'Acceleration_Enabled' : Acceleration_Enabled_Checkbox.checked.toString()
 		};
 
 		// Save for next launch
@@ -445,6 +450,8 @@
 		
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
 		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
+		
+		var Acceleration_Enabled_Checkbox = document.getElementById('Acceleration_Enabled_Checkbox');
 		
 		if (m_ColorType == "color")
 		{
@@ -490,6 +497,9 @@
 		
 		Network_VibrationEnabled_Checkbox.checked = true;
 		Network_Refreshtime_Input.value = "1";
+		
+		Acceleration_Enabled_Checkbox.checked = true;
+		
 		console.log('SetDefaults: done');
 		return true;
 	}
@@ -523,6 +533,8 @@
 		
 		var Network_VibrationEnabled_Checkbox = document.getElementById('Network_VibrationEnabled_Checkbox');
 		var Network_Refreshtime_Input = document.getElementById('Network_Refreshtime_Input');
+		
+		var Acceleration_Enabled_Checkbox = document.getElementById('Acceleration_Enabled_Checkbox');
 		
 		
 		if(localStorage['Color_Background']) 
@@ -574,6 +586,9 @@
 			Network_VibrationEnabled_Checkbox.checked = (localStorage['Network_VibrationEnabled'] === 'true'); 
 		if(localStorage['Network_Refreshtime']) 
 			Network_Refreshtime_Input.value = localStorage['Network_Refreshtime'];	
+		
+		if(localStorage['Acceleration_Enabled']) 
+			Acceleration_Enabled_Checkbox.checked = (localStorage['Acceleration_Enabled'] === 'true'); 
 		
 		
 		console.log('LoadData: done');
