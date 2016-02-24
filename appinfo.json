@@ -43,6 +43,27 @@
     "resources": {
         "media": [
             {
+                "file": "images/BackGround_Circle.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_BACKGROUND",
+                "storageFormat": "png",
+                "targetPlatforms": [
+                    "chalk"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "file": "images/BackGround_Rect.png",
+                "memoryFormat": "1BitPalette",
+                "name": "IMAGE_BACKGROUND",
+                "storageFormat": "png",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt"
+                ],
+                "type": "bitmap"
+            },
+            {
                 "file": "images/Overview_Aplite.png",
                 "name": "IMAGE_OVERVIEW",
                 "targetPlatforms": [
@@ -191,14 +212,6 @@
                 "file": "images/BatteryLow.png",
                 "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BATTERY_LOW",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
-                "file": "images/BackGround.png",
-                "memoryFormat": "1BitPalette",
-                "name": "IMAGE_BACKGROUND",
-                "storageFormat": "png",
                 "targetPlatforms": null,
                 "type": "bitmap"
             }
