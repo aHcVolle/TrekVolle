@@ -143,7 +143,7 @@ static void initialise_ui(void)
    text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
    text_layer_set_text(Layer_TimeMinute_Text, ":80");
-   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentRight);
+   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentLeft);
    text_layer_set_font(Layer_TimeMinute_Text, s_res_roboto_bold_subset_49);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
 
