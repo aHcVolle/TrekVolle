@@ -5,7 +5,7 @@ static Window *s_window;
 
 static GFont s_res_roboto_bold_subset_49;
 static GFont s_res_gothic_18_bold;
-static GFont s_res_gothic_14_bold;
+static GFont s_res_steps_alt_font;
 
 static TextLayer *Layer_TimeHour_Text;
 static TextLayer *Layer_TimeMinute_Text;
@@ -33,7 +33,7 @@ static void initialise_ui(void)
          printf("[MAIN][initialise_ui] Creating fonts");
    #endif
    s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
-   s_res_gothic_14_bold = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
+   s_res_steps_alt_font = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
    s_res_roboto_bold_subset_49 = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
    
    #ifdef DEBUG_MAINWINDOW
@@ -98,7 +98,7 @@ static void initialise_ui(void)
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
    #elif defined(PBL_ROUND)
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, 16, 16));
-   #endif
+   #endif   
    bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
    snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
@@ -143,7 +143,7 @@ static void initialise_ui(void)
    text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
    text_layer_set_text(Layer_TimeMinute_Text, ":80");
-   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentRight);
+   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentLeft);
    text_layer_set_font(Layer_TimeMinute_Text, s_res_roboto_bold_subset_49);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
 
@@ -185,7 +185,7 @@ static void initialise_ui(void)
       #if defined(PBL_RECT)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
       #elif defined(PBL_ROUND)
-         text_layer_set_font(Layer_Steps_Text, s_res_gothic_14_bold);
+         text_layer_set_font(Layer_Steps_Text, s_res_steps_alt_font);
       #endif
       layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
    #endif
@@ -401,6 +401,9 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
          printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 1 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
    
+      // Replace black with the watchface background color
+      //replace_gbitmap_color(GColorBlack, Color_Window, Image->thisBitmap, NULL);
+   
       #ifdef DEBUG_IMAGEREDRAW
          printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 2 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
@@ -429,7 +432,6 @@ void Color_SetTextColor()
          printf("[MAIN][Color_SetTextColor] Setting text color");
    #endif
    
-   // Set the windows background color
    window_set_background_color(s_window, Color_Window);
    
    // Set the text color
@@ -441,7 +443,7 @@ void Color_SetTextColor()
    text_layer_set_text_color(Layer_Date_Text, Color_Text); 
    text_layer_set_text_color(Layer_Day_Text, Color_Text); 
    #if defined(PBL_HEALTH)
-   text_layer_set_text_color(Layer_Steps_Text, Color_Text);
+      text_layer_set_text_color(Layer_Steps_Text, Color_Text);
    #endif
    layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
@@ -451,7 +453,7 @@ void Color_SetTextColor()
    layer_mark_dirty(text_layer_get_layer(Layer_Date_Text));
    layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
    #if defined(PBL_HEALTH)
-   layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
+      layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
    #endif
 }
 
@@ -463,7 +465,6 @@ void Color_SetImageColor()
          printf("[MAIN][Color_SetImageColor] Setting image color");
    #endif
    
-   // Set the windows background color
    window_set_background_color(s_window, Color_Window);
    
    // Redraw all the images

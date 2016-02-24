@@ -11,6 +11,10 @@
    #define DEBUG_CLOCK
 #endif
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_TIME
+#endif
+
 // The different date options
 #define DATE_DD_MM_YY 0
 #define DATE_YY_MM_DD 1

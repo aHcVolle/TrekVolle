@@ -116,6 +116,11 @@ static void Battery_Handle_Pebble(BatteryChargeState charge_state)
    // Save the battery's new data
    m_BatteryPebble.i_BatteryLevel = charge_state.charge_percent;
    m_BatteryPebble.b_ChargingState = charge_state.is_charging;
+   
+   #ifdef DEBUG_BATTERY
+      m_BatteryPebble.i_BatteryLevel = 99;
+   #endif
+   
    // And redraw its new data
    Battery_Redraw(&m_BatteryPebble);
 }
@@ -143,6 +148,7 @@ void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState)
    // Save the battery's new data
    m_BatteryPhone.i_BatteryLevel = i_BatteryLevel;
    m_BatteryPhone.b_ChargingState = b_ChargingState;
+      
    // And redraw its new data
    Battery_Redraw(&m_BatteryPhone);
 }
@@ -175,6 +181,7 @@ void Battery_Init()
    #ifdef DEBUG_BATTERY
       Battery_Handle_Phone(99,false);
    #endif
+   
    
    
    battery_state_service_subscribe(Battery_Handle_Pebble);
