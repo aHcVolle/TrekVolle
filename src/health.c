@@ -35,6 +35,11 @@ void Health_GetMovementData(void)
       Step_Distance = (int)health_service_sum_today(Step_Metric_Distance);
    } 
    
+   #ifdef DEBUG_STEPCOUNT
+      Step_Count = 6666;
+      Step_Distance = 6666;
+   #endif
+   
    // Buffer to store the health information
    static char s_HealthText[30];
    snprintf(s_HealthText,sizeof(s_HealthText),"%d %dm",Step_Count,Step_Distance);
