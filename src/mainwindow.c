@@ -339,9 +339,6 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
          printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 1 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
    
-      // Replace black with the watchface background color
-      replace_gbitmap_color(GColorBlack, Color_Window, Image->thisBitmap, NULL);
-   
       #ifdef DEBUG_IMAGEREDRAW
          printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Color 2 was replaced",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
@@ -369,6 +366,10 @@ void Color_SetTextColor()
    #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][Color_SetTextColor] Setting text color");
    #endif
+   
+   // Set the windows background color
+   window_set_background_color(s_window, Color_Window);
+   
    // Set the text color
    text_layer_set_text_color(Layer_TimeHour_Text, Color_ClockHour);
    text_layer_set_text_color(Layer_TimeMinute_Text, Color_ClockMin);
@@ -399,6 +400,10 @@ void Color_SetImageColor()
    #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][Color_SetImageColor] Setting image color");
    #endif
+   
+   // Set the windows background color
+   window_set_background_color(s_window, Color_Window);
+   
    // Redraw all the images
    Battery_RedrawAll();
    
