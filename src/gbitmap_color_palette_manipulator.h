@@ -3,6 +3,10 @@
 
 #include <pebble.h>
 
+#ifdef DEBUG_ENABLED
+   #define DEBUG_COLOR
+#endif
+
 #ifdef PBL_COLOR
 char* get_gbitmapformat_text(GBitmapFormat format);
 const char* get_gcolor_text(GColor m_color);
