@@ -43,6 +43,15 @@
     "resources": {
         "media": [
             {
+                "file": "images/Overview_Chalk.png",
+                "name": "IMAGE_OVERVIEW",
+                "storageFormat": "png",
+                "targetPlatforms": [
+                    "chalk"
+                ],
+                "type": "bitmap"
+            },
+            {
                 "file": "images/BackGround_Circle.png",
                 "memoryFormat": "1BitPalette",
                 "name": "IMAGE_BACKGROUND",
