@@ -40,18 +40,21 @@ static void initialise_ui(void)
    
    // Layer_Background_Image
    m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
+   bitmap_layer_set_compositing_mode(m_Image_Background.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
    snprintf(m_Image_Background.s_Name,sizeof(m_Image_Background.s_Name),"BCKG");
    Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
 
    // Layer_Bluetooth_Image
    m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_Bluetooth.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
    snprintf(m_Image_Bluetooth.s_Name,sizeof(m_Image_Bluetooth.s_Name),"BT");
    Redraw_Image(&m_Image_Bluetooth, RESOURCE_ID_IMAGE_BLUETOOTH, GColorWhite);
 
    // Layer_Weather_Image
    m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_Weather.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Weather.thisLayer);
    snprintf(m_Image_Weather.s_Name,sizeof(m_Image_Weather.s_Name),"WTHR");
    Redraw_Image(&m_Image_Weather, RESOURCE_ID_IMAGE_ERROR, GColorWhite);
@@ -59,6 +62,7 @@ static void initialise_ui(void)
    // Layer_Steps_Image
    #if defined(PBL_HEALTH)
    m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_Steps.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
    snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
    Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
@@ -66,18 +70,21 @@ static void initialise_ui(void)
 
    // Layer_Battery_Image_Pebble
    m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_BatteryPebble.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPebble.thisLayer);
    snprintf(m_Image_BatteryPebble.s_Name,sizeof(m_Image_BatteryPebble.s_Name),"BAT1");
    Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
 
    // Layer_Battery_Image_Phone
    m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
    snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
    Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
    
    // Layer_Network_Image
    m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
+   bitmap_layer_set_compositing_mode(m_Image_Network.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Network.thisLayer);
    snprintf(m_Image_Network.s_Name,sizeof(m_Image_Network.s_Name),"NET");
    Redraw_Image(&m_Image_Network, RESOURCE_ID_IMAGE_NETWORK, GColorWhite);
