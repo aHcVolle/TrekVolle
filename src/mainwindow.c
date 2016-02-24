@@ -41,14 +41,22 @@ static void initialise_ui(void)
    #endif
    
    // Layer_Background_Image
-   m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
+   #if defined(PBL_RECT)
+      m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
+   #elif defined(PBL_ROUND)
+      m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 180, 180));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_Background.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
    snprintf(m_Image_Background.s_Name,sizeof(m_Image_Background.s_Name),"BCKG");
    Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
 
    // Layer_Bluetooth_Image
-   m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
+   #if defined(PBL_RECT)
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
+   #elif defined(PBL_ROUND)
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(140, 134, 16, 16));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_Bluetooth.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
    snprintf(m_Image_Bluetooth.s_Name,sizeof(m_Image_Bluetooth.s_Name),"BT");
@@ -63,29 +71,45 @@ static void initialise_ui(void)
 
    // Layer_Steps_Image
    #if defined(PBL_HEALTH)
-   m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
-   bitmap_layer_set_compositing_mode(m_Image_Steps.thisLayer,GCompOpSet);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
-   snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
-   Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
+      #if defined(PBL_RECT)
+         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
+      #elif defined(PBL_ROUND)
+         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, 16, 16));
+      #endif
+      bitmap_layer_set_compositing_mode(m_Image_Steps.thisLayer,GCompOpSet);
+      layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
+      snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
+      Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
    #endif
 
    // Layer_Battery_Image_Pebble
-   m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
+   #if defined(PBL_RECT)
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
+   #elif defined(PBL_ROUND)
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, 16, 16));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_BatteryPebble.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPebble.thisLayer);
    snprintf(m_Image_BatteryPebble.s_Name,sizeof(m_Image_BatteryPebble.s_Name),"BAT1");
    Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
 
    // Layer_Battery_Image_Phone
-   m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
+   #if defined(PBL_RECT)
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
+   #elif defined(PBL_ROUND)
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, 16, 16));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
    snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
    Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
    
    // Layer_Network_Image
-   m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
+   #if defined(PBL_RECT)
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
+   #elif defined(PBL_ROUND)
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(123, 134, 16, 16));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_Network.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Network.thisLayer);
    snprintf(m_Image_Network.s_Name,sizeof(m_Image_Network.s_Name),"NET");
@@ -98,7 +122,11 @@ static void initialise_ui(void)
    #endif
    
    // Layer_TimeHour_Text
-   Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 75, 49));
+   #if defined(PBL_RECT)
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
+   #elif defined(PBL_ROUND)
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 11, 85, 49));
+   #endif
    text_layer_set_background_color(Layer_TimeHour_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeHour_Text, GColorWhite);
    text_layer_set_text(Layer_TimeHour_Text, "30");
@@ -107,7 +135,11 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);
    
    // Layer_TimeMinute_Text
-   Layer_TimeMinute_Text = text_layer_create(GRect(0, 4, 144, 49));
+   #if defined(PBL_RECT)
+      Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
+   #elif defined(PBL_ROUND)
+      Layer_TimeMinute_Text = text_layer_create(GRect(86, 11, 90, 49));
+   #endif
    text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
    text_layer_set_text(Layer_TimeMinute_Text, ":80");
@@ -116,7 +148,11 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
 
    // Layer_Weather_Text
-   Layer_Weather_Text = text_layer_create(GRect(24, 93, 119, 22));
+   #if defined(PBL_RECT)
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
+   #elif defined(PBL_ROUND)
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
+   #endif
    text_layer_set_background_color(Layer_Weather_Text, GColorClear);
    text_layer_set_text_color(Layer_Weather_Text, GColorWhite);
    text_layer_set_text(Layer_Weather_Text, "Updating...");
@@ -124,7 +160,11 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Weather_Text);
    
    // Layer_Day_Text
-   Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
+   #if defined(PBL_RECT)
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
+   #elif defined(PBL_ROUND)
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
+   #endif
    text_layer_set_background_color(Layer_Day_Text, GColorClear);
    text_layer_set_text_color(Layer_Day_Text, GColorWhite);
    text_layer_set_text(Layer_Day_Text, "D666 W88");
@@ -134,16 +174,28 @@ static void initialise_ui(void)
 
    // Layer_Steps_Text
    #if defined(PBL_HEALTH)
-   Layer_Steps_Text = text_layer_create(GRect(24, 147, 123, 20));
-   text_layer_set_background_color(Layer_Steps_Text, GColorClear);
-   text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
-   text_layer_set_text(Layer_Steps_Text, "9999, 9999m");
-   text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
+      #if defined(PBL_RECT)
+         Layer_Steps_Text = text_layer_create(GRect(24, 147, 123, 20));
+      #elif defined(PBL_ROUND)
+         Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
+      #endif
+      text_layer_set_background_color(Layer_Steps_Text, GColorClear);
+      text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
+      text_layer_set_text(Layer_Steps_Text, "9999 9999m");
+      #if defined(PBL_RECT)
+         text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
+      #elif defined(PBL_ROUND)
+         text_layer_set_font(Layer_Steps_Text, s_res_steps_alt_font);
+      #endif
+      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
    #endif
    
    // Layer_Date_Text
-   Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
+   #if defined(PBL_RECT)
+      Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
+   #elif defined(PBL_ROUND)
+      Layer_Date_Text = text_layer_create(GRect(44, 55, 100, 20));
+   #endif
    text_layer_set_background_color(Layer_Date_Text, GColorClear);
    text_layer_set_text_color(Layer_Date_Text, GColorWhite);
    text_layer_set_text(Layer_Date_Text, "Sun,00.00.00");
@@ -152,7 +204,11 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Date_Text);
 
    // Layer_Battery_Text_Pebble
-   Layer_Battery_Text_Pebble = text_layer_create(GRect(23, 130, 38, 20));
+   #if defined(PBL_RECT)
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(23, 130, 38, 20));
+   #elif defined(PBL_ROUND)
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
+   #endif
    text_layer_set_background_color(Layer_Battery_Text_Pebble, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Pebble, GColorWhite);
    text_layer_set_text(Layer_Battery_Text_Pebble, "99%");
@@ -160,7 +216,11 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Pebble);
 
    // Layer_Battery_Text_Phone
-   Layer_Battery_Text_Phone = text_layer_create(GRect(73, 130, 36, 20));
+   #if defined(PBL_RECT)
+      Layer_Battery_Text_Phone = text_layer_create(GRect(73, 130, 36, 20));
+   #elif defined(PBL_ROUND)
+      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 36, 20));
+   #endif
    text_layer_set_background_color(Layer_Battery_Text_Phone, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Phone, GColorWhite);
    text_layer_set_text(Layer_Battery_Text_Phone, "99%");
@@ -181,7 +241,7 @@ static void destroy_ui(void)
    text_layer_destroy(Layer_Weather_Text);
    text_layer_destroy(Layer_Day_Text);
    #if defined(PBL_HEALTH)
-   text_layer_destroy(Layer_Steps_Text);
+      text_layer_destroy(Layer_Steps_Text);
    #endif
    text_layer_destroy(Layer_Date_Text);
    text_layer_destroy(Layer_Battery_Text_Pebble);
@@ -191,7 +251,7 @@ static void destroy_ui(void)
    bitmap_layer_destroy(m_Image_Bluetooth.thisLayer);
    bitmap_layer_destroy(m_Image_Weather.thisLayer);
    #if defined(PBL_HEALTH)
-   bitmap_layer_destroy(m_Image_Steps.thisLayer);
+      bitmap_layer_destroy(m_Image_Steps.thisLayer);
    #endif
    bitmap_layer_destroy(m_Image_Network.thisLayer);
    bitmap_layer_destroy(m_Image_BatteryPhone.thisLayer);
@@ -201,7 +261,7 @@ static void destroy_ui(void)
    gbitmap_destroy(m_Image_Bluetooth.thisBitmap);
    gbitmap_destroy(m_Image_Weather.thisBitmap);
    #if defined(PBL_HEALTH)
-   gbitmap_destroy(m_Image_Steps.thisBitmap);
+      gbitmap_destroy(m_Image_Steps.thisBitmap);
    #endif
    gbitmap_destroy(m_Image_Network.thisBitmap);
    gbitmap_destroy(m_Image_BatteryPhone.thisBitmap);

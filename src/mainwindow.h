@@ -17,7 +17,7 @@
 #endif
 
 // Heap fragmentation help
-#define PNG_BUFFER_SIZE 260
+#define PNG_BUFFER_SIZE 600
 uint8_t* ui_PNG_Loadbuffer;
 
 // Structures to hold all image informations
