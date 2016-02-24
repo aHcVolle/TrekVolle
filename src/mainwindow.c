@@ -185,7 +185,7 @@ static void initialise_ui(void)
       #if defined(PBL_RECT)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
       #elif defined(PBL_ROUND)
-         text_layer_set_font(Layer_Steps_Text, s_res_steps_alt_font);
+         text_layer_set_font(Layer_Steps_Text, s_res_gothic_14_bold);
       #endif
       layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
    #endif
