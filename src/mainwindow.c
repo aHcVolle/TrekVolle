@@ -5,6 +5,7 @@ static Window *s_window;
 
 static GFont s_res_roboto_bold_subset_49;
 static GFont s_res_gothic_18_bold;
+static GFont s_res_gothic_14_bold;
 
 static TextLayer *Layer_TimeHour_Text;
 static TextLayer *Layer_TimeMinute_Text;
@@ -32,6 +33,7 @@ static void initialise_ui(void)
          printf("[MAIN][initialise_ui] Creating fonts");
    #endif
    s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
+   s_res_gothic_14_bold = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
    s_res_roboto_bold_subset_49 = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
    
    #ifdef DEBUG_MAINWINDOW
