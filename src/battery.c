@@ -171,7 +171,10 @@ void Battery_Init()
    m_BatteryPhone.p_ImageData = &m_Image_BatteryPhone;
    m_BatteryPhone.l_Text =   GetBatteryTextLayerPhone();
    show_PhoneBattery(false);
-   //show_PhoneBattery(true);
+   
+   #ifdef DEBUG_BATTERY
+      Battery_Handle_Phone(99,false);
+   #endif
    
    
    battery_state_service_subscribe(Battery_Handle_Pebble);
