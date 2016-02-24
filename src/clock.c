@@ -38,11 +38,6 @@ void Clock_Redraw()
       strftime(s_TimeHourBuffer, sizeof(s_TimeHourBuffer), "%I", Time_Tick);
       strftime(s_TimeMinuteBuffer, sizeof(s_TimeMinuteBuffer), ":%M", Time_Tick);
    }
-   
-   #ifdef DEBUG_TIME
-      snprintf(s_TimeHourBuffer, sizeof(s_TimeHourBuffer), "88");
-      snprintf(s_TimeMinuteBuffer, sizeof(s_TimeMinuteBuffer), ":88");
-   #endif
 
    // Display this time on the TextLayer
    text_layer_set_text(m_TimeHour_Text_Layer, s_TimeHourBuffer);

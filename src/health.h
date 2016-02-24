@@ -11,7 +11,7 @@
 #ifdef DEBUG_ENABLED
    #define DEBUG_STEPCOUNT
 #endif
-#define DEBUG_STEPCOUNT
+
 // Functions used in other files
 void Health_Init();
 void Health_DeInit();

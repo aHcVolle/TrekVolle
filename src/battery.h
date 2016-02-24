@@ -13,8 +13,6 @@
    #define DEBUG_BATTERY
 #endif
 
-#define DEBUG_BATTERY
-
 // Battery struct
 struct BatteryData
 {
