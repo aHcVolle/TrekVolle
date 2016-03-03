@@ -15,4 +15,5 @@
 // Functions used in other files
 void Health_Init();
 void Health_DeInit();
+void Health_GetMovementData(void);
 #endif

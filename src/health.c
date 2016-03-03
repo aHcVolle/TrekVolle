@@ -83,9 +83,9 @@ void Health_Init()
    m_Health_Text_Layer = GetStepTextLayer();
    
    // Register with the service
-   health_service_events_subscribe(Health_Handler, NULL);
+   //health_service_events_subscribe(Health_Handler, NULL);
    // Get the initial data
-   Health_GetMovementData();
+   //Health_GetMovementData();
    #endif
 }
 

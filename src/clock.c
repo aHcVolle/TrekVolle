@@ -122,6 +122,11 @@ static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed)
       m_b_Clock_SleepEnabled = false;
    }
    
+   #if defined(PBL_HEALTH)
+      // Get new health data
+      Health_GetMovementData();
+   #endif
+   
    #ifdef DEBUG_CLOCK
       printf("[CLOCK][Clock_Handle] After Heap Used: %d, Free: %d",(int) heap_bytes_used(), (int)heap_bytes_free() );
    #endif

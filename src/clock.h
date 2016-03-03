@@ -6,6 +6,7 @@
 #include "weather.h"
 #include "network.h"
 #include "bluetooth.h"
+#include "health.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_CLOCK
