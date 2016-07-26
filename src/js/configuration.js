@@ -3,8 +3,9 @@ Pebble.addEventListener('showConfiguration', function()
 {
    var ConfigVersion = '1_6';
    
-   var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
+   //var url = 'https://rawgit.com/aHcVolle/TrekVolle/master/config/config_'+ConfigVersion+'.html';
    // var url = 'https://www.vllmr.eu/pebble/config/index.html';
+   var url = 'https://www.vllmr.eu/pebble/TrekVolle/config/config_'+ConfigVersion+'.html';
    
    var watch = Pebble.getActiveWatchInfo();
    if (watch.platform == "aplite")

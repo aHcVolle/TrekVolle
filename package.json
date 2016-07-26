@@ -1,0 +1,246 @@
+{
+    "author": "volle",
+    "dependencies": {},
+    "keywords": [],
+    "name": "trekvolle",
+    "pebble": {
+        "capabilities": [
+            "location",
+            "configurable",
+            "health"
+        ],
+        "displayName": "TrekVolle",
+        "enableMultiJS": false,
+        "messageKeys": {
+            "KEY_ACCELERATION_ENABLE": 29,
+            "KEY_BATTERY_CHARGE": 5,
+            "KEY_BATTERY_STATE": 6,
+            "KEY_BLUETOOTH_VIBRATIONENABLED": 18,
+            "KEY_CLOCK_CLOCK24H": 15,
+            "KEY_CLOCK_DATESTYLE": 16,
+            "KEY_CLOCK_DAYOFYEARSTYLE": 26,
+            "KEY_CLOCK_SLEEP": 22,
+            "KEY_COLOR_BACKGROUND": 7,
+            "KEY_COLOR_BATTERYLOW": 13,
+            "KEY_COLOR_CHARGING": 11,
+            "KEY_COLOR_CLOCK_HOUR": 27,
+            "KEY_COLOR_CLOCK_MIN": 28,
+            "KEY_COLOR_ERROR": 12,
+            "KEY_COLOR_IMAGE": 9,
+            "KEY_COLOR_TEXT": 8,
+            "KEY_COLOR_WINDOW": 10,
+            "KEY_CONDITIONS": 1,
+            "KEY_ICON": 2,
+            "KEY_LOCATION": 3,
+            "KEY_NETWORK_REFRESHTIME": 17,
+            "KEY_NETWORK_VIBRATIONENABLED": 19,
+            "KEY_ONLINE": 4,
+            "KEY_PINGPONG": 23,
+            "KEY_TEMPERATURE": 0,
+            "KEY_WEATHER_REFRESHTIME": 20,
+            "KEY_WEATHER_RETRYUPDATE": 21,
+            "KEY_WEATHER_TEMPERATURECELCIUS": 14,
+            "KEY_WEATHER_TEMPERATURE_MAX": 25,
+            "KEY_WEATHER_TEMPERATURE_MIN": 24
+        },
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/Overview_Chalk.png",
+                    "name": "IMAGE_OVERVIEW",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "chalk"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BackGround_Circle.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BACKGROUND",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "chalk"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BackGround_Rect.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BACKGROUND",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Overview_Aplite.png",
+                    "name": "IMAGE_OVERVIEW",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Overview_Basalt.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_OVERVIEW",
+                    "targetPlatforms": [
+                        "basalt"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_10N.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_10N",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_02N.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_02N",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_01N.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_01N",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_50.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_50",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_13.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_13",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_11.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_11",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_10.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_10",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_09.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_09",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_04.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_04",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_03.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_03",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_02.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_02",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_01.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_01",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Steps.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_STEPS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Network.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_NETWORK",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Error.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_ERROR",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Bluetooth.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BLUETOOTH",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryMid.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_MID",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryHigh.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_HIGH",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryLow.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_LOW",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk"
+        ],
+        "uuid": "2da02267-7a19-4e49-9ed1-439d25db14e4",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.9.0"
+}
