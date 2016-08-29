@@ -40,7 +40,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Clock_Clock24h_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
    Tuple *Clock_Sleep_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP);
-   Tuple *Clock_DayOfYearStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEARSTYLE);
+   Tuple *Clock_DayOfYear_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEAR);
    
    Tuple *Network_Refreshtime_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_REFRESHTIME);   
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_VIBRATIONENABLED);
@@ -220,7 +220,14 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       #ifdef DEBUG_COMMUNICATION
          printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_DATESTYLE");
       #endif
-      m_i_Clock_DateStyle = (int)Clock_DateStyle_tuple->value->int32;
+      
+      if (Clock_DateStyle_tuple->value->cstring[0] == '0')
+         m_i_Clock_DateStyle = 0;
+      else if (Clock_DateStyle_tuple->value->cstring[0] == '1')
+         m_i_Clock_DateStyle = 1;
+      else
+         m_i_Clock_DateStyle = 2;
+         
       b_ClockChanged = true;
    }
    // The sleep mode was changed
@@ -232,9 +239,12 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       m_b_Clock_Sleep = (bool)Clock_Sleep_tuple->value->int32;
    }
    // If the DayOfYearStyle was changed
-   if (Clock_DayOfYearStyle_tuple)
+   if (Clock_DayOfYear_tuple)
    {
-      m_i_Clock_DayOfYearStyle = (int)Clock_DayOfYearStyle_tuple->value->int32;
+      if (Clock_DateStyle_tuple->value->cstring[0] == '0')
+         m_i_Clock_DayOfYear = 0;
+      else
+         m_i_Clock_DayOfYear = 1;
       b_ClockChanged = true;
    }
    // If we have new min max weather data
@@ -242,7 +252,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    {
       m_i_Weather_Temperature_Min = (int)Weather_TemperatureMin_tuple->value->int32;
       m_i_Weather_Temperature_Max = (int)Weather_TemperatureMax_tuple->value->int32;
-      if (m_i_Clock_DayOfYearStyle == DAY_TEMPHIGHLOW)
+      if (m_i_Clock_DayOfYear == DAY_TEMPHIGHLOW)
          b_ClockChanged = true;
    }
    

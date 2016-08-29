@@ -6,14 +6,14 @@
 #include "configuration.h"
 #include "battery.h"
 
-#define DEBUG_ENABLED
+//#define DEBUG_ENABLED
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_MAINWINDOW
 #endif
 
 #ifdef DEBUG_ENABLED
-   #define DEBUG_IMAGEREDRAW
+   //#define DEBUG_IMAGEREDRAW
 #endif
 
 // Heap fragmentation help

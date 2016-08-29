@@ -1,7 +1,3 @@
-var Clay = require('pebble-clay');
-var clayConfig = require('./clayconfig.js');
-var clay = new Clay(clayConfig);
-
 
 /*
 Pebble.addEventListener('showConfiguration', function() 

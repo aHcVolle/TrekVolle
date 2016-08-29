@@ -40,7 +40,7 @@
             "PINGPONG",
             "WEATHER_TEMPERATURE_MIN",
             "WEATHER_TEMPERATURE_MAX",
-            "CLOCK_DAYOFYEARSTYLE",
+            "CLOCK_DAYOFYEAR",
             "COLOR_CLOCK_HOUR",
             "COLOR_CLOCK_MIN",
             "ACCELERATION_ENABLE"

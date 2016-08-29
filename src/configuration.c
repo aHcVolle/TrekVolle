@@ -75,9 +75,9 @@ void LoadConfigFromStorage()
    {
      m_b_Clock_Sleep = persist_read_bool(MESSAGE_KEY_CLOCK_SLEEP);
    }
-   if (persist_exists(MESSAGE_KEY_CLOCK_DAYOFYEARSTYLE)) 
+   if (persist_exists(MESSAGE_KEY_CLOCK_DAYOFYEAR)) 
    {
-     m_i_Clock_DayOfYearStyle = persist_read_int(MESSAGE_KEY_CLOCK_DAYOFYEARSTYLE);
+     m_i_Clock_DayOfYear = persist_read_int(MESSAGE_KEY_CLOCK_DAYOFYEAR);
    }
    
    if (persist_exists(MESSAGE_KEY_NETWORK_REFRESHTIME)) 
@@ -127,7 +127,7 @@ void SaveConfigToStorage()
    persist_write_bool(MESSAGE_KEY_CLOCK_CLOCK24H, m_b_Clock_Clock24h);
    persist_write_int(MESSAGE_KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
    persist_write_bool(MESSAGE_KEY_CLOCK_SLEEP, m_b_Clock_Sleep);
-   persist_write_int(MESSAGE_KEY_CLOCK_DAYOFYEARSTYLE, m_i_Clock_DayOfYearStyle);
+   persist_write_int(MESSAGE_KEY_CLOCK_DAYOFYEAR, m_i_Clock_DayOfYear);
    
    persist_write_int(MESSAGE_KEY_NETWORK_REFRESHTIME, m_i_Network_RefreshTime);
    persist_write_bool(MESSAGE_KEY_NETWORK_VIBRATIONENABLED, m_b_Network_VibrationEnabled);   
@@ -176,7 +176,7 @@ void LoadDefaultConfig()
    m_i_Clock_DateStyle = DATE_DD_MM_YY;
    m_b_Clock_Clock24h = clock_is_24h_style();
    m_b_Clock_Sleep = true;
-   m_i_Clock_DayOfYearStyle = DAY_DAYOFYEAR;
+   m_i_Clock_DayOfYear = DAY_DAYOFYEAR;
    
    m_i_Network_RefreshTime = 1;
    m_b_Network_VibrationEnabled = true;

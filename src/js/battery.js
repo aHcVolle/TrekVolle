@@ -6,7 +6,10 @@ var m_b_Battery_Available;
 // Store the battery init status
 var m_b_Battery_IsInit;
 
-function Battery_GetData()
+// debugging
+var m_b_Debug;
+
+function GetData()
 {   
    // Did we init yet?
    if ((typeof m_b_Battery_IsInit === "undefined") || (m_b_Battery_IsInit === false))
@@ -28,8 +31,8 @@ function Battery_GetData()
       
    var dictionary = 
        {
-          'KEY_BATTERY_CHARGE': m_Battery.level * 100,
-          'KEY_BATTERY_STATE': m_Battery.charging ? 1 : 0
+          'BATTERY_CHARGE': m_Battery.level * 100,
+          'BATTERY_STATE': m_Battery.charging ? 1 : 0
        };
 
    // Send to Pebble
@@ -47,7 +50,7 @@ function Battery_GetData()
    
 }
 
-function Battery_InitSuccess(batteryManager) 
+function InitSuccess(batteryManager) 
 {
    // Assign batteryManager to globally 
    //   available `battery` variable.
@@ -58,14 +61,16 @@ function Battery_InitSuccess(batteryManager)
 
 }
 
-function Battery_InitFailure()
+function InitFailure()
 {
    if (m_b_Debug)
          console.log("[JS:BATT] Init failed");
 }
 
-function Battery_Init()
+function Init(b_Debug)
 {
+   m_b_Debug = b_Debug;
+   
    if (m_b_Debug)
          console.log("[JS:BATT] Init...");
    
@@ -79,19 +84,19 @@ function Battery_Init()
       navigator.getBattery().then(function(battery) 
       {
         battery.addEventListener('chargingchange', function(){ updateChargeInfo();});
-        function updateChargeInfo(){Battery_GetData();}
+        function updateChargeInfo(){GetData();}
       
         battery.addEventListener('levelchange', function(){updateLevelInfo();});
-        function updateLevelInfo(){Battery_GetData();}
+        function updateLevelInfo(){GetData();}
       
         battery.addEventListener('chargingtimechange', function(){updateChargingInfo();});
-        function updateChargingInfo(){Battery_GetData();}
+        function updateChargingInfo(){GetData();}
       
         battery.addEventListener('dischargingtimechange', function(){updateDischargingInfo();});
-        function updateDischargingInfo(){ Battery_GetData();} 
+        function updateDischargingInfo(){ GetData();} 
       });
       
-      navigator.getBattery().then(Battery_InitSuccess, Battery_InitFailure);
+      navigator.getBattery().then(InitSuccess, InitFailure);
    } 
    else 
    {
@@ -104,4 +109,6 @@ function Battery_Init()
    
 }
 
+module.exports.Init = Init;
+module.exports.GetData = GetData;
 

@@ -23,7 +23,7 @@
 // Vars used in other files
 int m_i_Clock_DateStyle;
 bool m_b_Clock_Clock24h;
-int m_i_Clock_DayOfYearStyle;
+int m_i_Clock_DayOfYear;
 
 bool m_b_Clock_Sleep;
 bool m_b_Clock_SleepEnabled;

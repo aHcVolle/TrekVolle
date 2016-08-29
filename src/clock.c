@@ -57,11 +57,11 @@ void Clock_Redraw()
    
    // Write the current day/week into a buffer
    static char s_DayBuffer[20];
-   if (m_i_Clock_DayOfYearStyle == DAY_DAYOFYEAR)
+   if (m_i_Clock_DayOfYear == DAY_DAYOFYEAR)
    {
       strftime(s_DayBuffer, sizeof(s_DayBuffer), "D%j W%W", Time_Tick);
    }
-   else if (m_i_Clock_DayOfYearStyle == DAY_TEMPHIGHLOW)
+   else if (m_i_Clock_DayOfYear == DAY_TEMPHIGHLOW)
    {
       int TempMin = m_i_Weather_Temperature_Min;
       int TempMax = m_i_Weather_Temperature_Max;
