@@ -30,7 +30,7 @@ void Battery_RequestPhone()
       printf("[BATT][Battery_RequestPhone] Phone battery requested");
    #endif
    // Send the request
-   Communication_Send(KEY_BATTERY_CHARGE);
+   Communication_Send(MESSAGE_KEY_BATTERY_CHARGE);
 }
 
 // Redraw all battery related things

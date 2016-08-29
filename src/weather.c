@@ -175,7 +175,7 @@ void Weather_Request()
    #endif
    
    // Send Request
-   Communication_Send(KEY_TEMPERATURE);
+   Communication_Send(MESSAGE_KEY_TEMPERATURE);
 }
 
 // Convert an image name to a resource id

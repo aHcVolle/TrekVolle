@@ -57,7 +57,7 @@ static void init()
    Acceleration_Init();
    
    // Do Ping
-   Communication_Send(KEY_PINGPONG);
+   Communication_Send(MESSAGE_KEY_PINGPONG);
 }
 
 // Deinit all the functions

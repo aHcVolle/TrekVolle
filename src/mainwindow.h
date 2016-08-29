@@ -6,7 +6,7 @@
 #include "configuration.h"
 #include "battery.h"
 
-//#define DEBUG_ENABLED
+#define DEBUG_ENABLED
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_MAINWINDOW

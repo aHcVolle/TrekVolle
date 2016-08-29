@@ -13,42 +13,42 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // Var to save if an image has been altered
    bool b_NewImageConfig = false;
    // Read tuples for data
-   Tuple *Temperature_tuple = dict_find(iterator, KEY_TEMPERATURE);
-   Tuple *Condition_tuple = dict_find(iterator, KEY_CONDITIONS);
-   Tuple *Image_tuple = dict_find(iterator, KEY_ICON);
-   Tuple *Location_tuple = dict_find(iterator,KEY_LOCATION);
-   Tuple *Network_tuple = dict_find(iterator,KEY_ONLINE);
-   Tuple *Batterycharge_tuple = dict_find(iterator,KEY_BATTERY_CHARGE);
-   Tuple *Batterystate_tuple = dict_find(iterator,KEY_BATTERY_STATE);
+   Tuple *Temperature_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
+   Tuple *Condition_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
+   Tuple *Image_tuple = dict_find(iterator, MESSAGE_KEY_ICON);
+   Tuple *Location_tuple = dict_find(iterator,MESSAGE_KEY_LOCATION);
+   Tuple *Network_tuple = dict_find(iterator,MESSAGE_KEY_ONLINE);
+   Tuple *Batterycharge_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_CHARGE);
+   Tuple *Batterystate_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_STATE);
    
-   Tuple *Color_Background_tuple = dict_find(iterator,KEY_COLOR_BACKGROUND);
-   Tuple *Color_Text_tuple = dict_find(iterator,KEY_COLOR_TEXT);
-   Tuple *Color_Image_tuple = dict_find(iterator,KEY_COLOR_IMAGE);
-   Tuple *Color_Window_tuple = dict_find(iterator,KEY_COLOR_WINDOW);
-   Tuple *Color_Charging_tuple = dict_find(iterator,KEY_COLOR_CHARGING);
-   Tuple *Color_Error_tuple = dict_find(iterator,KEY_COLOR_ERROR);
-   Tuple *Color_BatteryLow_tuple = dict_find(iterator,KEY_COLOR_BATTERYLOW);
-   Tuple *Color_ClockHour_tuple = dict_find(iterator,KEY_COLOR_CLOCK_HOUR);
-   Tuple *Color_ClockMin_tuple = dict_find(iterator,KEY_COLOR_CLOCK_MIN);
+   Tuple *Color_Background_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_BACKGROUND);
+   Tuple *Color_Text_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_TEXT);
+   Tuple *Color_Image_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_IMAGE);
+   Tuple *Color_Window_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_WINDOW);
+   Tuple *Color_Charging_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_CHARGING);
+   Tuple *Color_Error_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_ERROR);
+   Tuple *Color_BatteryLow_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_BATTERYLOW);
+   Tuple *Color_ClockHour_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_CLOCK_HOUR);
+   Tuple *Color_ClockMin_tuple = dict_find(iterator,MESSAGE_KEY_COLOR_CLOCK_MIN);
    
-   Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,KEY_WEATHER_TEMPERATURECELCIUS);
-   Tuple *Weather_Refreshtime_tuple = dict_find(iterator,KEY_WEATHER_REFRESHTIME);
-   Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,KEY_WEATHER_RETRYUPDATE);
-   Tuple *Weather_TemperatureMax_tuple = dict_find(iterator, KEY_WEATHER_TEMPERATURE_MAX);
-   Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, KEY_WEATHER_TEMPERATURE_MIN);
+   Tuple *Weather_TemperatureCelcius_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_TEMPERATURECELCIUS);
+   Tuple *Weather_Refreshtime_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_REFRESHTIME);
+   Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_RETRYUPDATE);
+   Tuple *Weather_TemperatureMax_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MAX);
+   Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MIN);
    
-   Tuple *Clock_Clock24h_tuple = dict_find(iterator,KEY_CLOCK_CLOCK24H);
-   Tuple *Clock_DateStyle_tuple = dict_find(iterator,KEY_CLOCK_DATESTYLE);
-   Tuple *Clock_Sleep_tuple = dict_find(iterator,KEY_CLOCK_SLEEP);
-   Tuple *Clock_DayOfYearStyle_tuple = dict_find(iterator,KEY_CLOCK_DAYOFYEARSTYLE);
+   Tuple *Clock_Clock24h_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_CLOCK24H);
+   Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
+   Tuple *Clock_Sleep_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP);
+   Tuple *Clock_DayOfYearStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEARSTYLE);
    
-   Tuple *Network_Refreshtime_tuple = dict_find(iterator,KEY_NETWORK_REFRESHTIME);   
-   Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,KEY_NETWORK_VIBRATIONENABLED);
+   Tuple *Network_Refreshtime_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_REFRESHTIME);   
+   Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_VIBRATIONENABLED);
    
-   Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,KEY_BLUETOOTH_VIBRATIONENABLED);
+   Tuple *Bluetooth_VibrationEnabled_tuple = dict_find(iterator,MESSAGE_KEY_BLUETOOTH_VIBRATIONENABLED);
 
-   Tuple *PingPong_tuple = dict_find(iterator,KEY_PINGPONG);
-   Tuple *Acceleration_Enabled_tuple = dict_find(iterator,KEY_ACCELERATION_ENABLE);
+   Tuple *PingPong_tuple = dict_find(iterator,MESSAGE_KEY_PINGPONG);
+   Tuple *Acceleration_Enabled_tuple = dict_find(iterator,MESSAGE_KEY_ACCELERATION_ENABLE);
    
    // Save if there was a change in the clock display   
    bool b_ClockChanged = false;
@@ -383,9 +383,9 @@ void Communication_OnInit()
    app_message_outbox_begin(&iter);
    
    // Add a key-value pair
-   dict_write_uint8(iter,KEY_BATTERY_CHARGE , 0);
-   dict_write_uint8(iter,KEY_ONLINE , 0);
-   dict_write_uint8(iter,KEY_TEMPERATURE , 0);
+   dict_write_uint8(iter,MESSAGE_KEY_BATTERY_CHARGE , 0);
+   dict_write_uint8(iter,MESSAGE_KEY_ONLINE , 0);
+   dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0);
    
    // Send the message!
    app_message_outbox_send();

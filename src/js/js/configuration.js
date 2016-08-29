@@ -1,4 +1,9 @@
+var Clay = require('pebble-clay');
+var clayConfig = require('./clayconfig.js');
+var clay = new Clay(clayConfig);
 
+
+/*
 Pebble.addEventListener('showConfiguration', function() 
 {
    var ConfigVersion = '1_6';
@@ -22,9 +27,9 @@ Pebble.addEventListener('showConfiguration', function()
          console.log("[JS:CONF] Sending to "+url);
    Pebble.openURL(url);
 });
+*/
 
-
-
+/*
 Pebble.addEventListener('webviewclosed', function(e) 
 {
    var configData = JSON.parse(decodeURIComponent(e.response));
@@ -231,3 +236,4 @@ Pebble.addEventListener('webviewclosed', function(e)
    if (b_Weather_Location_Changed)
       Weather_GetData();
 });
+*/
