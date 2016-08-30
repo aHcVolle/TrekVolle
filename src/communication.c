@@ -239,10 +239,15 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // If the DayOfYearStyle was changed
    if (Clock_DayOfYear_tuple)
    {
-      if (Clock_DateStyle_tuple->value->cstring[0] == '0')
+      if (Clock_DayOfYear_tuple->value->cstring[0] == '0')
+      {
          m_i_Clock_DayOfYear = 0;
+      }         
       else
+      {
          m_i_Clock_DayOfYear = 1;
+      }
+         
       b_ClockChanged = true;
    }
    // If we have new min max weather data
@@ -293,7 +298,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
          printf("[COM][Communication_InboxReceived] Received data KEY_PINGPONG");
       #endif
       Communication_OnInit();    
-      Weather_LoadData();
+      
    }
    
    if (Acceleration_Enabled_tuple)
@@ -394,7 +399,8 @@ void Communication_OnInit()
    // Add a key-value pair
    dict_write_uint8(iter,MESSAGE_KEY_BATTERY_CHARGE , 0);
    dict_write_uint8(iter,MESSAGE_KEY_ONLINE , 0);
-   //dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0); // Don't get the weather data here
+   if (!m_b_Weather_LastUpdateWasOK)
+      dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0);
    
    // Send the message!
    app_message_outbox_send();

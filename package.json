@@ -49,7 +49,9 @@
             "WEATHER_DATA_TEMP",
             "WEATHER_DATA_COND",
             "WEATHER_DATA_LOCATION",
-            "WEATHER_DATA_IMAGE"
+            "WEATHER_DATA_IMAGE",
+            "WEATHER_DATA_TEMPMIN",
+            "WEATHER_DATA_TEMPMAX"
         ],
         "projectType": "native",
         "resources": {
@@ -245,10 +247,10 @@
             "basalt",
             "chalk"
         ],
-        "uuid": "3c4a7751-b753-470b-9399-2721720df7ac",
+        "uuid": "d547415b-4f52-46f4-9623-a0721103070c",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "1.12.0"
+    "version": "1.13.0"
 }

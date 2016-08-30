@@ -5,6 +5,7 @@
 #include "clock.h"
 #include "mainwindow.h"
 #include "communication.h"
+#include "clock.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_WEATHER

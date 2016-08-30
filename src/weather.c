@@ -148,8 +148,10 @@ void Weather_Init()
    m_Weather_Text_Layer = GetWeatherTextLayer();
    
    m_i_Weather_WeatherImage = RESOURCE_ID_IMAGE_ERROR;
+   //
+   Weather_LoadData();
    // Redraw the weather
-   Weather_RedrawImage();
+   Weather_Redraw();
 }
 
 // Deinit the weather module
@@ -197,6 +199,8 @@ void Weather_SaveData()
    persist_write_int(MESSAGE_KEY_WEATHER_DATA_TIME, m_i_Weather_LastRefresh);
    persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMP, m_i_Weather_Temperature);
    persist_write_int(MESSAGE_KEY_WEATHER_DATA_IMAGE, m_i_Weather_WeatherImage);
+   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMPMIN, m_i_Weather_Temperature_Min);
+   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMPMAX, m_i_Weather_Temperature_Max);
    persist_write_string(MESSAGE_KEY_WEATHER_DATA_COND, m_s_Weather_ConditionBuffer);
    persist_write_string(MESSAGE_KEY_WEATHER_DATA_LOCATION, m_s_Weather_LocationBuffer);
    
@@ -219,7 +223,9 @@ void Weather_LoadData()
       // Reload Weather data from internet ?
       if (i_TimeDiffInMinutes <  m_i_Weather_RefreshTime)
       {
-         
+         #ifdef DEBUG_WEATHER
+            printf("[WEATHER][Weather_LoadData] Using saved weather");
+         #endif
          
          // Load it from storage
          if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TEMP)) 
@@ -229,6 +235,14 @@ void Weather_LoadData()
          if (persist_exists(MESSAGE_KEY_WEATHER_DATA_IMAGE)) 
          {
             m_i_Weather_WeatherImage = persist_read_int(MESSAGE_KEY_WEATHER_DATA_IMAGE);
+         }
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TEMPMIN)) 
+         {
+            m_i_Weather_Temperature_Min = persist_read_int(MESSAGE_KEY_WEATHER_DATA_TEMPMIN);
+         }
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TEMPMAX)) 
+         {
+            m_i_Weather_Temperature_Max = persist_read_int(MESSAGE_KEY_WEATHER_DATA_TEMPMAX);
          }
          if (persist_exists(MESSAGE_KEY_WEATHER_DATA_COND)) 
          {
@@ -240,12 +254,14 @@ void Weather_LoadData()
          }
          
          m_b_Weather_LastUpdateWasOK = true;
-         Weather_Redraw();
+         
          m_i_Weather_Counter = i_TimeDiffInMinutes - 1;
          #ifdef DEBUG_WEATHER
             printf("[WEATHER][Weather_LoadData] Minutes to next weather refresh: %d",m_i_Weather_RefreshTime - m_i_Weather_Counter);
          #endif
          
+         if (m_i_Clock_DayOfYear == DAY_TEMPHIGHLOW)
+            Clock_Redraw();
       }
       else
       {
@@ -254,7 +270,7 @@ void Weather_LoadData()
          #endif
          
          // The saved data is too old
-         Weather_Request();
+         m_b_Weather_LastUpdateWasOK = false;
       }
       
    }
@@ -265,7 +281,7 @@ void Weather_LoadData()
       #endif
       
       // There is no saved data
-      Weather_Request();
+      m_b_Weather_LastUpdateWasOK = false;
    }
 }
 
