@@ -269,10 +269,11 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // The network refresh time was changed
    if (Network_Refreshtime_tuple)
    {
-      #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_NETWORK_REFRESHTIME");
-      #endif
+      
       m_i_Network_RefreshTime = (int)Network_Refreshtime_tuple->value->int32;
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_NETWORK_REFRESHTIME %d",m_i_Network_RefreshTime);
+      #endif
    }
    // The network vibration settings have been changed
    if (Network_VibrationEnabled_tuple)
@@ -348,8 +349,18 @@ void Communication_TimerCallback(void *data)
       app_message_outbox_begin(&iter);
       
       // Add a key-value pair
-      dict_write_uint8(iter,*i_data , 0);
-      dict_write_end(iter);
+      if (*i_data != (int)MESSAGE_KEY_TEMPERATURE)
+      {
+         dict_write_uint8(iter,*i_data , 0);
+         dict_write_end(iter);
+      }
+      else
+      {
+         char *sys_locale = setlocale(LC_ALL, "");
+         dict_write_cstring(iter,MESSAGE_KEY_TEMPERATURE,sys_locale);
+         dict_write_end(iter);
+      }
+      
       // Send the message!
       app_message_outbox_send();
       free(data);
@@ -396,6 +407,7 @@ void Communication_OnInit()
    DictionaryIterator *iter;
    app_message_outbox_begin(&iter);
    
+
    // Add a key-value pair
    dict_write_uint8(iter,MESSAGE_KEY_BATTERY_CHARGE , 0);
    dict_write_uint8(iter,MESSAGE_KEY_ONLINE , 0);

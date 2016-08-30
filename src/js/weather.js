@@ -1,7 +1,7 @@
 // Set the used OpenWeatherMap.org API key
 // Please use your own if you copy this code
 var m_s_Weather_OpenWeatherMap_Key; 
-
+var m_s_Weather_Language;
 // Weather location types
 var Weather_Location_Type_GeoLocation;
 var Weather_Location_Type_CityName;
@@ -30,6 +30,47 @@ function SetMessaging(b_MessagingAvailable)
       console.log("[JS:WTHR] Messaging disabled!");
 }
 
+function SetLanguage(Language)
+{
+   if ((Language === '') || (Language === null) || (typeof Language === "undefined"))
+   {
+      m_s_Weather_Language = 'en';
+   }
+   else if (Language ==='fr_FR')
+   {
+      m_s_Weather_Language = 'fr';
+   }
+   else if (Language ==='de_DE')
+   {
+      m_s_Weather_Language = 'de';
+   }
+   else if (Language ==='es_ES')
+   {
+      m_s_Weather_Language = 'es';
+   }
+   else if (Language ==='it_IT')
+   {
+      m_s_Weather_Language = 'it';
+   }
+   else if (Language ==='pt_PT')
+   {
+      m_s_Weather_Language = 'pt';
+   }
+   else if (Language ==='en_CN')
+   {
+      m_s_Weather_Language = 'zh_cn';
+   }
+   else if (Language ==='en_TW')
+   {
+      m_s_Weather_Language = 'zh_tw';
+   }
+   else
+   {
+      m_s_Weather_Language = 'en';
+   }
+   
+}
+
 function Init(b_Debug)
 {
    m_b_Debug = b_Debug;
@@ -45,6 +86,7 @@ function Init(b_Debug)
    
    m_i_Weather_Location_StorageID = 0;
    m_s_Weather_Location_Name = '';
+   m_s_Weather_Language = 'en';
    m_i_Weather_Location_Type = Weather_Location_Type_GeoLocation;
    
    // There is only one provider right now
@@ -86,10 +128,13 @@ var xhrRequest = function (url, type, callback)
    
 };
 
+
+
 function GetOpenWeatherMapData(RequestString )
 {
+   
    // Construct the OpenWeatherMap.org URL
-  var url = 'http://api.openweathermap.org/data/2.5/weather?' + RequestString + '&appid=' + m_s_Weather_OpenWeatherMap_Key;
+  var url = 'http://api.openweathermap.org/data/2.5/weather?' + RequestString + '&lang='+m_s_Weather_Language+'&appid=' + m_s_Weather_OpenWeatherMap_Key;
      
    
    // Send request to OpenWeatherMap
@@ -108,7 +153,8 @@ function GetOpenWeatherMapData(RequestString )
             //console.log('Temperature is ' + temperature);
    
             // Conditions
-            var conditions = json.weather[0].main;      
+            //var conditions = json.weather[0].main;      
+            var conditions = json.weather[0].description;      
             //console.log('Conditions are ' + conditions);
             
             // MinMax
@@ -315,3 +361,5 @@ module.exports.Init = Init;
 module.exports.GetData = GetData;
 module.exports.SaveData = SaveData;
 module.exports.LoadData = LoadData;
+module.exports.SetLanguage = SetLanguage;
+

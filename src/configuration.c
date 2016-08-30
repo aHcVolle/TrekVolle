@@ -171,7 +171,7 @@ void LoadDefaultConfig()
    m_b_Clock_Sleep = true;
    m_i_Clock_DayOfYear = DAY_DAYOFYEAR;
    
-   m_i_Network_RefreshTime = 1;
+   m_i_Network_RefreshTime = 60;
    m_b_Network_VibrationEnabled = true;
    
    m_b_Bluetooth_VibrationEnabled = true;

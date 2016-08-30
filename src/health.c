@@ -67,6 +67,9 @@ static void Health_Handler(HealthEventType event, void *context)
     case HealthEventSleepUpdate:
       // We don't use this
       break;
+    //case HealthEventHeartRateUpdate:
+     // https://developer.pebble.com/docs/c/preview/Foundation/Event_Service/HealthService/
+      //break;
   }
 }
 #endif

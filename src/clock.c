@@ -101,6 +101,9 @@ static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed)
    {
       Network_Request();
       m_i_Network_Counter = 0;
+      #ifdef DEBUG_CLOCK
+         printf("[CLOCK][Clock_Handle] Network: %d %d",m_i_Network_Counter,m_i_Network_RefreshTime);
+      #endif
    }
    
    // Or a weather update
