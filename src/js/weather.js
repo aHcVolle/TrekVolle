@@ -400,3 +400,5 @@ function GetData()
 module.exports.SetMessaging = SetMessaging;
 module.exports.Init = Init;
 module.exports.GetData = GetData;
+module.exports.SaveData = SaveData;
+module.exports.LoadData = LoadData;

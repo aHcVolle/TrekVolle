@@ -43,7 +43,8 @@
             "CLOCK_DAYOFYEAR",
             "COLOR_CLOCK_HOUR",
             "COLOR_CLOCK_MIN",
-            "ACCELERATION_ENABLE"
+            "ACCELERATION_ENABLE",
+            "WEATHER_LOCATION"
         ],
         "projectType": "native",
         "resources": {
@@ -244,5 +245,5 @@
             "watchface": true
         }
     },
-    "version": "1.10.0"
+    "version": "1.11.0"
 }

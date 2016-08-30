@@ -1,11 +1,10 @@
-var Clay = require('pebble-clay');
-var clayConfig = require('./clayconfig.js');
-var clay = new Clay(clayConfig);
+
 
 
 var battery = require('./battery');
 var network = require('./network');
 var weather = require('./weather');
+var configuration = require('./configuration');
 
 
 var m_b_MessagingAvailable;
@@ -18,6 +17,9 @@ Pebble.addEventListener('ready', function(e)
    
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");
+   
+   // Configuration
+   configuration.Init(m_b_Debug);
    
    // Init the network check
    network.SetDebug(m_b_Debug);
@@ -102,7 +104,7 @@ function Messaging_Init()
             Messaging_DoPong();
             b_Found = true;
          }
-         
+
 
          if (!b_Found && m_b_Debug)
                console.log("[JS:APP] Unkown info requested..." +e.payload.toString());

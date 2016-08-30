@@ -36,6 +36,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_RETRYUPDATE);
    Tuple *Weather_TemperatureMax_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MAX);
    Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MIN);
+   Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_LOCATION);
    
    Tuple *Clock_Clock24h_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
@@ -202,6 +203,14 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
          printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_RETRYUPDATE");
       #endif
       m_b_Weather_RetryUpdate = (bool)Weather_RetryUpdate_tuple->value->int32;
+   }
+   // If the Location was setup
+   if (Weather_Location_tuple)
+   {
+       #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_LOCATION");
+      #endif
+      
    }
    
    

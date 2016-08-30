@@ -60,7 +60,7 @@ module.exports = [
       },
       {
         "type": "color",
-        "messageKey": "COLOR_CLOCK_MINUTE",
+        "messageKey": "COLOR_CLOCK_MIN",
         "defaultValue": "0xFF5555",
         "label": "Clock minute Color"
       }
@@ -76,13 +76,15 @@ module.exports = [
       {
         "type": "toggle",
         "messageKey": "WEATHER_TEMPERATURECELCIUS",
-        "label": "Temp. in Celcius",
+        "label": "Temperature in Celcius",
+        "description": "Fahrenheit if disabled.",
         "defaultValue": true
       },
       {
         "type": "toggle",
         "messageKey": "WEATHER_RETRYUPDATE",
         "label": "Retry weather update",
+        "description": "if the last update failed.",
         "defaultValue": true
       },
       {
@@ -90,15 +92,22 @@ module.exports = [
         "messageKey": "WEATHER_REFRESHTIME",
         "defaultValue": 60,
         "label": "Weather refresh time",
-        "description": "Time between weather requests.",
+        "description": "Time in minutes between weather requests.",
         "min": 1,
         "max": 99,
         "step": 1
       },
       {
+        "type": "input",
+        "messageKey": "WEATHER_LOCATION",
+        "description": "Enter your city, cityID, leave empty for geolocation.",
+        "label": "Weather Location"
+      },
+      {
         "type": "toggle",
         "messageKey": "ACCELERATION_ENABLE",
         "label": "Switch between condition and location",
+        "description": "when shaking your pebble.",
         "defaultValue": true
       }
     ]
@@ -114,12 +123,6 @@ module.exports = [
         "type": "toggle",
         "messageKey": "CLOCK_CLOCK24H",
         "label": "24H Mode",
-        "defaultValue": true
-      },
-      {
-        "type": "toggle",
-        "messageKey": "CLOCK_SLEEP",
-         "label": "Sleep mode (00:00 to 07:00)",
         "defaultValue": true
       },
       {
@@ -154,7 +157,7 @@ module.exports = [
             "value": "0" 
           },
           { 
-            "label": "Temp min max", 
+            "label": "Temperature minimum/maximum", 
             "value": "1" 
           }         
           ]
@@ -167,18 +170,27 @@ module.exports = [
     "items": [
       {
         "type": "heading",
-        "defaultValue": "Network"
+        "defaultValue": "Connection"
       },
       {
         "type": "toggle",
         "messageKey": "NETWORK_VIBRATIONENABLED",
         "label": "Network vibrations",
+        "description": "Vibrate on internet (dis)connect.",
         "defaultValue": true
       },
       {
         "type": "toggle",
         "messageKey": "BLUETOOTH_VIBRATIONENABLED",
         "label": "Bluetooth vibrations",
+        "description": "Vibrate on bluetooth (dis)connect.",
+        "defaultValue": true
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CLOCK_SLEEP",
+        "label": "Sleep mode (00:00 to 07:00)",
+        "description": "If enabled, the watchapp will not virate during this time.",
         "defaultValue": true
       },
       {
@@ -186,7 +198,7 @@ module.exports = [
         "messageKey": "NETWORK_REFRESHTIME",
         "defaultValue": 60,
         "label": "Network refresh time",
-        "description": "Time between network requests.",
+        "description": "Time in minutes between network checks.",
         "min": 1,
         "max": 99,
         "step": 1
