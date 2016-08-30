@@ -28,6 +28,10 @@ int m_i_Clock_DayOfYear;
 bool m_b_Clock_Sleep;
 bool m_b_Clock_SleepEnabled;
 
+int m_i_Weather_Counter;
+int m_i_Network_Counter;
+
+
 // Functions used in other files
 void Clock_Redraw();
 void Clock_Init();

@@ -2,6 +2,7 @@
 #define WEATHER_H
 
 #include <pebble.h>
+#include "clock.h"
 #include "mainwindow.h"
 #include "communication.h"
 
@@ -22,7 +23,7 @@ bool m_b_Weather_LastUpdateWasOK;
 bool m_b_Weather_RetryUpdate;
 bool m_b_Weather_TemperatureInCelcius;
 int m_i_Weather_RefreshTime;
-
+int m_i_Weather_LastRefresh;
 int m_i_Weather_Temperature_Min;
 int m_i_Weather_Temperature_Max;
 
@@ -36,5 +37,7 @@ void Weather_Request();
 void Weather_RedrawText();
 void Weather_RedrawImage();
 void Weather_Redraw();
+void Weather_SaveData();
+void Weather_LoadData();
 int  Weather_GetImageID(char* s_WeatherImageName);
 #endif

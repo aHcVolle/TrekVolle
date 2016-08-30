@@ -61,12 +61,7 @@ void LoadConfigFromStorage()
    {
      m_b_Weather_RetryUpdate = persist_read_bool(MESSAGE_KEY_WEATHER_RETRYUPDATE);
    }
-
    
-   if (persist_exists(MESSAGE_KEY_CLOCK_CLOCK24H)) 
-   {
-     m_b_Clock_Clock24h = persist_read_bool(MESSAGE_KEY_CLOCK_CLOCK24H);
-   }
    if (persist_exists(MESSAGE_KEY_CLOCK_DATESTYLE)) 
    {
      m_i_Clock_DateStyle = persist_read_int(MESSAGE_KEY_CLOCK_DATESTYLE);
@@ -123,8 +118,7 @@ void SaveConfigToStorage()
    persist_write_bool(MESSAGE_KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
    persist_write_int(MESSAGE_KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
    persist_write_bool(MESSAGE_KEY_WEATHER_RETRYUPDATE, m_b_Weather_RetryUpdate);
-      
-   persist_write_bool(MESSAGE_KEY_CLOCK_CLOCK24H, m_b_Clock_Clock24h);
+
    persist_write_int(MESSAGE_KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
    persist_write_bool(MESSAGE_KEY_CLOCK_SLEEP, m_b_Clock_Sleep);
    persist_write_int(MESSAGE_KEY_CLOCK_DAYOFYEAR, m_i_Clock_DayOfYear);
@@ -174,7 +168,6 @@ void LoadDefaultConfig()
    m_b_Weather_RetryUpdate = true;
       
    m_i_Clock_DateStyle = DATE_DD_MM_YY;
-   m_b_Clock_Clock24h = clock_is_24h_style();
    m_b_Clock_Sleep = true;
    m_i_Clock_DayOfYear = DAY_DAYOFYEAR;
    

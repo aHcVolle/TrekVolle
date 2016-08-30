@@ -125,6 +125,12 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
    }
    // Redraw the text
    Weather_RedrawText();
+   
+   // Save new data to non volatile memory
+   time_t Time;
+   time(&Time);
+   m_i_Weather_LastRefresh = (int)Time;
+   
 }
 
 // Init all the variables
@@ -153,6 +159,7 @@ void Weather_DeInit()
    #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_DeInit] Deinit");
    #endif
+   Weather_SaveData();
 }
 
 // Request a weather update
@@ -174,8 +181,92 @@ void Weather_Request()
          printf("[WEATHER][Weather_Request] Request");
    #endif
    
+   
+   
    // Send Request
    Communication_Send(MESSAGE_KEY_TEMPERATURE);
+}
+
+void Weather_SaveData()
+{
+   
+   #ifdef DEBUG_WEATHER
+      printf("[WEATHER][Weather_SaveData] Saving weather data (time: %d)",m_i_Weather_LastRefresh);
+   #endif
+     
+   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TIME, m_i_Weather_LastRefresh);
+   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMP, m_i_Weather_Temperature);
+   persist_write_int(MESSAGE_KEY_WEATHER_DATA_IMAGE, m_i_Weather_WeatherImage);
+   persist_write_string(MESSAGE_KEY_WEATHER_DATA_COND, m_s_Weather_ConditionBuffer);
+   persist_write_string(MESSAGE_KEY_WEATHER_DATA_LOCATION, m_s_Weather_LocationBuffer);
+   
+}
+
+void Weather_LoadData()
+{
+   if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TIME)) 
+   {
+      m_i_Weather_LastRefresh = persist_read_int(MESSAGE_KEY_WEATHER_DATA_TIME);
+      
+      time_t now;
+      time(&now);
+      
+      #ifdef DEBUG_WEATHER
+         printf("[WEATHER][Weather_LoadData] Times: saved: %d, now: %d",(int)m_i_Weather_LastRefresh,(int)now);
+      #endif
+      
+      int i_TimeDiffInMinutes = (now - m_i_Weather_LastRefresh) / 60;
+      // Reload Weather data from internet ?
+      if (i_TimeDiffInMinutes <  m_i_Weather_RefreshTime)
+      {
+         
+         
+         // Load it from storage
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TEMP)) 
+         {
+            m_i_Weather_Temperature = persist_read_int(MESSAGE_KEY_WEATHER_DATA_TEMP);
+         }
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_IMAGE)) 
+         {
+            m_i_Weather_WeatherImage = persist_read_int(MESSAGE_KEY_WEATHER_DATA_IMAGE);
+         }
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_COND)) 
+         {
+            persist_read_string(MESSAGE_KEY_WEATHER_DATA_COND,m_s_Weather_ConditionBuffer,32);
+         }
+         if (persist_exists(MESSAGE_KEY_WEATHER_DATA_LOCATION)) 
+         {
+            persist_read_string(MESSAGE_KEY_WEATHER_DATA_LOCATION,m_s_Weather_LocationBuffer,32);
+         }
+         
+         m_b_Weather_LastUpdateWasOK = true;
+         Weather_Redraw();
+         m_i_Weather_Counter = i_TimeDiffInMinutes - 1;
+         #ifdef DEBUG_WEATHER
+            printf("[WEATHER][Weather_LoadData] Minutes to next weather refresh: %d",m_i_Weather_RefreshTime - m_i_Weather_Counter);
+         #endif
+         
+      }
+      else
+      {
+         #ifdef DEBUG_WEATHER
+            printf("[WEATHER][Weather_LoadData] Saved weather data is too old");
+         #endif
+         
+         // The saved data is too old
+         Weather_Request();
+      }
+      
+   }
+   else
+   {
+      #ifdef DEBUG_WEATHER
+         printf("[WEATHER][Weather_LoadData] There is no saved weather data");
+      #endif
+      
+      // There is no saved data
+      Weather_Request();
+   }
 }
 
 // Convert an image name to a resource id

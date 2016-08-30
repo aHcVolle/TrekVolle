@@ -38,7 +38,6 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MIN);
    Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_LOCATION);
    
-   Tuple *Clock_Clock24h_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_CLOCK24H);
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
    Tuple *Clock_Sleep_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP);
    Tuple *Clock_DayOfYear_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEAR);
@@ -213,16 +212,6 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       
    }
    
-   
-   // The clock mode was changed
-   if (Clock_Clock24h_tuple)
-   {
-      #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_CLOCK24H");
-      #endif
-      m_b_Clock_Clock24h = (bool)Clock_Clock24h_tuple->value->int32;
-      b_ClockChanged = true;
-   }      
    // The datestyle was changed
    if (Clock_DateStyle_tuple)
    {
@@ -303,7 +292,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       #ifdef DEBUG_COMMUNICATION
          printf("[COM][Communication_InboxReceived] Received data KEY_PINGPONG");
       #endif
-      Communication_OnInit();      
+      Communication_OnInit();    
+      Weather_LoadData();
    }
    
    if (Acceleration_Enabled_tuple)
@@ -404,10 +394,12 @@ void Communication_OnInit()
    // Add a key-value pair
    dict_write_uint8(iter,MESSAGE_KEY_BATTERY_CHARGE , 0);
    dict_write_uint8(iter,MESSAGE_KEY_ONLINE , 0);
-   dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0);
+   //dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0); // Don't get the weather data here
    
    // Send the message!
    app_message_outbox_send();
+   
+   
 }
 
 // Register with the app messaging service

@@ -47,6 +47,7 @@ function Init(b_Debug)
    m_s_Weather_Location_Name = '';
    m_i_Weather_Location_Type = Weather_Location_Type_GeoLocation;
    
+   // There is only one provider right now
    m_i_Weather_Provider = 0;
 
    // And load the data from storage
@@ -156,77 +157,6 @@ function GetOpenWeatherMapData(RequestString )
     });
 }
 
-function GetYahooData(RequestString )
-{
-   // Construct the OpenWeatherMap.org URL
-  var url = 'http://api.openweathermap.org/data/2.5/weather?' + RequestString + '&appid=' + m_s_Weather_OpenWeatherMap_Key;
-     
-   
-   // Send request to OpenWeatherMap
-   xhrRequest(url, 'GET', function(responseText) 
-      {
-         if (m_b_Debug)
-            console.log("[JS:WTHR] Got weather data");
-         
-         // responseText contains a JSON object with weather info
-         var json = JSON.parse(responseText);
-         
-         if(typeof json.main !== "undefined")
-         {
-           // Temperature in Kelvin requires adjustment
-            var temperature = Math.round(json.main.temp - 273.15);
-            //console.log('Temperature is ' + temperature);
-   
-            // Conditions
-            var conditions = json.weather[0].main;      
-            //console.log('Conditions are ' + conditions);
-            
-            // MinMax
-            var Temp_Min = Math.round(json.main.temp_min - 273.15);
-            var Temp_Max = Math.round(json.main.temp_max - 273.15);
-            // Icon
-            var iconname = json.weather[0].icon;
-   
-            // Location
-            var city = json.name;
-            var country = json.sys.country;
-            var location = city + ',' + country;
-   
-            // Assemble dictionary using our keys
-            var dictionary = 
-                {
-                   'KEY_TEMPERATURE': temperature,
-                   'KEY_CONDITIONS': conditions,
-                   'KEY_ICON': iconname,
-                   'KEY_LOCATION': location,
-                   'KEY_ONLINE': 1,
-                   'KEY_WEATHER_TEMPERATURE_MIN' : Temp_Min,
-                   'KEY_WEATHER_TEMPERATURE_MAX' : Temp_Max
-                };
-   
-            // Send to Pebble
-            Pebble.sendAppMessage(dictionary,
-               function(e)
-               {
-                  if (m_b_Debug)
-                     console.log("[JS:WTHR] Sent message with ID " + e.data.transactionId);
-               },
-               function(e)
-               {
-                  if (m_b_Debug)
-                     console.log("[JS:WTHR] Could not send message with ID " + e.data.transactionId + " error: " + e.error);
-               });
-         } 
-         else
-         {
-            if (m_b_Debug)
-               console.log("[JS:WTHR] Weather data is borked!");
-         }
-         
-         
-    });
-}
-
 function LocationSuccess(pos) 
 {
    // Debug printout
@@ -238,13 +168,7 @@ function LocationSuccess(pos)
    {
       GetOpenWeatherMapData('lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude);
    }
-   // Yahoo
-   else if (m_i_Weather_Provider === 1)
-   {
-      GetYahooData();
-   }
-   // WeatherUnderground
-   else if (m_i_Weather_Provider === 2)
+   else
    {
       if (m_b_Debug)
          console.log("[JS:WTHR] Unknown weather provider");
@@ -356,15 +280,10 @@ function GetData()
          {
             GetOpenWeatherMapData('id=' + m_s_Weather_Location_Name);
          }
-         // Yahoo
-         else if (m_i_Weather_Provider === 1)
+         else
          {
-            GetYahooData('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20'+m_s_Weather_Location_Name+'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys');
-         }
-         // WeatherUnderground
-         else if (m_i_Weather_Provider === 2)
-         {
-            
+            if (m_b_Debug)
+               console.log("[JS:WTHR] Unknown weather provider.");
          }
       }
       else if (m_i_Weather_Location_Type == Weather_Location_Type_CityName)
@@ -377,13 +296,7 @@ function GetData()
          {
             GetOpenWeatherMapData('q=' + m_s_Weather_Location_Name);
          }
-         // Yahoo
-         else if (m_i_Weather_Provider === 1)
-         {
-            GetYahooData('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+m_s_Weather_Location_Name+'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys');
-         }
-         // WeatherUnderground
-         else if (m_i_Weather_Provider === 2)
+         else
          {
             if (m_b_Debug)
                console.log("[JS:WTHR] Unknown weather provider");

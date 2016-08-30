@@ -7,8 +7,7 @@ TextLayer* m_Date_Text_Layer = NULL;
 TextLayer* m_Day_Text_Layer = NULL;
 
 // Used variables 
-int m_i_Weather_Counter = 0;
-int m_i_Network_Counter = 0;
+
 int m_i_LastMinute = -1;
 
 
@@ -139,12 +138,16 @@ void Clock_Init()
    #ifdef DEBUG_CLOCK
          printf("[CLOCK][Clock_Init] Init");
    #endif
+   
+   m_i_Weather_Counter = 0;
+   m_i_Network_Counter = 0;
+   
    // Init the vars
    m_TimeHour_Text_Layer = GetTimeHourTextLayer();
    m_TimeMinute_Text_Layer = GetTimeMinuteTextLayer();
    m_Date_Text_Layer = GetDateTextLayer();
    m_Day_Text_Layer  = GetDayTextLayer();
-   
+   m_b_Clock_Clock24h = clock_is_24h_style();
    
    // Make sure the time is displayed from the start
    Clock_Redraw();

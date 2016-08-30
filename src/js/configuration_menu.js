@@ -120,12 +120,6 @@ module.exports = [
         "defaultValue": "Clock"
       },
       {
-        "type": "toggle",
-        "messageKey": "CLOCK_CLOCK24H",
-        "label": "24H Mode",
-        "defaultValue": true
-      },
-      {
         "type": "radiogroup",
         "messageKey": "CLOCK_DATESTYLE",
         "label": "Date style",

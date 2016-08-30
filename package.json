@@ -29,7 +29,7 @@
             "COLOR_ERROR",
             "COLOR_BATTERYLOW",
             "WEATHER_TEMPERATURECELCIUS",
-            "CLOCK_CLOCK24H",
+            "UNUSED_CLOCK24H",
             "CLOCK_DATESTYLE",
             "NETWORK_REFRESHTIME",
             "BLUETOOTH_VIBRATIONENABLED",
@@ -44,7 +44,12 @@
             "COLOR_CLOCK_HOUR",
             "COLOR_CLOCK_MIN",
             "ACCELERATION_ENABLE",
-            "WEATHER_LOCATION"
+            "WEATHER_LOCATION",
+            "WEATHER_DATA_TIME",
+            "WEATHER_DATA_TEMP",
+            "WEATHER_DATA_COND",
+            "WEATHER_DATA_LOCATION",
+            "WEATHER_DATA_IMAGE"
         ],
         "projectType": "native",
         "resources": {
@@ -240,10 +245,10 @@
             "basalt",
             "chalk"
         ],
-        "uuid": "2da02267-7a19-4e49-9ed1-439d25db14e4",
+        "uuid": "3c4a7751-b753-470b-9399-2721720df7ac",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "1.11.0"
+    "version": "1.12.0"
 }
