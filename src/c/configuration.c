@@ -1,5 +1,7 @@
 #include "configuration.h"
 
+static char m_s_Save_TextBuffer[32];
+
 // Load the stored vars from the non volatile storage
 void LoadConfigFromStorage()
 {
@@ -96,6 +98,53 @@ void LoadConfigFromStorage()
    
 }
 
+
+void WriteInt(int Key, int Value)
+{
+   if (persist_exists(Key))
+   {
+      if (persist_read_int(Key) != Value)
+         persist_write_int(Key, Value);
+   }
+   else
+   {
+      persist_write_int(Key, Value);
+   }
+}
+
+void WriteBool(int Key, bool Value)
+{
+   if (persist_exists(Key))
+   {
+      if (persist_read_bool(Key) != Value)
+         persist_write_bool(Key, Value);
+   }
+   else
+   {
+      persist_write_bool(Key, Value);
+   }
+}
+
+void WriteString(int Key, const char* String)
+{
+   if (persist_exists(Key))
+   {
+      persist_read_string(Key, m_s_Save_TextBuffer, 32);
+      if (strcmp(m_s_Save_TextBuffer,String) != 0)
+         persist_write_string(Key, String);     
+
+   }
+   else
+   {
+      persist_write_string(Key, String);
+   }
+   
+   
+}
+
+
+
+
 // Save all the variables to the storage
 void SaveConfigToStorage()
 {
@@ -105,30 +154,30 @@ void SaveConfigToStorage()
    #endif
    
    // And save
-   persist_write_int(MESSAGE_KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_TEXT, (int)Color_Text.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_IMAGE, (int)Color_Image.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_WINDOW, (int)Color_Window.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_CHARGING, (int)Color_Charging.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_ERROR, (int)Color_Error.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_CLOCK_HOUR, (int)Color_ClockHour.argb);
-   persist_write_int(MESSAGE_KEY_COLOR_CLOCK_MIN,  (int)Color_ClockMin.argb);
+   WriteInt(MESSAGE_KEY_COLOR_BACKGROUND, (int)Color_Background.argb);
+   WriteInt(MESSAGE_KEY_COLOR_TEXT, (int)Color_Text.argb);
+   WriteInt(MESSAGE_KEY_COLOR_IMAGE, (int)Color_Image.argb);
+   WriteInt(MESSAGE_KEY_COLOR_WINDOW, (int)Color_Window.argb);
+   WriteInt(MESSAGE_KEY_COLOR_CHARGING, (int)Color_Charging.argb);
+   WriteInt(MESSAGE_KEY_COLOR_ERROR, (int)Color_Error.argb);
+   WriteInt(MESSAGE_KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
+   WriteInt(MESSAGE_KEY_COLOR_CLOCK_HOUR, (int)Color_ClockHour.argb);
+   WriteInt(MESSAGE_KEY_COLOR_CLOCK_MIN,  (int)Color_ClockMin.argb);
          
-   persist_write_bool(MESSAGE_KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
-   persist_write_int(MESSAGE_KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
-   persist_write_bool(MESSAGE_KEY_WEATHER_RETRYUPDATE, m_b_Weather_RetryUpdate);
+   WriteBool(MESSAGE_KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
+   WriteInt(MESSAGE_KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
+   WriteBool(MESSAGE_KEY_WEATHER_RETRYUPDATE, m_b_Weather_RetryUpdate);
 
-   persist_write_int(MESSAGE_KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
-   persist_write_bool(MESSAGE_KEY_CLOCK_SLEEP, m_b_Clock_Sleep);
-   persist_write_int(MESSAGE_KEY_CLOCK_DAYOFYEAR, m_i_Clock_DayOfYear);
+   WriteInt(MESSAGE_KEY_CLOCK_DATESTYLE, m_i_Clock_DateStyle);
+   WriteBool(MESSAGE_KEY_CLOCK_SLEEP, m_b_Clock_Sleep);
+   WriteInt(MESSAGE_KEY_CLOCK_DAYOFYEAR, m_i_Clock_DayOfYear);
    
-   persist_write_int(MESSAGE_KEY_NETWORK_REFRESHTIME, m_i_Network_RefreshTime);
-   persist_write_bool(MESSAGE_KEY_NETWORK_VIBRATIONENABLED, m_b_Network_VibrationEnabled);   
+   WriteInt(MESSAGE_KEY_NETWORK_REFRESHTIME, m_i_Network_RefreshTime);
+   WriteBool(MESSAGE_KEY_NETWORK_VIBRATIONENABLED, m_b_Network_VibrationEnabled);   
    
-   persist_write_bool(MESSAGE_KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
+   WriteBool(MESSAGE_KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
    
-   persist_write_bool(MESSAGE_KEY_ACCELERATION_ENABLE, m_b_Acceleration_Enabled);
+   WriteBool(MESSAGE_KEY_ACCELERATION_ENABLE, m_b_Acceleration_Enabled);
     
 }
 

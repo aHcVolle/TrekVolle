@@ -16,6 +16,11 @@
 
 
 // Functions used in other files
+void WriteInt(int Key, int Value);
+void WriteBool(int Key, bool Value);
+void WriteString(int Key, const char* String);
+
+
 void LoadConfigFromStorage();
 void SaveConfigToStorage();
 void LoadDefaultConfig();

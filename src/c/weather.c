@@ -195,15 +195,21 @@ void Weather_SaveData()
    #ifdef DEBUG_WEATHER
       printf("[WEATHER][Weather_SaveData] Saving weather data (time: %d)",m_i_Weather_LastRefresh);
    #endif
-     
-   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TIME, m_i_Weather_LastRefresh);
-   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMP, m_i_Weather_Temperature);
-   persist_write_int(MESSAGE_KEY_WEATHER_DATA_IMAGE, m_i_Weather_WeatherImage);
-   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMPMIN, m_i_Weather_Temperature_Min);
-   persist_write_int(MESSAGE_KEY_WEATHER_DATA_TEMPMAX, m_i_Weather_Temperature_Max);
-   persist_write_string(MESSAGE_KEY_WEATHER_DATA_COND, m_s_Weather_ConditionBuffer);
-   persist_write_string(MESSAGE_KEY_WEATHER_DATA_LOCATION, m_s_Weather_LocationBuffer);
    
+   int i_LastSaveTime = 0;
+   if (persist_exists(MESSAGE_KEY_WEATHER_DATA_TIME))
+      i_LastSaveTime = persist_read_int(MESSAGE_KEY_WEATHER_DATA_TIME);
+   
+   if (i_LastSaveTime != m_i_Weather_LastRefresh)
+   {
+      WriteInt(MESSAGE_KEY_WEATHER_DATA_TIME, m_i_Weather_LastRefresh);
+      WriteInt(MESSAGE_KEY_WEATHER_DATA_TEMP, m_i_Weather_Temperature);
+      WriteInt(MESSAGE_KEY_WEATHER_DATA_IMAGE, m_i_Weather_WeatherImage);
+      WriteInt(MESSAGE_KEY_WEATHER_DATA_TEMPMIN, m_i_Weather_Temperature_Min);
+      WriteInt(MESSAGE_KEY_WEATHER_DATA_TEMPMAX, m_i_Weather_Temperature_Max);
+      WriteString(MESSAGE_KEY_WEATHER_DATA_COND, m_s_Weather_ConditionBuffer);
+      WriteString(MESSAGE_KEY_WEATHER_DATA_LOCATION, m_s_Weather_LocationBuffer);
+   }
 }
 
 void Weather_LoadData()
