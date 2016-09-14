@@ -50,7 +50,7 @@ void Weather_RedrawText()
    // Set the text
    text_layer_set_text(m_Weather_Text_Layer, m_s_Weather_TextBuffer);
    // Redraw the text
-   layer_mark_dirty(text_layer_get_layer(m_Weather_Text_Layer));
+   //layer_mark_dirty(text_layer_get_layer(m_Weather_Text_Layer));
 }
 
 // Redraw the weather image
@@ -74,6 +74,7 @@ void Weather_Redraw()
    // And do some work
    Weather_RedrawText();
    Weather_RedrawImage();
+   Refresh_Display();
 }
 
 // New weather information will be processed here

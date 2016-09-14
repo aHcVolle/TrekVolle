@@ -94,6 +94,8 @@ void Network_Handle_Reply(Tuple *network_tuple)
    
    // Redraw the image
    Network_Redraw();
+   
+   Refresh_Display();
 }
 
 // Init the network variables

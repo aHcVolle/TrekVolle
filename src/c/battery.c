@@ -95,7 +95,7 @@ void Battery_Redraw(struct BatteryData* Battery)
    // Draw the battery's text
    text_layer_set_text_color(Battery->l_Text, TextColor);
    text_layer_set_text(Battery->l_Text, Battery->s_Text);
-   layer_mark_dirty(text_layer_get_layer(Battery->l_Text));
+   //layer_mark_dirty(text_layer_get_layer(Battery->l_Text));
    
 }
 

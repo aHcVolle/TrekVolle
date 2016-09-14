@@ -55,6 +55,7 @@ void Color_SetTextColor();
 void Color_SetImageColor();
 
 void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color);
+void Refresh_Display(void);
 
 // Functions to return all the text pointers
 TextLayer* GetStepTextLayer();

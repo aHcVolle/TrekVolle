@@ -66,10 +66,24 @@ static void Bluetooth_Handle(bool b_ConnectionState)
       //printf("BT disconnected");
    }
    
+   
+   // And check if we are online (will do nothing if bluetoth is disconnected)
+   //Network_Request();
+   
+   if (b_ConnectionState)
+   {
+      //request a network update at the next clock tick
+      m_i_Network_Counter = m_i_Network_RefreshTime;
+   }
+   else
+   {
+      // if there is no bt connection there can't be a network connection
+      m_b_Network_ConnectionState = false;
+      Network_Redraw();
+   }
+   
    // Redraw the bluetooth image
    Bluetooth_Redraw();
-   // And check if we are online (will do nothing if bluetoth is disconnected)
-   Network_Request();
 }
 
 // Init the bluetooth vars and register with the bluetooth connection service

@@ -309,6 +309,11 @@ void hide_mainwindow(void)
    window_stack_remove(s_window, true);
 }
 
+void Refresh_Display(void)
+{
+   layer_mark_dirty(window_get_root_layer(s_window));
+}
+
 // Redraw the specified image
 void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
 {
@@ -415,7 +420,7 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
    #endif
 
    // Let the layer be redrawn
-   layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
+   //layer_mark_dirty(bitmap_layer_get_layer(Image->thisLayer));
    #ifdef DEBUG_IMAGEREDRAW
       printf("[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d End",(int) heap_bytes_used(), (int)heap_bytes_free() );
    #endif
@@ -443,16 +448,17 @@ void Color_SetTextColor()
    #if defined(PBL_HEALTH)
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
    #endif
-   layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
-   layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
-   layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
-   layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Phone));
-   layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
-   layer_mark_dirty(text_layer_get_layer(Layer_Date_Text));
-   layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Phone));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Date_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
    #if defined(PBL_HEALTH)
-   layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
+   //layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
    #endif
+   Refresh_Display();
 }
 
 // Set all the images color

@@ -129,6 +129,8 @@ static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed)
       Health_GetMovementData();
    #endif
    
+   Refresh_Display();
+   
    #ifdef DEBUG_CLOCK
       printf("[CLOCK][Clock_Handle] After Heap Used: %d, Free: %d",(int) heap_bytes_used(), (int)heap_bytes_free() );
    #endif
