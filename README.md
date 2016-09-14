@@ -21,7 +21,7 @@ Usage:
 
 - Tap on watch to change between weather conditions & current location.
 - Use the configuration settings to configure all the used colors.
-- If the phone's battery is displayed depends on your phone. Its working on android cm-12.1, not tested anywhere else.
+- If the phone's battery is displayed depends on your phone. Its working on android 5 & 6, not tested anywhere else.
 
 ToDo:
 - Nothing todo right now
