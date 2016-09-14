@@ -77,6 +77,11 @@ void LoadConfigFromStorage()
      m_i_Clock_DayOfYear = persist_read_int(MESSAGE_KEY_CLOCK_DAYOFYEAR);
    }
    
+   if (persist_exists(MESSAGE_KEY_BATTERY_SAVING_LEVEL)) 
+   {
+     m_i_BatterySavingLevel = persist_read_int(MESSAGE_KEY_BATTERY_SAVING_LEVEL);
+   }
+   
    if (persist_exists(MESSAGE_KEY_NETWORK_REFRESHTIME)) 
    {
      m_i_Network_RefreshTime = persist_read_int(MESSAGE_KEY_NETWORK_REFRESHTIME);
@@ -163,7 +168,7 @@ void SaveConfigToStorage()
    WriteInt(MESSAGE_KEY_COLOR_BATTERYLOW, (int)Color_BatteryLow.argb);
    WriteInt(MESSAGE_KEY_COLOR_CLOCK_HOUR, (int)Color_ClockHour.argb);
    WriteInt(MESSAGE_KEY_COLOR_CLOCK_MIN,  (int)Color_ClockMin.argb);
-         
+   WriteInt(MESSAGE_KEY_BATTERY_SAVING_LEVEL,m_i_BatterySavingLevel);
    WriteBool(MESSAGE_KEY_WEATHER_TEMPERATURECELCIUS, m_b_Weather_TemperatureInCelcius);
    WriteInt(MESSAGE_KEY_WEATHER_REFRESHTIME, m_i_Weather_RefreshTime);
    WriteBool(MESSAGE_KEY_WEATHER_RETRYUPDATE, m_b_Weather_RetryUpdate);
@@ -226,5 +231,7 @@ void LoadDefaultConfig()
    m_b_Bluetooth_VibrationEnabled = true;
    
    m_b_Acceleration_Enabled = true;
+   
+   m_i_BatterySavingLevel = 20;
 }
 

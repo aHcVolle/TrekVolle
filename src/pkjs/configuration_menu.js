@@ -200,6 +200,25 @@ module.exports = [
     ]
   },
   {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Miscellaneous"
+      },
+      {
+        "type": "slider",
+        "messageKey": "BATTERY_SAVING_LEVEL",
+        "defaultValue": 20,
+        "label": "Battery saving level",
+        "description": "Pebble battery level when battery saving should be active.",
+        "min": 0,
+        "max": 100,
+        "step": 10
+      }
+    ]
+  },
+  {
     "type": "submit",
     "defaultValue": "Save Settings"
   }

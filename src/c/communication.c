@@ -49,6 +49,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
 
    Tuple *PingPong_tuple = dict_find(iterator,MESSAGE_KEY_PINGPONG);
    Tuple *Acceleration_Enabled_tuple = dict_find(iterator,MESSAGE_KEY_ACCELERATION_ENABLE);
+   Tuple *Battery_Saving_Level_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_SAVING_LEVEL);
+   
    
    // Save if there was a change in the clock display   
    bool b_ClockChanged = false;
@@ -301,6 +303,16 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       Communication_OnInit();    
       
    }
+   if (Battery_Saving_Level_tuple)
+   {
+      m_i_BatterySavingLevel = Battery_Saving_Level_tuple->value->int32;
+      
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_BATTERY_SAVING_LEVEL: %d",m_i_BatterySavingLevel);
+      #endif     
+      
+      Battery_CheckSaving();
+   }
    
    if (Acceleration_Enabled_tuple)
    {
@@ -326,6 +338,9 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       }
       
    }
+   
+   
+   
    
 }
 

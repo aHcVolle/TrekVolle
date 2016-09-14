@@ -499,6 +499,31 @@ void show_PhoneBattery(bool show)
    
 }
 
+void show_ConnectionSymbols(bool show)
+{
+   // Set the layers hidden attribute
+   if (layer_get_hidden((Layer *)m_Image_Network.thisLayer) == show)
+   {
+      // Debug printout
+      #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][show_ConnectionSymbols] Setting network hide status to %d",(int)!show);
+      #endif
+      
+      layer_set_hidden((Layer *)m_Image_Network.thisLayer, !show);
+   }
+   
+   if (layer_get_hidden((Layer *)m_Image_Bluetooth.thisLayer) == show)
+   {
+      // Debug printout
+      #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][show_ConnectionSymbols] Setting bluetooth hide status to %d",(int)!show);
+      #endif
+      
+      layer_set_hidden((Layer *)m_Image_Bluetooth.thisLayer, !show);
+   }
+}
+
+
 // Return all the layer's pointers
 TextLayer* GetTimeHourTextLayer()
 {   return Layer_TimeHour_Text;}

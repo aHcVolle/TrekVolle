@@ -15,6 +15,10 @@ void Network_Request()
    if (!m_b_CommunicationIsInit)
       return;
    
+   // Don't do this if we're battery saving
+   if (m_b_BatterySavingActive)
+      return;
+   
    // Debug printout
    #ifdef DEBUG_NETWORK
          printf("[NET][Network_Request] Connection request");
@@ -42,7 +46,7 @@ void Network_Redraw()
    {
       Color = Color_Error;
    }     
-   
+     
    // Redraw the image
    Redraw_Image(&m_Image_Network,RESOURCE_ID_IMAGE_NETWORK,Color);
    
@@ -67,11 +71,11 @@ void Network_Handle_Reply(Tuple *network_tuple)
    m_b_Network_ConnectionState = b_ConnectionState;
    
    bool b_Vibrate = m_b_Network_VibrationEnabled;
-   if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
+   if ((m_b_Clock_Sleep && m_b_Clock_SleepEnabled) || (m_b_BatterySavingActive))
    {
       #ifdef DEBUG_NETWORK
       if (b_Vibrate)
-         printf("[NET][Network_Handle_Reply] Blocked vibration due to sleep mode");
+         printf("[NET][Network_Handle_Reply] Blocked vibration due to sleep mode / battery saving");
       #endif
       b_Vibrate = false;
    }

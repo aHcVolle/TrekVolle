@@ -51,6 +51,7 @@ GColor Color_ClockMin;
 void show_mainwindow(void);
 void hide_mainwindow(void);
 void show_PhoneBattery(bool show);
+void show_ConnectionSymbols(bool show);
 void Color_SetTextColor();
 void Color_SetImageColor();
 

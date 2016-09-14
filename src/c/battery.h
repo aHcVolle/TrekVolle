@@ -9,9 +9,7 @@
    #define DEBUG_BATTERY
 #endif
 
-#ifdef DEBUG_ENABLED
-   #define DEBUG_BATTERY
-#endif
+
 
 // Battery struct
 struct BatteryData
@@ -26,10 +24,16 @@ struct BatteryData
    int i_ImageID;
 };
 
+int m_i_BatterySavingLevel;
+bool m_b_BatterySavingActive;
+
+
+
 // Functions used in other files
 void Battery_Init();
 void Battery_Deinit();
 void Battery_RedrawAll();
 void Battery_Handle_Phone(int i_BatteryLevel,bool b_ChargingState);
 void Battery_RequestPhone();
+void Battery_CheckSaving();
 #endif

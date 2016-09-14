@@ -176,6 +176,10 @@ void Weather_Request()
    if (!m_b_CommunicationIsInit)
       return;
    
+   // Don't do this if we're battery saving
+   if (m_b_BatterySavingActive)
+      return;
+   
    // We haven't got data yet
    m_b_Weather_LastUpdateWasOK = false;
 

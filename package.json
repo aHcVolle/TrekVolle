@@ -51,7 +51,8 @@
             "WEATHER_DATA_LOCATION",
             "WEATHER_DATA_IMAGE",
             "WEATHER_DATA_TEMPMIN",
-            "WEATHER_DATA_TEMPMAX"
+            "WEATHER_DATA_TEMPMAX",
+            "BATTERY_SAVING_LEVEL"
         ],
         "projectType": "native",
         "resources": {

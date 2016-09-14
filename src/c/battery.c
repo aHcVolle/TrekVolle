@@ -26,6 +26,9 @@ void Battery_RequestPhone()
    if (!m_b_CommunicationIsInit)
       return;
    
+   if (m_b_BatterySavingActive)
+      return;
+   
    #ifdef DEBUG_BATTERY
       printf("[BATT][Battery_RequestPhone] Phone battery requested");
    #endif
@@ -116,6 +119,7 @@ static void Battery_Handle_Pebble(BatteryChargeState charge_state)
    // Save the battery's new data
    m_BatteryPebble.i_BatteryLevel = charge_state.charge_percent;
    m_BatteryPebble.b_ChargingState = charge_state.is_charging;
+   Battery_CheckSaving();
    // And redraw its new data
    Battery_Redraw(&m_BatteryPebble);
 }
@@ -160,6 +164,48 @@ void Battery_RedrawAll()
       Battery_Redraw(&m_BatteryPhone);
 }
 
+void Battery_CheckSaving()
+{
+   #ifdef DEBUG_BATTERY
+         printf("[BATT][Battery_CheckSaving] Battery level: %d%% BSL: %d%%",m_BatteryPebble.i_BatteryLevel,m_i_BatterySavingLevel);
+   #endif
+   
+   if ((m_BatteryPebble.i_BatteryLevel <= m_i_BatterySavingLevel) && (!m_BatteryPebble.b_ChargingState) && (!m_b_BatterySavingActive))
+   {
+      // We start battery saving, do some actions
+      m_b_BatterySavingActive = true;
+      m_i_Weather_DisplayState = DISPLAY_CONDITIONS;
+      show_PhoneBattery(false);
+      show_ConnectionSymbols(false);
+      
+      Acceleration_DeInit();
+      
+      Health_DeInit();
+      Bluetooth_DeInit();
+      #ifdef DEBUG_BATTERY
+         printf("[BATT][Battery_CheckSaving] Entered battery saving mode");
+      #endif
+   }  
+   else if (m_b_BatterySavingActive)
+   {
+      // We return from battery saving, do some actions
+      m_b_BatterySavingActive = false;
+      show_ConnectionSymbols(true);
+      Acceleration_Init();
+      Battery_RequestPhone();
+      Health_Init();
+      Bluetooth_Init();
+      #ifdef DEBUG_BATTERY
+         printf("[BATT][Battery_CheckSaving] Left battery saving mode");
+      #endif
+   }
+   else
+   {
+      m_b_BatterySavingActive = false;
+   }
+      
+}
+
 // Init the battery layers and register to the pebbles battery service
 void Battery_Init()
 {
@@ -171,7 +217,7 @@ void Battery_Init()
    m_BatteryPhone.p_ImageData = &m_Image_BatteryPhone;
    m_BatteryPhone.l_Text =   GetBatteryTextLayerPhone();
    show_PhoneBattery(false);
-   
+   m_b_BatterySavingActive = false;
    #ifdef DEBUG_BATTERY
       Battery_Handle_Phone(99,false);
    #endif
@@ -179,6 +225,7 @@ void Battery_Init()
    
    battery_state_service_subscribe(Battery_Handle_Pebble);
    Battery_Handle_Pebble(battery_state_service_peek());
+   
 }
 
 // Unregister from pebbles battery service

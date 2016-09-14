@@ -38,11 +38,11 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    m_b_Bluetooth_ConnectionState = b_ConnectionState;
    
    bool b_Vibrate = m_b_Bluetooth_VibrationEnabled;
-   if (m_b_Clock_Sleep && m_b_Clock_SleepEnabled)
+   if ((m_b_Clock_Sleep && m_b_Clock_SleepEnabled) || (m_b_BatterySavingActive))
    {
       #ifdef DEBUG_BLUETOOTH
       if (b_Vibrate)
-         printf("[BT][Bluetooth_Handle] Blocked vibration due to sleep mode");
+         printf("[BT][Bluetooth_Handle] Blocked vibration due to sleep mode / battery saving");
       #endif
       b_Vibrate = false;
    }
