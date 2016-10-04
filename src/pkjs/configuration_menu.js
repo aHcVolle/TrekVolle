@@ -98,6 +98,31 @@ module.exports = [
         "step": 1
       },
       {
+        "type": "radiogroup",
+        "messageKey": "WEATHER_PROVIDER",
+        "label": "Weather provider",
+        "defaultValue": "0",
+        "options": [
+          { 
+            "label": "OpenWeatherMap", 
+            "value": "0" 
+          },
+          { 
+            "label": "Yahoo", 
+            "value": "1" 
+          },
+          { 
+            "label": "WeatherUnderground", 
+            "value": "2" 
+          },
+          { 
+            "label": "ForecastIO", 
+            "value": "3" 
+          }
+             
+          ]
+      },
+      {
         "type": "input",
         "messageKey": "WEATHER_LOCATION",
         "description": "Enter your city, cityID, leave empty for geolocation.",
