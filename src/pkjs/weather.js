@@ -264,6 +264,34 @@ function LocationError(err)
    // Debug printout
    if (m_b_Debug)
       console.log("[JS:WTHR] Could not get location data");
+   // Return an object which displays the error
+   
+   // Assemble dictionary using our keys
+   var dictionary = 
+       {
+          'TEMPERATURE': -200,
+          'CONDITIONS': "No location",
+          'ICON': "erroricon",
+          'LOCATION': "No location",
+          'ONLINE': 1,
+          'WEATHER_TEMPERATURE_MIN' : 0,
+          'WEATHER_TEMPERATURE_MAX' : 0
+       };
+
+   // Send to Pebble
+   Pebble.sendAppMessage(dictionary,
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:WTHR] Sent message with ID " + e.data.transactionId);
+                         },
+                         function(e)
+                         {
+                            if (m_b_Debug)
+                               console.log("[JS:WTHR] Could not send message with ID " + e.data.transactionId + " error: " + e.error);
+                         });
+   
+   
 }
 
 function LoadData()
@@ -310,11 +338,24 @@ function GetData()
       // Lets see what type of location we have
       if (m_i_Weather_Location_Type == Weather_Location_Type_GeoLocation)
       {
-         // Debug printout
-         if (m_b_Debug)
-            console.log("[JS:WTHR] Getting location");
-         // Get Weather data based on location settings
-         navigator.geolocation.getCurrentPosition(LocationSuccess,LocationError,{timeout: 15000, maximumAge: 60000});
+         if ("geolocation" in navigator)
+         {
+            // Debug printout
+            if (m_b_Debug)
+               console.log("[JS:WTHR] Getting location");
+            // Get Weather data based on location settings            
+            navigator.geolocation.getCurrentPosition(LocationSuccess,LocationError,{timeout: 15000, maximumAge: 60000});
+         }
+         else
+         {
+            // Debug printout
+            if (m_b_Debug)
+               console.log("[JS:WTHR] geolocation not available!");
+            // return an error
+            LocationError();
+         }
+         
+         
       }
       else if (m_i_Weather_Location_Type == Weather_Location_Type_CityID)
       {

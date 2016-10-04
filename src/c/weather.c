@@ -29,7 +29,12 @@ void Weather_RedrawText()
    if (m_i_Weather_DisplayState == DISPLAY_CONDITIONS)
    {
       // Save the weather text
-      if (m_b_Weather_TemperatureInCelcius)
+      if (m_i_Weather_Temperature < -199)
+      {
+         snprintf(m_s_Weather_TextBuffer, sizeof(m_s_Weather_TextBuffer), "%s", m_s_Weather_ConditionBuffer);
+         m_b_Weather_LastUpdateWasOK = false;
+      }
+      else if (m_b_Weather_TemperatureInCelcius)
       {
          // If we want the temperature in celcius
          snprintf(m_s_Weather_TextBuffer, sizeof(m_s_Weather_TextBuffer), "%d°C, %s", m_i_Weather_Temperature, m_s_Weather_ConditionBuffer);
