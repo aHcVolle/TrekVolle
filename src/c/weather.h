@@ -40,5 +40,5 @@ void Weather_RedrawImage();
 void Weather_Redraw();
 void Weather_SaveData();
 void Weather_LoadData();
-int  Weather_GetImageID(char* s_WeatherImageName);
+int  Weather_GetImageID(int i_WeatherID);
 #endif

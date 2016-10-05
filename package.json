@@ -52,11 +52,100 @@
             "WEATHER_DATA_IMAGE",
             "WEATHER_DATA_TEMPMIN",
             "WEATHER_DATA_TEMPMAX",
-            "BATTERY_SAVING_LEVEL"
+            "BATTERY_SAVING_LEVEL",
+            "WEATHER_PROVIDER",
+            "WEATHER_API_KEY"
         ],
         "projectType": "native",
         "resources": {
             "media": [
+                {
+                    "file": "images/Weather_Mist.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_MIST",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Snow.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_SNOW",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Lightning.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_LIGHTNING",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Rainy.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAINY",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_RainyNight.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAINYNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Rain.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAIN",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_ThickClouds.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_THICKCLOUDS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Clouds.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Cloudy.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDY",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_CloudyNight.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDYNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Clear.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLEAR",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_ClearNight.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLEARNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
                 {
                     "file": "images/Overview_Diorite.png",
                     "name": "IMAGE_OVERVIEW",
@@ -110,93 +199,6 @@
                     "targetPlatforms": [
                         "basalt"
                     ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_10N.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_10N",
-                    "storageFormat": "png",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_02N.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_02N",
-                    "storageFormat": "png",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_01N.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_01N",
-                    "storageFormat": "png",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_50.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_50",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_13.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_13",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_11.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_11",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_10.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_10",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_09.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_09",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_04.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_04",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_03.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_03",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_02.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_02",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_01.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_01",
-                    "targetPlatforms": null,
                     "type": "bitmap"
                 },
                 {

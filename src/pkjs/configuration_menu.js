@@ -116,11 +116,17 @@ module.exports = [
             "value": "2" 
           },
           { 
-            "label": "ForecastIO", 
+            "label": "DarkSky", 
             "value": "3" 
           }
              
           ]
+      },
+      {
+        "type": "input",
+        "messageKey": "WEATHER_API_KEY",
+        "description": "Enter your API key, leave blank to use the builtin.",
+        "label": "Weather API key"
       },
       {
         "type": "input",

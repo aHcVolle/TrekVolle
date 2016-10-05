@@ -28,23 +28,45 @@ Pebble.addEventListener('showConfiguration', function(e) {
 });
 
 
-Pebble.addEventListener('webviewclosed', function(e) {
-  if (e && !e.response) {
-    return;
-  }
+Pebble.addEventListener('webviewclosed', function(e) 
+{
 
-  // Get the keys and values from each config item
-  var dict = clay.getSettings(e.response);
+   if (e && !e.response) 
+   {
+      return;
+   }
+
+   // Get the keys and values from each config item
+   var dict = clay.getSettings(e.response);
   
-  var Location = dict[messageKeys.WEATHER_LOCATION];
-  if(typeof Location !== "undefined")
-  { 
-      weather.SaveData(Location);
+   
+   var RequestWeather = false;
+   var Location = dict[messageKeys.WEATHER_LOCATION];
+   if(typeof Location !== "undefined")
+   { 
+      weather.SaveLocation(Location);
+      RequestWeather = true;
+   }
+  
+   var WeatherProvider = dict[messageKeys.WEATHER_PROVIDER];
+   if(typeof WeatherProvider !== "undefined")
+   { 
+      weather.SaveProvider(WeatherProvider);
+      RequestWeather = true;
+   }
+   
+   var WeatherAPIKey = dict[messageKeys.WEATHER_API_KEY];
+   if(typeof WeatherAPIKey !== "undefined")
+   { 
+      weather.SaveAPIKey(WeatherAPIKey);
+      RequestWeather = true;
+   }
+  
+   if (RequestWeather === true)
+   {
       weather.LoadData();
       weather.GetData();
-  }
-   
-   
+   }
    
   // Send settings values to watch side
   Pebble.sendAppMessage(dict, function(e) 

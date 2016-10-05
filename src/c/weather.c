@@ -119,7 +119,7 @@ void Weather_Handle(Tuple *Temperature_tuple,Tuple *Condition_tuple,Tuple *Locat
    // If we have info about the image to use
    if (Image_tuple)
    {  
-      int i_NewWeatherImage = Weather_GetImageID(Image_tuple->value->cstring);
+      int i_NewWeatherImage = Weather_GetImageID(Image_tuple->value->int32);
       #ifdef DEBUG_WEATHER
          printf("[WEATHER][Weather_Handle] Handler: Got imageid %d",i_NewWeatherImage);
       #endif
@@ -302,52 +302,31 @@ void Weather_LoadData()
 }
 
 // Convert an image name to a resource id
-int Weather_GetImageID(char* s_WeatherImageName)
+int Weather_GetImageID(int i_WeatherID)
 {
    #ifdef DEBUG_WEATHER
-      printf("[WEATHER][Weather_GetImageID] Getting id for %s",s_WeatherImageName);
+      printf("[WEATHER][Weather_GetImageID] Getting id for %d",i_WeatherID);
    #endif
-   // Compare the image name
-   if (strcmp(s_WeatherImageName,"01d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_01;
-   else if (strcmp(s_WeatherImageName,"01n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_01N;
-   else if (strcmp(s_WeatherImageName,"02d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_02;
-   else if (strcmp(s_WeatherImageName,"02n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_02N;
-   else if (strcmp(s_WeatherImageName,"03d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_03;
-   else if (strcmp(s_WeatherImageName,"03n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_03;
-   else if (strcmp(s_WeatherImageName,"04d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_04;
-   else if (strcmp(s_WeatherImageName,"04n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_04;
-   else if (strcmp(s_WeatherImageName,"09d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_09;
-   else if (strcmp(s_WeatherImageName,"09n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_09;
-   else if (strcmp(s_WeatherImageName,"10d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_10;
-   else if (strcmp(s_WeatherImageName,"10n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_10N;
-   else if (strcmp(s_WeatherImageName,"11d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_11;
-   else if (strcmp(s_WeatherImageName,"11n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_11;   
-   else if (strcmp(s_WeatherImageName,"13d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_13;
-   else if (strcmp(s_WeatherImageName,"13n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_13;
-   else if (strcmp(s_WeatherImageName,"50d") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_50;
-   else if (strcmp(s_WeatherImageName,"50n") == 0)
-      return RESOURCE_ID_IMAGE_WEATHER_50;
    
-   // This imagename is unknown!
-   #ifdef DEBUG_WEATHER
-      printf("[WEATHER][Weather_GetImageID] Unknown weather image %s",s_WeatherImageName);
-   #endif
-   return RESOURCE_ID_IMAGE_ERROR;
+   switch (i_WeatherID)
+   {
+      case 1:  return RESOURCE_ID_IMAGE_WEATHER_CLEARNIGHT;
+      case 2:  return RESOURCE_ID_IMAGE_WEATHER_CLEAR;
+      case 3:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDYNIGHT;
+      case 4:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDY;
+      case 5:  return RESOURCE_ID_IMAGE_WEATHER_CLOUDS;
+      case 6:  return RESOURCE_ID_IMAGE_WEATHER_THICKCLOUDS;
+      case 7:  return RESOURCE_ID_IMAGE_WEATHER_RAIN;
+      case 8:  return RESOURCE_ID_IMAGE_WEATHER_RAINYNIGHT;
+      case 9:  return RESOURCE_ID_IMAGE_WEATHER_RAINY;
+      case 10: return RESOURCE_ID_IMAGE_WEATHER_LIGHTNING;
+      case 11: return RESOURCE_ID_IMAGE_WEATHER_SNOW;
+      case 12: return RESOURCE_ID_IMAGE_WEATHER_MIST;
+      default: 
+               #ifdef DEBUG_WEATHER
+                  printf("[WEATHER][Weather_GetImageID] Unknown weather image %d",i_WeatherID);
+               #endif
+               return RESOURCE_ID_IMAGE_ERROR;
+      
+   }   
 }

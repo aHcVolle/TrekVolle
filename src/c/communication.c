@@ -13,10 +13,10 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // Var to save if an image has been altered
    bool b_NewImageConfig = false;
    // Read tuples for data
-   Tuple *Temperature_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
-   Tuple *Condition_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
-   Tuple *Image_tuple = dict_find(iterator, MESSAGE_KEY_ICON);
-   Tuple *Location_tuple = dict_find(iterator,MESSAGE_KEY_LOCATION);
+   Tuple *Weather_Temperature_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
+   Tuple *Weather_Condition_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
+   Tuple *Weather_Image_tuple = dict_find(iterator, MESSAGE_KEY_ICON);
+   Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_LOCATION);
    Tuple *Network_tuple = dict_find(iterator,MESSAGE_KEY_ONLINE);
    Tuple *Batterycharge_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_CHARGE);
    Tuple *Batterystate_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_STATE);
@@ -36,8 +36,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Weather_RetryUpdate_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_RETRYUPDATE);
    Tuple *Weather_TemperatureMax_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MAX);
    Tuple *Weather_TemperatureMin_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE_MIN);
-   Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_LOCATION);
-   
+
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
    Tuple *Clock_Sleep_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP);
    Tuple *Clock_DayOfYear_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEAR);
@@ -58,12 +57,12 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // Process the received tuples
    
    // If there was a weather update send the data
-   if(Temperature_tuple && Condition_tuple && Location_tuple && Image_tuple) 
+   if(Weather_Temperature_tuple && Weather_Condition_tuple && Weather_Location_tuple && Weather_Image_tuple) 
    {
       #ifdef DEBUG_COMMUNICATION
          printf("[COM][Communication_InboxReceived] Received data KEY_TEMPERATURE,KEY_CONDITIONS,KEY_ICON,KEY_LOCATION");
       #endif
-      Weather_Handle(Temperature_tuple,Condition_tuple,Location_tuple,Image_tuple);
+      Weather_Handle(Weather_Temperature_tuple,Weather_Condition_tuple,Weather_Location_tuple,Weather_Image_tuple);
    }
       
 
@@ -204,14 +203,6 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
          printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_RETRYUPDATE");
       #endif
       m_b_Weather_RetryUpdate = (bool)Weather_RetryUpdate_tuple->value->int32;
-   }
-   // If the Location was setup
-   if (Weather_Location_tuple)
-   {
-       #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_WEATHER_LOCATION");
-      #endif
-      
    }
    
    // The datestyle was changed
