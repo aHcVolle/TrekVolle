@@ -143,7 +143,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_TimeHour_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeHour_Text, GColorWhite);
-   text_layer_set_text(Layer_TimeHour_Text, "30");
+   text_layer_set_text(Layer_TimeHour_Text, "");
    text_layer_set_text_alignment(Layer_TimeHour_Text, GTextAlignmentRight);
    text_layer_set_font(Layer_TimeHour_Text, s_res_roboto_bold_subset_49);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);
@@ -156,7 +156,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
-   text_layer_set_text(Layer_TimeMinute_Text, ":80");
+   text_layer_set_text(Layer_TimeMinute_Text, "");
    text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentLeft);
    text_layer_set_font(Layer_TimeMinute_Text, s_res_roboto_bold_subset_49);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
@@ -181,7 +181,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_Day_Text, GColorClear);
    text_layer_set_text_color(Layer_Day_Text, GColorWhite);
-   text_layer_set_text(Layer_Day_Text, "D666 W88");
+   text_layer_set_text(Layer_Day_Text, "");
    text_layer_set_text_alignment(Layer_Day_Text, GTextAlignmentRight);
    text_layer_set_font(Layer_Day_Text, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Day_Text);
@@ -195,7 +195,7 @@ static void initialise_ui(void)
       #endif
       text_layer_set_background_color(Layer_Steps_Text, GColorClear);
       text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
-      text_layer_set_text(Layer_Steps_Text, "9999 9999m");
+      text_layer_set_text(Layer_Steps_Text, "");
       #if defined(PBL_RECT)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
       #elif defined(PBL_ROUND)
@@ -230,7 +230,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_Date_Text, GColorClear);
    text_layer_set_text_color(Layer_Date_Text, GColorWhite);
-   text_layer_set_text(Layer_Date_Text, "Sun,00.00.00");
+   text_layer_set_text(Layer_Date_Text, "");
    text_layer_set_text_alignment(Layer_Date_Text, GTextAlignmentRight);
    text_layer_set_font(Layer_Date_Text, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Date_Text);
@@ -243,7 +243,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_Battery_Text_Pebble, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Pebble, GColorWhite);
-   text_layer_set_text(Layer_Battery_Text_Pebble, "99%");
+   text_layer_set_text(Layer_Battery_Text_Pebble, "");
    text_layer_set_font(Layer_Battery_Text_Pebble, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Pebble);
 
@@ -255,7 +255,7 @@ static void initialise_ui(void)
    #endif
    text_layer_set_background_color(Layer_Battery_Text_Phone, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Phone, GColorWhite);
-   text_layer_set_text(Layer_Battery_Text_Phone, "99%");
+   text_layer_set_text(Layer_Battery_Text_Phone, "");
    text_layer_set_font(Layer_Battery_Text_Phone, s_res_gothic_18_bold);
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Phone);
    
