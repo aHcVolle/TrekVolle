@@ -10,7 +10,7 @@ Features:
 - Phone battery status 
 - Network connection status 
 - Bluetooth connection status 
-- Health information (step count & distance) 
+- Health information (step count, distance & heart rate) 
 - Customizable colors
 - Display temperature in °C or °F
 - Display time in 24H / 12H
