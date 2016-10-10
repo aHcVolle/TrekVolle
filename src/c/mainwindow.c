@@ -12,6 +12,7 @@ static TextLayer *Layer_TimeMinute_Text;
 static TextLayer *Layer_Weather_Text;
 static TextLayer *Layer_Day_Text;
 static TextLayer *Layer_Steps_Text;
+static TextLayer *Layer_Heart_Text;
 static TextLayer *Layer_Date_Text;
 static TextLayer *Layer_Battery_Text_Pebble;
 static TextLayer *Layer_Battery_Text_Phone;
@@ -72,7 +73,7 @@ static void initialise_ui(void)
    // Layer_Steps_Image
    #if defined(PBL_HEALTH)
       #if defined(PBL_RECT)
-         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(8, 152, 16, 16));
+         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, 16, 16));
       #elif defined(PBL_ROUND)
          m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, 16, 16));
       #endif
@@ -81,10 +82,23 @@ static void initialise_ui(void)
       snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
       Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
    #endif
+   
+   // Layer_Heart_Image
+   #if defined(PBL_HEALTH)
+      #if defined(PBL_RECT)
+         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+      #elif defined(PBL_ROUND)
+         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+      #endif
+      bitmap_layer_set_compositing_mode(m_Image_Heart.thisLayer,GCompOpSet);
+      layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Heart.thisLayer);
+      snprintf(m_Image_Heart.s_Name,sizeof(m_Image_Heart.s_Name),"HRT");
+      Redraw_Image(&m_Image_Heart, RESOURCE_ID_IMAGE_HEART, GColorWhite);
+   #endif
 
    // Layer_Battery_Image_Pebble
    #if defined(PBL_RECT)
-      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(8, 134, 16, 16));
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, 16, 16));
    #elif defined(PBL_ROUND)
       m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, 16, 16));
    #endif
@@ -95,7 +109,7 @@ static void initialise_ui(void)
 
    // Layer_Battery_Image_Phone
    #if defined(PBL_RECT)
-      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(58, 134, 16, 16));
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, 16, 16));
    #elif defined(PBL_ROUND)
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, 16, 16));
    #endif
@@ -175,7 +189,7 @@ static void initialise_ui(void)
    // Layer_Steps_Text
    #if defined(PBL_HEALTH)
       #if defined(PBL_RECT)
-         Layer_Steps_Text = text_layer_create(GRect(24, 147, 123, 20));
+         Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
       #elif defined(PBL_ROUND)
          Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
       #endif
@@ -188,6 +202,24 @@ static void initialise_ui(void)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_14_bold);
       #endif
       layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
+   #endif
+   
+   // Layer_Heart_Text
+   #if defined(PBL_HEALTH)
+      #if defined(PBL_RECT)
+         Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
+      #elif defined(PBL_ROUND)
+         Layer_Heart_Text = text_layer_create(GRect(120, 151, 123, 20));
+      #endif
+      text_layer_set_background_color(Layer_Heart_Text, GColorClear);
+      text_layer_set_text_color(Layer_Heart_Text, GColorWhite);
+      text_layer_set_text(Layer_Heart_Text, "");
+      #if defined(PBL_RECT)
+         text_layer_set_font(Layer_Heart_Text, s_res_gothic_18_bold);
+      #elif defined(PBL_ROUND)
+         text_layer_set_font(Layer_Heart_Text, s_res_gothic_14_bold);
+      #endif
+      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Heart_Text);
    #endif
    
    // Layer_Date_Text
@@ -205,7 +237,7 @@ static void initialise_ui(void)
 
    // Layer_Battery_Text_Pebble
    #if defined(PBL_RECT)
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(23, 130, 38, 20));
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
    #elif defined(PBL_ROUND)
       Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
    #endif
@@ -217,9 +249,9 @@ static void initialise_ui(void)
 
    // Layer_Battery_Text_Phone
    #if defined(PBL_RECT)
-      Layer_Battery_Text_Phone = text_layer_create(GRect(73, 130, 36, 20));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
    #elif defined(PBL_ROUND)
-      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 36, 20));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 38, 20));
    #endif
    text_layer_set_background_color(Layer_Battery_Text_Phone, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Phone, GColorWhite);
@@ -441,23 +473,15 @@ void Color_SetTextColor()
    text_layer_set_text_color(Layer_TimeHour_Text, Color_ClockHour);
    text_layer_set_text_color(Layer_TimeMinute_Text, Color_ClockMin);
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
-   text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
-   text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
+   //text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
+   //text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
    text_layer_set_text_color(Layer_Date_Text, Color_Text); 
    text_layer_set_text_color(Layer_Day_Text, Color_Text); 
    #if defined(PBL_HEALTH)
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
+   text_layer_set_text_color(Layer_Heart_Text, Color_Text);
    #endif
-   //layer_mark_dirty(text_layer_get_layer(Layer_TimeHour_Text));
-   //layer_mark_dirty(text_layer_get_layer(Layer_TimeMinute_Text));
-   //layer_mark_dirty(text_layer_get_layer(Layer_Weather_Text));
-   //layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Phone));
-   //layer_mark_dirty(text_layer_get_layer(Layer_Battery_Text_Pebble));
-   //layer_mark_dirty(text_layer_get_layer(Layer_Date_Text));
-   //layer_mark_dirty(text_layer_get_layer(Layer_Day_Text));
-   #if defined(PBL_HEALTH)
-   //layer_mark_dirty(text_layer_get_layer(Layer_Steps_Text));
-   #endif
+
    Refresh_Display();
 }
 
@@ -477,6 +501,7 @@ void Color_SetImageColor()
    
    #if defined(PBL_HEALTH)
    Redraw_Image(&m_Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
+   Redraw_Image(&m_Image_Heart,RESOURCE_ID_IMAGE_HEART,Color_Image);
    #endif
    Redraw_Image(&m_Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
 }
@@ -523,21 +548,32 @@ void show_ConnectionSymbols(bool show)
    }
 }
 
+// Display the phone battery's image
+void show_HeartRate(bool show)
+{
+   
+   // Set the layers hidden attribute
+   if (layer_get_hidden((Layer *)Layer_Heart_Text) == show)
+   {
+      // Debug printout
+      #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][show_HeartRate] Setting heartrate display hide status to %d",(int)!show);
+      #endif
+      
+      layer_set_hidden((Layer *)Layer_Heart_Text, !show);
+      layer_set_hidden((Layer *)m_Image_Heart.thisLayer, !show);
+   }   
+   
+}
+
 
 // Return all the layer's pointers
-TextLayer* GetTimeHourTextLayer()
-{   return Layer_TimeHour_Text;}
-TextLayer* GetTimeMinuteTextLayer()
-{   return Layer_TimeMinute_Text;}
-TextLayer* GetWeatherTextLayer()
-{   return Layer_Weather_Text;}
-TextLayer*  GetBatteryTextLayerPhone()
-{   return Layer_Battery_Text_Phone;}
-TextLayer*  GetBatteryTextLayerPebble()
-{   return Layer_Battery_Text_Pebble;}
-TextLayer* GetDateTextLayer()
-{   return Layer_Date_Text;}
-TextLayer*  GetDayTextLayer()
-{   return Layer_Day_Text;}
-TextLayer* GetStepTextLayer()
-{   return Layer_Steps_Text;}
+TextLayer* GetTimeHourTextLayer() {   return Layer_TimeHour_Text;}
+TextLayer* GetTimeMinuteTextLayer() {   return Layer_TimeMinute_Text;}
+TextLayer* GetWeatherTextLayer() {   return Layer_Weather_Text;}
+TextLayer* GetBatteryTextLayerPhone() {   return Layer_Battery_Text_Phone;}
+TextLayer* GetBatteryTextLayerPebble() {   return Layer_Battery_Text_Pebble;}
+TextLayer* GetDateTextLayer() {   return Layer_Date_Text;}
+TextLayer* GetDayTextLayer() {   return Layer_Day_Text;}
+TextLayer* GetStepTextLayer() {   return Layer_Steps_Text;}
+TextLayer* GetHeartTextLayer() {   return Layer_Heart_Text;}

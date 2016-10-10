@@ -88,9 +88,9 @@ void Battery_Redraw(struct BatteryData* Battery)
    }
 
    // Cap the displayed text at 3 chars
-   if (Battery->i_BatteryLevel > 99)
-      snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d", Battery->i_BatteryLevel);
-   else
+   //if (Battery->i_BatteryLevel > 99)
+   //   snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d", Battery->i_BatteryLevel);
+   //else
       snprintf(Battery->s_Text, sizeof(Battery->s_Text), "%d%%", Battery->i_BatteryLevel);
    #ifdef DEBUG_BATTERY
          printf("[BATT][Battery_Redraw] Redrawing battery text");
@@ -118,6 +118,11 @@ static void Battery_Handle_Pebble(BatteryChargeState charge_state)
    #endif
    // Save the battery's new data
    m_BatteryPebble.i_BatteryLevel = charge_state.charge_percent;
+   
+   #ifdef DEBUG_BATTERY
+      m_BatteryPebble.i_BatteryLevel = 80;
+   #endif
+   
    m_BatteryPebble.b_ChargingState = charge_state.is_charging;
    Battery_CheckSaving();
    // And redraw its new data
@@ -219,7 +224,7 @@ void Battery_Init()
    show_PhoneBattery(false);
    m_b_BatterySavingActive = false;
    #ifdef DEBUG_BATTERY
-      Battery_Handle_Phone(99,false);
+      Battery_Handle_Phone(80,false);
    #endif
    
    

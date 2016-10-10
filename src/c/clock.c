@@ -127,6 +127,7 @@ static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed)
    #if defined(PBL_HEALTH)
       // Get new health data
       Health_GetMovementData();
+      Health_GetHeartRateData();
    #endif
    
    Refresh_Display();

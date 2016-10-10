@@ -60,6 +60,17 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/Heart.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_HEART",
+                    "targetPlatforms": [
+                        "basalt",
+                        "chalk",
+                        "diorite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/Weather_Mist.png",
                     "memoryFormat": "1BitPalette",
                     "name": "IMAGE_WEATHER_MIST",

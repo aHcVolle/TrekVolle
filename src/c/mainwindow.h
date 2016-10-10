@@ -33,6 +33,7 @@ struct ImageData m_Image_BatteryPhone;
 struct ImageData m_Image_Network;
 struct ImageData m_Image_Weather;
 struct ImageData m_Image_Steps;
+struct ImageData m_Image_Heart;
 struct ImageData m_Image_Background;
 struct ImageData m_Image_Bluetooth;
 
@@ -52,6 +53,7 @@ void show_mainwindow(void);
 void hide_mainwindow(void);
 void show_PhoneBattery(bool show);
 void show_ConnectionSymbols(bool show);
+void show_HeartRate(bool show);
 void Color_SetTextColor();
 void Color_SetImageColor();
 
@@ -60,6 +62,7 @@ void Refresh_Display(void);
 
 // Functions to return all the text pointers
 TextLayer* GetStepTextLayer();
+TextLayer* GetHeartTextLayer();
 TextLayer* GetTimeHourTextLayer();
 TextLayer* GetTimeMinuteTextLayer();
 TextLayer* GetDateTextLayer();
