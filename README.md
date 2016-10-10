@@ -24,7 +24,6 @@ Usage:
 - If the phone's battery is displayed depends on your phone. Its working on android 5,6 & 7, not tested anywhere else.
 
 ToDo:
-- Implement Heartrate
 - Geolocation on Android7 seems broken
 
 Links:
