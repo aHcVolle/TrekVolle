@@ -81,22 +81,24 @@ void Clock_Redraw()
 
 bool Clock_IsSleepingTime(struct tm* Now)
 {
-   /*
-   if ((Now->tm_hour > 0) && (Now->tm_hour < 7))   
-      return true;
-   else
-      return false;
-   */
+ 
    int i_Now = Now->tm_hour * 100 + Now->tm_min;
    
-   if((m_i_Clock_Sleep_Begin < m_i_Clock_Sleep_End && (i_Now >= m_i_Clock_Sleep_Begin || i_Now <= m_i_Clock_Sleep_End)) ||
-      (i_Now >= m_i_Clock_Sleep_Begin && i_Now <= m_i_Clock_Sleep_End)) 
+   if (m_i_Clock_Sleep_Begin < m_i_Clock_Sleep_End)
    {
-      return true;
+       if ((i_Now > m_i_Clock_Sleep_Begin) && (i_Now < m_i_Clock_Sleep_End))
+        return true;
+       else
+        return false;
    }
    else
-      return false;
-   
+   {
+       if (((i_Now > m_i_Clock_Sleep_Begin) && (i_Now <= 2400)) || (i_Now < m_i_Clock_Sleep_End))
+        return true;
+       else
+        return false;
+   }
+   return false;
 }
 
 // A new time tick will be processed here
