@@ -31,6 +31,8 @@ bool m_b_Clock_SleepEnabled;
 int m_i_Weather_Counter;
 int m_i_Network_Counter;
 
+int m_i_Clock_Sleep_Begin;
+int m_i_Clock_Sleep_End;
 
 // Functions used in other files
 void Clock_Redraw();

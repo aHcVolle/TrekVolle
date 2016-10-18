@@ -7,11 +7,12 @@
 #include "battery.h"
 #include "configuration.h"
 #include "acceleration.h"
+#include "clock.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_COMMUNICATION
 #endif
-
+#define DEBUG_COMMUNICATION
 
 /*
 // Variable to set the debug printout (is set in main.c)

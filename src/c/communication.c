@@ -40,6 +40,8 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Clock_DateStyle_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DATESTYLE);
    Tuple *Clock_Sleep_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP);
    Tuple *Clock_DayOfYear_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_DAYOFYEAR);
+   Tuple *Clock_Sleep_Begin_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP_BEGIN);
+   Tuple *Clock_Sleep_End_tuple = dict_find(iterator,MESSAGE_KEY_CLOCK_SLEEP_END);
    
    Tuple *Network_Refreshtime_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_REFRESHTIME);   
    Tuple *Network_VibrationEnabled_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_VIBRATIONENABLED);
@@ -243,6 +245,47 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
          
       b_ClockChanged = true;
    }
+   
+   if (Clock_Sleep_Begin_tuple)
+   {
+      int hh = 0;
+      int mm = 0;
+      char c_Temp[3];
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_BEGIN: %s",Clock_Sleep_Begin_tuple->value->cstring);
+      #endif
+      
+      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[0];
+      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[1];
+      c_Temp[2] = 0;
+      hh  = atoi(c_Temp);
+      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[3];
+      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[4];
+      c_Temp[2] = 0;
+      mm  = atoi(c_Temp);
+      m_i_Clock_Sleep_Begin = hh * 100 + mm;
+   }
+   
+   if (Clock_Sleep_End_tuple)
+   {
+      int hh = 0;
+      int mm = 0;
+      char c_Temp[3];
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_END: %s",Clock_Sleep_End_tuple->value->cstring);
+      #endif
+      
+      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[0];
+      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[1];
+      c_Temp[2] = 0;
+      hh  = atoi(c_Temp);
+      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[3];
+      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[4];
+      c_Temp[2] = 0;
+      mm  = atoi(c_Temp);
+      m_i_Clock_Sleep_End = hh * 100 + mm;
+   }
+   
    // If we have new min max weather data
    if (Weather_TemperatureMin_tuple && Weather_TemperatureMax_tuple)
    {

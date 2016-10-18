@@ -54,7 +54,9 @@
             "WEATHER_DATA_TEMPMAX",
             "BATTERY_SAVING_LEVEL",
             "WEATHER_PROVIDER",
-            "WEATHER_API_KEY"
+            "WEATHER_API_KEY",
+            "CLOCK_SLEEP_BEGIN",
+            "CLOCK_SLEEP_END"
         ],
         "projectType": "native",
         "resources": {

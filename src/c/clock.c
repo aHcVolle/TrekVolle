@@ -79,6 +79,26 @@ void Clock_Redraw()
    
 }
 
+bool Clock_IsSleepingTime(struct tm* Now)
+{
+   /*
+   if ((Now->tm_hour > 0) && (Now->tm_hour < 7))   
+      return true;
+   else
+      return false;
+   */
+   int i_Now = Now->tm_hour * 100 + Now->tm_min;
+   
+   if((m_i_Clock_Sleep_Begin < m_i_Clock_Sleep_End && (i_Now >= m_i_Clock_Sleep_Begin || i_Now <= m_i_Clock_Sleep_End)) ||
+      (i_Now >= m_i_Clock_Sleep_Begin && i_Now <= m_i_Clock_Sleep_End)) 
+   {
+      return true;
+   }
+   else
+      return false;
+   
+}
+
 // A new time tick will be processed here
 static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed) 
 {
@@ -115,14 +135,8 @@ static void Clock_Handle(struct tm *tick_time, TimeUnits units_changed)
    }   
    
    // Check the sleep mode
-   if ((tick_time->tm_hour >= 0) && (tick_time->tm_hour < 7))
-   {
-      m_b_Clock_SleepEnabled = true;
-   }
-   else
-   {
-      m_b_Clock_SleepEnabled = false;
-   }
+   m_b_Clock_SleepEnabled = Clock_IsSleepingTime(tick_time);
+   
    
    #if defined(PBL_HEALTH)
       // Get new health data

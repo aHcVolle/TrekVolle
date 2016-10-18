@@ -186,6 +186,33 @@ module.exports = [
             "value": "1" 
           }         
           ]
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CLOCK_SLEEP",
+        "label": "Sleep mode",
+        "description": "If enabled, the watchapp will not virate during the set time.",
+        "defaultValue": true
+      },
+      {
+        "type": "input",
+        "messageKey": "CLOCK_SLEEP_BEGIN",
+        "description": "Enter the time the sleep time should begin.",
+        "label": "Sleep begin",
+        "attributes": {
+            "placeholder": "00:00",
+             "type": "time"
+           }
+      },
+      {
+        "type": "input",
+        "messageKey": "CLOCK_SLEEP_END",
+        "description": "Enter the time the sleep time should end.",
+        "label": "Sleep end",
+         "attributes": {
+            "placeholder": "07:00",
+             "type": "time"
+           }
       }
    ]
       
@@ -209,13 +236,6 @@ module.exports = [
         "messageKey": "BLUETOOTH_VIBRATIONENABLED",
         "label": "Bluetooth vibrations",
         "description": "Vibrate on bluetooth (dis)connect.",
-        "defaultValue": true
-      },
-      {
-        "type": "toggle",
-        "messageKey": "CLOCK_SLEEP",
-        "label": "Sleep mode (00:00 to 07:00)",
-        "description": "If enabled, the watchapp will not virate during this time.",
         "defaultValue": true
       },
       {

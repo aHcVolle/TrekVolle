@@ -108,7 +108,7 @@ function GetDarkSkyLanguage()
 
 function Init(b_Debug)
 {
-   m_b_Debug = false;//b_Debug;
+   m_b_Debug = b_Debug;
    
    if (m_b_Debug)
          console.log("[JS:WTHR] Init");
@@ -117,8 +117,6 @@ function Init(b_Debug)
    m_s_Weather_WeatherUnderground_Key = '8425b0c1109d22ef';
    m_s_Weather_DarkSky_Key = '24fef94865f6cb61a34c6172035970d8';
    m_s_Weather_API_Key = '';
-   m_s_Weather_Google_Location_Key = 'AIzaSyAsUif3YCmxdoBtL7AsR9FizG38J9SXggI';
-   
    
    Weather_Location_Type_GeoLocation = 0;
    Weather_Location_Type_CityName = 1;
@@ -811,51 +809,17 @@ function LocationError(err)
    if(err.code == err.PERMISSION_DENIED) 
    {
       if (m_b_Debug)
-         console.log('Location access was denied by the user.');  
+         console.log('[JS:WTHR] Location access was denied by the user.');  
    } 
    else 
    {
       if (m_b_Debug)
-         console.log('location error (' + err.code + '): ' + err.message);
+         console.log('[JS:WTHR] Location error (' + err.code + '): ' + err.message);
    }
    
-   // fallback to google location api
-   GetGoogleLocation();
-   
-}
-
-function GetGoogleLocation()
-{
-   var url = 'https://www.googleapis.com/geolocation/v1/geolocate?key=' + m_s_Weather_Google_Location_Key;
-   
-   xhrRequest(url, 'GET', function(responseText) 
-   {
-      if (m_b_Debug)
-         console.log("[JS:WTHR:GL] Got location");
-      
-      if (m_b_Debug)
-         console.log(responseText);
-      
-      // responseText contains a JSON object with weather info
-      var json = JSON.parse(responseText);
-      
-      if(typeof json.location !== "undefined")
-      {
-         var lat = json.location.lat;
-         var lon = json.location.lon;
-         if (m_b_Debug)
-            console.log("[JS:WTHR:GL] Location: "+lat + "," + lat);
-         HandleLocation(lat,lon);
-      }
-      else
-      {
-         // Return an error
-         SendWeatherError('No location');
-      }
-   
-   });
    // Return an error
    SendWeatherError('No location');
+   
 }
 
 function SendWeatherError(Text)
