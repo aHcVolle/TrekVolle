@@ -26,9 +26,6 @@ static void initialise_ui(void)
    #endif
    s_window = window_create();
    window_set_background_color(s_window, GColorBlack);
-   /*#ifndef PBL_SDK_3
-   window_set_fullscreen(s_window, 1);
-   #endif*/
    
    #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating fonts");
@@ -42,10 +39,12 @@ static void initialise_ui(void)
    #endif
    
    // Layer_Background_Image
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 180, 180));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 200, 228));
    #endif
    bitmap_layer_set_compositing_mode(m_Image_Background.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
@@ -53,10 +52,12 @@ static void initialise_ui(void)
    Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
 
    // Layer_Bluetooth_Image
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(140, 134, 16, 16));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
    #endif
    bitmap_layer_set_compositing_mode(m_Image_Bluetooth.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
@@ -64,7 +65,13 @@ static void initialise_ui(void)
    Redraw_Image(&m_Image_Bluetooth, RESOURCE_ID_IMAGE_BLUETOOTH, GColorWhite);
 
    // Layer_Weather_Image
-   m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
+   #elif defined(PBL_PLATFORM_CHALK)
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
+   #endif
    bitmap_layer_set_compositing_mode(m_Image_Weather.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Weather.thisLayer);
    snprintf(m_Image_Weather.s_Name,sizeof(m_Image_Weather.s_Name),"WTHR");
@@ -72,10 +79,12 @@ static void initialise_ui(void)
 
    // Layer_Steps_Image
    #if defined(PBL_HEALTH)
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, 16, 16));
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
          m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, 16, 16));
+      #elif defined(PBL_PLATFORM_EMERY)
+         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, 16, 16));
       #endif
       bitmap_layer_set_compositing_mode(m_Image_Steps.thisLayer,GCompOpSet);
       layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
@@ -85,9 +94,11 @@ static void initialise_ui(void)
    
    // Layer_Heart_Image
    #if defined(PBL_HEALTH)
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
+         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+      #elif defined(PBL_PLATFORM_EMERY)
          m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
       #endif
       bitmap_layer_set_compositing_mode(m_Image_Heart.thisLayer,GCompOpSet);
@@ -97,10 +108,12 @@ static void initialise_ui(void)
    #endif
 
    // Layer_Battery_Image_Pebble
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, 16, 16));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, 16, 16));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, 16, 16));
    #endif
    bitmap_layer_set_compositing_mode(m_Image_BatteryPebble.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPebble.thisLayer);
@@ -108,10 +121,12 @@ static void initialise_ui(void)
    Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
 
    // Layer_Battery_Image_Phone
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, 16, 16));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, 16, 16));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, 16, 16));
    #endif
    bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
@@ -119,10 +134,12 @@ static void initialise_ui(void)
    Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
    
    // Layer_Network_Image
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       m_Image_Network.thisLayer = bitmap_layer_create(GRect(123, 134, 16, 16));
+   #elif defined(PBL_PLATFORM_EMERY)
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
    #endif
    bitmap_layer_set_compositing_mode(m_Image_Network.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Network.thisLayer);
@@ -136,10 +153,12 @@ static void initialise_ui(void)
    #endif
    
    // Layer_TimeHour_Text
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_TimeHour_Text = text_layer_create(GRect(0, 11, 85, 49));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
    #endif
    text_layer_set_background_color(Layer_TimeHour_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeHour_Text, GColorWhite);
@@ -149,10 +168,12 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);
    
    // Layer_TimeMinute_Text
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_TimeMinute_Text = text_layer_create(GRect(86, 11, 90, 49));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
    #endif
    text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
    text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
@@ -162,10 +183,12 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
 
    // Layer_Weather_Text
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
    #endif
    text_layer_set_background_color(Layer_Weather_Text, GColorClear);
    text_layer_set_text_color(Layer_Weather_Text, GColorWhite);
@@ -174,10 +197,12 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Weather_Text);
    
    // Layer_Day_Text
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
    #endif
    text_layer_set_background_color(Layer_Day_Text, GColorClear);
    text_layer_set_text_color(Layer_Day_Text, GColorWhite);
@@ -188,45 +213,55 @@ static void initialise_ui(void)
 
    // Layer_Steps_Text
    #if defined(PBL_HEALTH)
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
          Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
+      #elif defined(PBL_PLATFORM_EMERY)
+         Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
       #endif
       text_layer_set_background_color(Layer_Steps_Text, GColorClear);
       text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
       text_layer_set_text(Layer_Steps_Text, "");
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
          text_layer_set_font(Layer_Steps_Text, s_res_gothic_14_bold);
+      #elif defined(PBL_PLATFORM_EMERY)
+         text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
       #endif
       layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
    #endif
    
    // Layer_Heart_Text
    #if defined(PBL_HEALTH)
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
          Layer_Heart_Text = text_layer_create(GRect(120, 151, 123, 20));
+      #elif defined(PBL_PLATFORM_EMERY)
+         Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
       #endif
       text_layer_set_background_color(Layer_Heart_Text, GColorClear);
       text_layer_set_text_color(Layer_Heart_Text, GColorWhite);
       text_layer_set_text(Layer_Heart_Text, "");
-      #if defined(PBL_RECT)
+      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
          text_layer_set_font(Layer_Heart_Text, s_res_gothic_18_bold);
-      #elif defined(PBL_ROUND)
+      #elif defined(PBL_PLATFORM_CHALK)
          text_layer_set_font(Layer_Heart_Text, s_res_gothic_14_bold);
+      #elif defined(PBL_PLATFORM_EMERY)
+         text_layer_set_font(Layer_Heart_Text, s_res_gothic_18_bold);
       #endif
       layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Heart_Text);
    #endif
    
    // Layer_Date_Text
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_Date_Text = text_layer_create(GRect(44, 55, 100, 20));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
    #endif
    text_layer_set_background_color(Layer_Date_Text, GColorClear);
    text_layer_set_text_color(Layer_Date_Text, GColorWhite);
@@ -236,10 +271,12 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Date_Text);
 
    // Layer_Battery_Text_Pebble
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
    #endif
    text_layer_set_background_color(Layer_Battery_Text_Pebble, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Pebble, GColorWhite);
@@ -248,10 +285,12 @@ static void initialise_ui(void)
    layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Pebble);
 
    // Layer_Battery_Text_Phone
-   #if defined(PBL_RECT)
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
-   #elif defined(PBL_ROUND)
+   #elif defined(PBL_PLATFORM_CHALK)
       Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 38, 20));
+   #elif defined(PBL_PLATFORM_EMERY)
+      Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
    #endif
    text_layer_set_background_color(Layer_Battery_Text_Phone, GColorClear);
    text_layer_set_text_color(Layer_Battery_Text_Phone, GColorWhite);

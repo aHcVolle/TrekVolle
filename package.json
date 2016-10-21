@@ -62,13 +62,31 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/BackGround_Emery.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BACKGROUND",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Overview_Emery.png",
+                    "name": "IMAGE_OVERVIEW",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/Heart.png",
                     "memoryFormat": "1BitPalette",
                     "name": "IMAGE_HEART",
                     "targetPlatforms": [
                         "basalt",
                         "chalk",
-                        "diorite"
+                        "diorite",
+                        "emery"
                     ],
                     "type": "bitmap"
                 },
@@ -270,7 +288,8 @@
             "aplite",
             "basalt",
             "chalk",
-            "diorite"
+            "diorite",
+            "emery"
         ],
         "uuid": "2da02267-7a19-4e49-9ed1-439d25db14e4",
         "watchapp": {
