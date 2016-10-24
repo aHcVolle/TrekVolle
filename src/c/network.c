@@ -25,7 +25,7 @@ void Network_Request()
    #endif
    
    // Send the request
-   Communication_Send(MESSAGE_KEY_ONLINE);
+   Communication_Send(MESSAGE_KEY_NETWORK_STATUS);
 }
 
 // Redraw the network image

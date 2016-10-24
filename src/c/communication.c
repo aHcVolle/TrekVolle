@@ -13,11 +13,11 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    // Var to save if an image has been altered
    bool b_NewImageConfig = false;
    // Read tuples for data
-   Tuple *Weather_Temperature_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
-   Tuple *Weather_Condition_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
-   Tuple *Weather_Image_tuple = dict_find(iterator, MESSAGE_KEY_ICON);
-   Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_LOCATION);
-   Tuple *Network_tuple = dict_find(iterator,MESSAGE_KEY_ONLINE);
+   Tuple *Weather_Temperature_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE);
+   Tuple *Weather_Condition_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_CONDITIONS);
+   Tuple *Weather_Image_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_ICON);
+   Tuple *Weather_Location_tuple = dict_find(iterator,MESSAGE_KEY_WEATHER_LOCATION);
+   Tuple *Network_tuple = dict_find(iterator,MESSAGE_KEY_NETWORK_STATUS);
    Tuple *Batterycharge_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_CHARGE);
    Tuple *Batterystate_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_STATE);
    
@@ -62,7 +62,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    if(Weather_Temperature_tuple && Weather_Condition_tuple && Weather_Location_tuple && Weather_Image_tuple) 
    {
       #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_TEMPERATURE,KEY_CONDITIONS,KEY_ICON,KEY_LOCATION");
+         printf("[COM][Communication_InboxReceived] Received data TEMPERATURE,CONDITIONS,ICON,LOCATION");
       #endif
       Weather_Handle(Weather_Temperature_tuple,Weather_Condition_tuple,Weather_Location_tuple,Weather_Image_tuple);
    }
@@ -72,7 +72,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    if (Network_tuple)
    {
       #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_ONLINE");
+         printf("[COM][Communication_InboxReceived] Received data NETWORK_STATUS");
       #endif
       Network_Handle_Reply(Network_tuple);
    }
@@ -398,7 +398,7 @@ void Communication_TimerCallback(void *data)
       app_message_outbox_begin(&iter);
       
       // Add a key-value pair
-      if (*i_data != (int)MESSAGE_KEY_TEMPERATURE)
+      if (*i_data != (int)MESSAGE_KEY_WEATHER_TEMPERATURE)
       {
          dict_write_uint8(iter,*i_data , 0);
          dict_write_end(iter);
@@ -406,7 +406,7 @@ void Communication_TimerCallback(void *data)
       else
       {
          char *sys_locale = setlocale(LC_ALL, "");
-         dict_write_cstring(iter,MESSAGE_KEY_TEMPERATURE,sys_locale);
+         dict_write_cstring(iter,MESSAGE_KEY_WEATHER_TEMPERATURE,sys_locale);
          dict_write_end(iter);
       }
       
@@ -459,9 +459,9 @@ void Communication_OnInit()
 
    // Add a key-value pair
    dict_write_uint8(iter,MESSAGE_KEY_BATTERY_CHARGE , 0);
-   dict_write_uint8(iter,MESSAGE_KEY_ONLINE , 0);
+   dict_write_uint8(iter,MESSAGE_KEY_NETWORK_STATUS , 0);
    if (!m_b_Weather_LastUpdateWasOK)
-      dict_write_uint8(iter,MESSAGE_KEY_TEMPERATURE , 0);
+      dict_write_uint8(iter,MESSAGE_KEY_WEATHER_TEMPERATURE , 0);
    
    // Send the message!
    app_message_outbox_send();

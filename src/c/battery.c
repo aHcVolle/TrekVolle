@@ -224,7 +224,7 @@ void Battery_Init()
    show_PhoneBattery(false);
    m_b_BatterySavingActive = false;
    #ifdef DEBUG_BATTERY
-      Battery_Handle_Phone(80,false);
+      Battery_Handle_Phone(100,false);
    #endif
    
    

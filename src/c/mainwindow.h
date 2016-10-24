@@ -16,6 +16,18 @@
    //#define DEBUG_IMAGEREDRAW
 #endif
 
+#if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE) || defined(PBL_PLATFORM_CHALK)
+ #define ICON_SIZE 16
+#else
+ #define ICON_SIZE 22
+#endif
+
+
+#if defined(PBL_PLATFORM_DIORITE) || defined(PBL_PLATFORM_EMERY)
+ #define HAS_HEARTRATE
+#endif
+
+
 // Heap fragmentation help
 #define PNG_BUFFER_SIZE 600
 uint8_t* ui_PNG_Loadbuffer;
@@ -33,7 +45,9 @@ struct ImageData m_Image_BatteryPhone;
 struct ImageData m_Image_Network;
 struct ImageData m_Image_Weather;
 struct ImageData m_Image_Steps;
+#if defined(HAS_HEARTRATE)
 struct ImageData m_Image_Heart;
+#endif
 struct ImageData m_Image_Background;
 struct ImageData m_Image_Bluetooth;
 
@@ -62,7 +76,9 @@ void Refresh_Display(void);
 
 // Functions to return all the text pointers
 TextLayer* GetStepTextLayer();
+#if defined(HAS_HEARTRATE)
 TextLayer* GetHeartTextLayer();
+#endif
 TextLayer* GetTimeHourTextLayer();
 TextLayer* GetTimeMinuteTextLayer();
 TextLayer* GetDateTextLayer();

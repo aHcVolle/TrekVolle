@@ -16,6 +16,10 @@
    #define DEBUG_HEARTRATE
 #endif
 
+#define DEBUG_HEALTH
+#define DEBUG_STEPCOUNT
+#define DEBUG_HEARTRATE
+
 // Functions used in other files
 void Health_Init();
 void Health_DeInit();

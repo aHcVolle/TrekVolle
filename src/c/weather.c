@@ -196,7 +196,7 @@ void Weather_Request()
    
    
    // Send Request
-   Communication_Send(MESSAGE_KEY_TEMPERATURE);
+   Communication_Send(MESSAGE_KEY_WEATHER_TEMPERATURE);
 }
 
 void Weather_SaveData()

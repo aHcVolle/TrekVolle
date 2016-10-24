@@ -57,7 +57,7 @@ function SendReply(b_IsConnected,m_b_Debug)
          console.log("[JS:NET] Network check: Failed");
    }   
    // Send message to pebble
-   var dictionary ={'ONLINE': b_IsConnected ? 1 : 0};
+   var dictionary ={'NETWORK_STATUS': b_IsConnected ? 1 : 0};
    Pebble.sendAppMessage(dictionary,
                          function(e)
                          {

@@ -102,6 +102,7 @@ void Health_GetMovementData(void)
 
 void Health_GetHeartRateData(void)
 {
+   #if defined(HAS_HEARTRATE)
    // Debug printout
    #ifdef DEBUG_HEALTH
          printf("[HEALTH][Health_GetData] Getting heartrate data");
@@ -130,9 +131,10 @@ void Health_GetHeartRateData(void)
    
    // And display the data
    text_layer_set_text(m_Health_Heart_Text_Layer, s_HeartText);
+   #endif
 }
 
-
+/*
 // This will get called if there is new health data
 static void Health_Handler(HealthEventType event, void *context) 
 {
@@ -163,7 +165,9 @@ static void Health_Handler(HealthEventType event, void *context)
       break;
   }
 }
+*/
 #endif
+
 // Init the vars and register with the health service
 void Health_Init()
 {
@@ -175,7 +179,9 @@ void Health_Init()
    
    // Get the layers
    m_Health_Movement_Text_Layer = GetStepTextLayer();
+   #if defined(HAS_HEARTRATE)
    m_Health_Heart_Text_Layer = GetHeartTextLayer();
+   #endif
 
    // Hide the heartrate layer
    show_HeartRate(false);

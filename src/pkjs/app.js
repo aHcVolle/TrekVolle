@@ -13,7 +13,7 @@ var m_b_Debug;
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready', function(e) 
 {
-   m_b_Debug = false;   
+   m_b_Debug = true;   
    
    if (m_b_Debug)
          console.log("[JS:APP] JS ready...");
@@ -75,17 +75,10 @@ function Messaging_Init()
       if (m_b_MessagingAvailable)
       {
          var b_Found = false;
-         /*if ('WEATHER_LANGUAGE' in e.payload)
+         
+         if ('WEATHER_TEMPERATURE' in e.payload)
          {
-            if (m_b_Debug)
-               console.log("[JS:APP] Weather language set.");
-            weather.SetLanguage(e.payload.value);
-            b_Found = true;
-         }*/
-         if ('TEMPERATURE' in e.payload)
-         {
-            
-            var Language = e.payload.TEMPERATURE.toString();
+            var Language = e.payload.WEATHER_TEMPERATURE.toString();
             if (m_b_Debug)
                console.log("[JS:APP] Weather info requested ..."+Language);
             weather.SetLanguage(Language);
@@ -93,7 +86,7 @@ function Messaging_Init()
             weather.GetData();
             b_Found = true;
          }
-         if ('ONLINE' in e.payload)
+         if ('NETWORK_STATUS' in e.payload)
          {
             if (m_b_Debug)
                console.log("[JS:APP] Online info requested...");

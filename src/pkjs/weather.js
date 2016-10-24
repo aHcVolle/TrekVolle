@@ -258,11 +258,11 @@ function GetYahooData(RequestString)
          // Assemble dictionary using our keys
          var dictionary = 
          {
-            'TEMPERATURE': temperature,
-            'CONDITIONS': conditions,
-            'ICON': iconname,
-            'LOCATION': location,
-            'ONLINE': 1,
+            'WEATHER_TEMPERATURE': temperature,
+            'WEATHER_CONDITIONS': conditions,
+            'WEATHER_ICON': iconname,
+            'WEATHER_LOCATION': location,
+            'NETWORK_STATUS': 1,
             'WEATHER_TEMPERATURE_MIN' : Temp_Min,
             'WEATHER_TEMPERATURE_MAX' : Temp_Max
          };
@@ -377,11 +377,11 @@ function GetOpenWeatherMapData(RequestString)
          // Assemble dictionary using our keys
          var dictionary = 
          {
-            'TEMPERATURE': temperature,
-            'CONDITIONS': conditions,
-            'ICON': iconname,
-            'LOCATION': location,
-            'ONLINE': 1,
+            'WEATHER_TEMPERATURE': temperature,
+            'WEATHER_CONDITIONS': conditions,
+            'WEATHER_ICON': iconname,
+            'WEATHER_LOCATION': location,
+            'NETWORK_STATUS': 1,
             'WEATHER_TEMPERATURE_MIN' : Temp_Min,
             'WEATHER_TEMPERATURE_MAX' : Temp_Max
          };
@@ -490,11 +490,11 @@ function GetWeatherUndergroundData(RequestString)
          // Assemble dictionary using our keys
          var dictionary = 
          {
-            'TEMPERATURE': temperature,
-            'CONDITIONS': conditions,
-            'ICON': iconname,
-            'LOCATION': location,
-            'ONLINE': 1,
+            'WEATHER_TEMPERATURE': temperature,
+            'WEATHER_CONDITIONS': conditions,
+            'WEATHER_ICON': iconname,
+            'WEATHER_LOCATION': location,
+            'NETWORK_STATUS': 1,
             'WEATHER_TEMPERATURE_MIN' : Temp_Min,
             'WEATHER_TEMPERATURE_MAX' : Temp_Max
          };
@@ -827,11 +827,11 @@ function SendWeatherError(Text)
    // Assemble dictionary using our keys
    var dictionary = 
        {
-          'TEMPERATURE': -200,
-          'CONDITIONS': Text,
-          'ICON': "erroricon",
-          'LOCATION': Text,
-          'ONLINE': 1,
+          'WEATHER_TEMPERATURE': -200,
+          'WEATHER_CONDITIONS': Text,
+          'WEATHER_ICON': "erroricon",
+          'WEATHER_LOCATION': Text,
+          'NETWORK_STATUS': 1,
           'WEATHER_TEMPERATURE_MIN' : 0,
           'WEATHER_TEMPERATURE_MAX' : 0
        };

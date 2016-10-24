@@ -3,21 +3,33 @@
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
 
-static GFont s_res_roboto_bold_subset_49;
-static GFont s_res_gothic_18_bold;
-static GFont s_res_gothic_14_bold;
+static GFont s_Font_Time;
+static GFont s_Font_Text_Big;
+#if defined(PBL_PLATFORM_CHALK)
+   static GFont s_Font_Text_Small;
+#endif
 
 static TextLayer *Layer_TimeHour_Text;
 static TextLayer *Layer_TimeMinute_Text;
 static TextLayer *Layer_Weather_Text;
 static TextLayer *Layer_Day_Text;
 static TextLayer *Layer_Steps_Text;
+#if defined(HAS_HEARTRATE)
 static TextLayer *Layer_Heart_Text;
+#endif
 static TextLayer *Layer_Date_Text;
 static TextLayer *Layer_Battery_Text_Pebble;
 static TextLayer *Layer_Battery_Text_Phone;
 
 
+void SetupTextLayer(TextLayer* TargetLayer,GColor BackgroundColor,GColor TextColor,char* Text,GTextAlignment Alignment,GFont Font)
+{
+   text_layer_set_background_color(TargetLayer, BackgroundColor);
+   text_layer_set_text_color(TargetLayer, TextColor);
+   text_layer_set_text(TargetLayer, Text);
+   text_layer_set_text_alignment(TargetLayer, Alignment);
+   text_layer_set_font(TargetLayer, Font);
+}
 
 static void initialise_ui(void) 
 {
@@ -30,273 +42,207 @@ static void initialise_ui(void)
    #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Creating fonts");
    #endif
-   s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
-   s_res_gothic_14_bold = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
-   s_res_roboto_bold_subset_49 = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
    
-   #ifdef DEBUG_MAINWINDOW
-         printf("[MAIN][initialise_ui] Creating image layers");
+   
+   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
+      s_Font_Text_Big = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
+      s_Font_Time = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
+   #elif defined(PBL_PLATFORM_CHALK)
+      s_Font_Text_Big = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
+      s_Font_Text_Small = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
+      s_Font_Time = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
+   #elif defined(PBL_PLATFORM_EMERY)
+      s_Font_Text_Big = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
+      s_Font_Time = fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49);
    #endif
    
-   // Layer_Background_Image
+   #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][initialise_ui] Creating layers");
+   #endif
+   
    #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 144, 168));
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, ICON_SIZE, ICON_SIZE));
+   
+      #if defined(PBL_HEALTH)
+         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, ICON_SIZE, ICON_SIZE));
+         #if defined(HAS_HEARTRATE)
+            m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156,ICON_SIZE/2, ICON_SIZE/2));
+         #endif
+      #endif
+   
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, ICON_SIZE, ICON_SIZE));
+   
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
+      Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
+      
+      #if defined(PBL_HEALTH)
+         Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
+         #if defined(HAS_HEARTRATE)
+            Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
+         #endif
+      #endif
+   
+      Layer_Date_Text = text_layer_create(GRect(0, 50, 144, 20));
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
+   
    #elif defined(PBL_PLATFORM_CHALK)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 180, 180));
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(140, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, ICON_SIZE, ICON_SIZE));
+      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, ICON_SIZE, ICON_SIZE));
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(123, 134, ICON_SIZE, ICON_SIZE));
+   
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 11, 85, 49));
+      Layer_TimeMinute_Text = text_layer_create(GRect(86, 11, 90, 49));
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
+      Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
+      Layer_Date_Text = text_layer_create(GRect(44, 55, 100, 20));
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 38, 20));
+
    #elif defined(PBL_PLATFORM_EMERY)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 200, 228));
+      
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 140, ICON_SIZE, ICON_SIZE));
+   
+      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(10, 180, ICON_SIZE, ICON_SIZE));
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(80, 180, ICON_SIZE, ICON_SIZE));
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(160, 180, ICON_SIZE, ICON_SIZE));
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(180, 180, ICON_SIZE, ICON_SIZE));
+   
+      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(10, 200, ICON_SIZE, ICON_SIZE));
+      m_Image_Heart.thisLayer = bitmap_layer_create(GRect(140, 200, ICON_SIZE, ICON_SIZE));
+      
+   
+      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 100, 49));
+      Layer_TimeMinute_Text = text_layer_create(GRect(102, 4, 100, 49));
+      Layer_Date_Text = text_layer_create(GRect(0, 54, 200, 28));
+      Layer_Day_Text = text_layer_create(GRect(0, 99, 200, 28));
+      Layer_Weather_Text = text_layer_create(GRect(26, 129, 144, 28));
+      
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(26, 175, 38, 28));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(100, 175, 38, 28));
+   
+      Layer_Steps_Text = text_layer_create(GRect(26, 198, 110, 28));
+      Layer_Heart_Text = text_layer_create(GRect(160, 198, 110, 28));
+      
+      
+   
    #endif
+   
+   #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][initialise_ui] Setting up layers");
+   #endif
+   
    bitmap_layer_set_compositing_mode(m_Image_Background.thisLayer,GCompOpSet);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
-   snprintf(m_Image_Background.s_Name,sizeof(m_Image_Background.s_Name),"BCKG");
-   Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
-
-   // Layer_Bluetooth_Image
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_CHALK)
-      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(140, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_EMERY)
-      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(126, 134, 16, 16));
-   #endif
    bitmap_layer_set_compositing_mode(m_Image_Bluetooth.thisLayer,GCompOpSet);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
-   snprintf(m_Image_Bluetooth.s_Name,sizeof(m_Image_Bluetooth.s_Name),"BT");
-   Redraw_Image(&m_Image_Bluetooth, RESOURCE_ID_IMAGE_BLUETOOTH, GColorWhite);
-
-   // Layer_Weather_Image
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
-   #elif defined(PBL_PLATFORM_CHALK)
-      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
-   #elif defined(PBL_PLATFORM_EMERY)
-      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, 16, 16));
-   #endif
    bitmap_layer_set_compositing_mode(m_Image_Weather.thisLayer,GCompOpSet);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Weather.thisLayer);
-   snprintf(m_Image_Weather.s_Name,sizeof(m_Image_Weather.s_Name),"WTHR");
-   Redraw_Image(&m_Image_Weather, RESOURCE_ID_IMAGE_ERROR, GColorWhite);
-
-   // Layer_Steps_Image
    #if defined(PBL_HEALTH)
-      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, 16, 16));
-      #elif defined(PBL_PLATFORM_CHALK)
-         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, 16, 16));
-      #elif defined(PBL_PLATFORM_EMERY)
-         m_Image_Steps.thisLayer = bitmap_layer_create(GRect(6, 152, 16, 16));
-      #endif
       bitmap_layer_set_compositing_mode(m_Image_Steps.thisLayer,GCompOpSet);
-      layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
-      snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
-      Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
+   #endif
+   #if defined(HAS_HEARTRATE)
+      bitmap_layer_set_compositing_mode(m_Image_Heart.thisLayer,GCompOpSet);
    #endif
    
-   // Layer_Heart_Image
+   bitmap_layer_set_compositing_mode(m_Image_BatteryPebble.thisLayer,GCompOpSet);
+   bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
+   bitmap_layer_set_compositing_mode(m_Image_Network.thisLayer,GCompOpSet);
+   
+   SetupTextLayer(Layer_TimeHour_Text,GColorClear,GColorWhite,"",GTextAlignmentRight,s_Font_Time);
+   SetupTextLayer(Layer_TimeMinute_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Time);
+   SetupTextLayer(Layer_Weather_Text,GColorClear,GColorWhite,"Updating...",GTextAlignmentLeft,s_Font_Text_Big);
+   SetupTextLayer(Layer_Day_Text,GColorClear,GColorWhite,"",GTextAlignmentRight,s_Font_Text_Big);
    #if defined(PBL_HEALTH)
       #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+         SetupTextLayer(Layer_Steps_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
+         #if defined(HAS_HEARTRATE)
+            SetupTextLayer(Layer_Heart_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
+         #endif
       #elif defined(PBL_PLATFORM_CHALK)
-         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+         SetupTextLayer(Layer_Steps_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Small);
       #elif defined(PBL_PLATFORM_EMERY)
-         m_Image_Heart.thisLayer = bitmap_layer_create(GRect(110, 156, 8, 8));
+         SetupTextLayer(Layer_Steps_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
+         SetupTextLayer(Layer_Heart_Text,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
       #endif
-      bitmap_layer_set_compositing_mode(m_Image_Heart.thisLayer,GCompOpSet);
+   #endif   
+   SetupTextLayer(Layer_Date_Text,GColorClear,GColorWhite,"",GTextAlignmentRight,s_Font_Text_Big);
+   SetupTextLayer(Layer_Battery_Text_Pebble,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
+   SetupTextLayer(Layer_Battery_Text_Phone,GColorClear,GColorWhite,"",GTextAlignmentLeft,s_Font_Text_Big);
+      
+   
+   #ifdef DEBUG_MAINWINDOW
+         printf("[MAIN][initialise_ui] Add layers");
+   #endif
+   
+   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Background.thisLayer);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Bluetooth.thisLayer);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Weather.thisLayer);
+   #if defined(PBL_HEALTH)
+      layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Steps.thisLayer);
+   #endif
+   #if defined(HAS_HEARTRATE)
       layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Heart.thisLayer);
-      snprintf(m_Image_Heart.s_Name,sizeof(m_Image_Heart.s_Name),"HRT");
-      Redraw_Image(&m_Image_Heart, RESOURCE_ID_IMAGE_HEART, GColorWhite);
    #endif
-
-   // Layer_Battery_Image_Pebble
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_CHALK)
-      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_EMERY)
-      m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(6, 134, 16, 16));
-   #endif
-   bitmap_layer_set_compositing_mode(m_Image_BatteryPebble.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPebble.thisLayer);
-   snprintf(m_Image_BatteryPebble.s_Name,sizeof(m_Image_BatteryPebble.s_Name),"BAT1");
-   Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
-
-   // Layer_Battery_Image_Phone
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_CHALK)
-      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_EMERY)
-      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(56, 134, 16, 16));
-   #endif
-   bitmap_layer_set_compositing_mode(m_Image_BatteryPhone.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_BatteryPhone.thisLayer);
-   snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
-   Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
-   
-   // Layer_Network_Image
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_CHALK)
-      m_Image_Network.thisLayer = bitmap_layer_create(GRect(123, 134, 16, 16));
-   #elif defined(PBL_PLATFORM_EMERY)
-      m_Image_Network.thisLayer = bitmap_layer_create(GRect(109, 134, 16, 16));
-   #endif
-   bitmap_layer_set_compositing_mode(m_Image_Network.thisLayer,GCompOpSet);
    layer_add_child(window_get_root_layer(s_window), (Layer *)m_Image_Network.thisLayer);
-   snprintf(m_Image_Network.s_Name,sizeof(m_Image_Network.s_Name),"NET");
-   Redraw_Image(&m_Image_Network, RESOURCE_ID_IMAGE_NETWORK, GColorWhite);
    
+   
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);   
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Weather_Text);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Day_Text);
+   #if defined(PBL_HEALTH)
+      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
+   #endif
+   #if defined(HAS_HEARTRATE)
+      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Heart_Text);
+   #endif
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Date_Text);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Pebble);
+   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Phone);
    
    
    #ifdef DEBUG_MAINWINDOW
-         printf("[MAIN][initialise_ui] Creating text layers");
+         printf("[MAIN][initialise_ui] Finish image layers");
    #endif
    
-   // Layer_TimeHour_Text
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_TimeHour_Text = text_layer_create(GRect(0, 11, 85, 49));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 71, 49));
-   #endif
-   text_layer_set_background_color(Layer_TimeHour_Text, GColorClear);
-   text_layer_set_text_color(Layer_TimeHour_Text, GColorWhite);
-   text_layer_set_text(Layer_TimeHour_Text, "");
-   text_layer_set_text_alignment(Layer_TimeHour_Text, GTextAlignmentRight);
-   text_layer_set_font(Layer_TimeHour_Text, s_res_roboto_bold_subset_49);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeHour_Text);
-   
-   // Layer_TimeMinute_Text
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_TimeMinute_Text = text_layer_create(GRect(86, 11, 90, 49));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_TimeMinute_Text = text_layer_create(GRect(72, 4, 72, 49));
-   #endif
-   text_layer_set_background_color(Layer_TimeMinute_Text, GColorClear);
-   text_layer_set_text_color(Layer_TimeMinute_Text, GColorWhite);
-   text_layer_set_text(Layer_TimeMinute_Text, "");
-   text_layer_set_text_alignment(Layer_TimeMinute_Text, GTextAlignmentLeft);
-   text_layer_set_font(Layer_TimeMinute_Text, s_res_roboto_bold_subset_49);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_TimeMinute_Text);
-
-   // Layer_Weather_Text
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_Weather_Text = text_layer_create(GRect(24, 93, 144, 22));
-   #endif
-   text_layer_set_background_color(Layer_Weather_Text, GColorClear);
-   text_layer_set_text_color(Layer_Weather_Text, GColorWhite);
-   text_layer_set_text(Layer_Weather_Text, "Updating...");
-   text_layer_set_font(Layer_Weather_Text, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Weather_Text);
-   
-   // Layer_Day_Text
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_Day_Text = text_layer_create(GRect(0, 72, 144, 20));
-   #endif
-   text_layer_set_background_color(Layer_Day_Text, GColorClear);
-   text_layer_set_text_color(Layer_Day_Text, GColorWhite);
-   text_layer_set_text(Layer_Day_Text, "");
-   text_layer_set_text_alignment(Layer_Day_Text, GTextAlignmentRight);
-   text_layer_set_font(Layer_Day_Text, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Day_Text);
-
-   // Layer_Steps_Text
+   snprintf(m_Image_Background.s_Name,sizeof(m_Image_Background.s_Name),"BCKG");
+   snprintf(m_Image_Bluetooth.s_Name,sizeof(m_Image_Bluetooth.s_Name),"BT");
+   snprintf(m_Image_Weather.s_Name,sizeof(m_Image_Weather.s_Name),"WTHR");
    #if defined(PBL_HEALTH)
-      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
-      #elif defined(PBL_PLATFORM_CHALK)
-         Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
-      #elif defined(PBL_PLATFORM_EMERY)
-         Layer_Steps_Text = text_layer_create(GRect(21, 147, 110, 20));
-      #endif
-      text_layer_set_background_color(Layer_Steps_Text, GColorClear);
-      text_layer_set_text_color(Layer_Steps_Text, GColorWhite);
-      text_layer_set_text(Layer_Steps_Text, "");
-      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
-      #elif defined(PBL_PLATFORM_CHALK)
-         text_layer_set_font(Layer_Steps_Text, s_res_gothic_14_bold);
-      #elif defined(PBL_PLATFORM_EMERY)
-         text_layer_set_font(Layer_Steps_Text, s_res_gothic_18_bold);
-      #endif
-      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Steps_Text);
+      snprintf(m_Image_Steps.s_Name,sizeof(m_Image_Steps.s_Name),"STPS");
    #endif
-   
-   // Layer_Heart_Text
+   #if defined(HAS_HEARTRATE)
+      snprintf(m_Image_Heart.s_Name,sizeof(m_Image_Heart.s_Name),"HRT");
+   #endif
+   snprintf(m_Image_BatteryPebble.s_Name,sizeof(m_Image_BatteryPebble.s_Name),"BAT1");
+   snprintf(m_Image_BatteryPhone.s_Name,sizeof(m_Image_BatteryPhone.s_Name),"BAT2");
+   snprintf(m_Image_Network.s_Name,sizeof(m_Image_Network.s_Name),"NET");
+    
+     
+   Redraw_Image(&m_Image_Background, RESOURCE_ID_IMAGE_BACKGROUND, GColorBlue);
+   Redraw_Image(&m_Image_Bluetooth, RESOURCE_ID_IMAGE_BLUETOOTH, GColorWhite); 
+   Redraw_Image(&m_Image_Weather, RESOURCE_ID_IMAGE_ERROR, GColorWhite);
    #if defined(PBL_HEALTH)
-      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
-      #elif defined(PBL_PLATFORM_CHALK)
-         Layer_Heart_Text = text_layer_create(GRect(120, 151, 123, 20));
-      #elif defined(PBL_PLATFORM_EMERY)
-         Layer_Heart_Text = text_layer_create(GRect(120, 147, 110, 20));
-      #endif
-      text_layer_set_background_color(Layer_Heart_Text, GColorClear);
-      text_layer_set_text_color(Layer_Heart_Text, GColorWhite);
-      text_layer_set_text(Layer_Heart_Text, "");
-      #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-         text_layer_set_font(Layer_Heart_Text, s_res_gothic_18_bold);
-      #elif defined(PBL_PLATFORM_CHALK)
-         text_layer_set_font(Layer_Heart_Text, s_res_gothic_14_bold);
-      #elif defined(PBL_PLATFORM_EMERY)
-         text_layer_set_font(Layer_Heart_Text, s_res_gothic_18_bold);
-      #endif
-      layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Heart_Text);
+      Redraw_Image(&m_Image_Steps, RESOURCE_ID_IMAGE_STEPS, GColorWhite);
    #endif
-   
-   // Layer_Date_Text
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_Date_Text = text_layer_create(GRect(44, 55, 100, 20));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_Date_Text = text_layer_create(GRect(44, 50, 100, 20));
+   #if defined(HAS_HEARTRATE)
+      Redraw_Image(&m_Image_Heart, RESOURCE_ID_IMAGE_HEART, GColorWhite); 
    #endif
-   text_layer_set_background_color(Layer_Date_Text, GColorClear);
-   text_layer_set_text_color(Layer_Date_Text, GColorWhite);
-   text_layer_set_text(Layer_Date_Text, "");
-   text_layer_set_text_alignment(Layer_Date_Text, GTextAlignmentRight);
-   text_layer_set_font(Layer_Date_Text, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Date_Text);
-
-   // Layer_Battery_Text_Pebble
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(19, 130, 38, 20));
-   #endif
-   text_layer_set_background_color(Layer_Battery_Text_Pebble, GColorClear);
-   text_layer_set_text_color(Layer_Battery_Text_Pebble, GColorWhite);
-   text_layer_set_text(Layer_Battery_Text_Pebble, "");
-   text_layer_set_font(Layer_Battery_Text_Pebble, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Pebble);
-
-   // Layer_Battery_Text_Phone
-   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE)
-      Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
-   #elif defined(PBL_PLATFORM_CHALK)
-      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 38, 20));
-   #elif defined(PBL_PLATFORM_EMERY)
-      Layer_Battery_Text_Phone = text_layer_create(GRect(69, 130, 38, 20));
-   #endif
-   text_layer_set_background_color(Layer_Battery_Text_Phone, GColorClear);
-   text_layer_set_text_color(Layer_Battery_Text_Phone, GColorWhite);
-   text_layer_set_text(Layer_Battery_Text_Phone, "");
-   text_layer_set_font(Layer_Battery_Text_Phone, s_res_gothic_18_bold);
-   layer_add_child(window_get_root_layer(s_window), (Layer *)Layer_Battery_Text_Phone);
+   Redraw_Image(&m_Image_BatteryPebble, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
+   Redraw_Image(&m_Image_BatteryPhone, RESOURCE_ID_IMAGE_BATTERY_HIGH, GColorWhite);
+   Redraw_Image(&m_Image_Network, RESOURCE_ID_IMAGE_NETWORK, GColorWhite);
    
    #ifdef DEBUG_MAINWINDOW
          printf("[MAIN][initialise_ui] Finished creating");
@@ -396,7 +342,7 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
       #endif
       return;
    }
-
+   
    #ifdef DEBUG_IMAGEREDRAW
    printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Start: %s R: %d",(int) heap_bytes_used(),(int) heap_bytes_free(),Image->s_Name,ImageID );
    #endif
@@ -451,12 +397,13 @@ void Redraw_Image(struct ImageData* Image, int ImageID, GColor Color)
       #ifdef DEBUG_IMAGEREDRAW
       printf( "[MAIN][Redraw_Image] Heap Used: %05d, Free: %05d Resource is loaded",(int) heap_bytes_used(),(int) heap_bytes_free() );
       #endif
-   
+      
       // Create the bitmap
-      Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);
+      Image->thisBitmap = gbitmap_create_from_png_data(ui_PNG_Loadbuffer, png_size);      
    #else
       Image->thisBitmap = gbitmap_create_with_resource(ImageID);
    #endif
+      
    // Check if everything went fine
    if (Image->thisBitmap == NULL)
    {
@@ -512,12 +459,13 @@ void Color_SetTextColor()
    text_layer_set_text_color(Layer_TimeHour_Text, Color_ClockHour);
    text_layer_set_text_color(Layer_TimeMinute_Text, Color_ClockMin);
    text_layer_set_text_color(Layer_Weather_Text, Color_Text);
-   //text_layer_set_text_color(Layer_Battery_Text_Phone, Color_Text);
-   //text_layer_set_text_color(Layer_Battery_Text_Pebble, Color_Text);
+
    text_layer_set_text_color(Layer_Date_Text, Color_Text); 
    text_layer_set_text_color(Layer_Day_Text, Color_Text); 
    #if defined(PBL_HEALTH)
    text_layer_set_text_color(Layer_Steps_Text, Color_Text);
+   #endif
+   #if defined(HAS_HEARTRATE)
    text_layer_set_text_color(Layer_Heart_Text, Color_Text);
    #endif
 
@@ -540,6 +488,8 @@ void Color_SetImageColor()
    
    #if defined(PBL_HEALTH)
    Redraw_Image(&m_Image_Steps,RESOURCE_ID_IMAGE_STEPS,Color_Image);
+   #endif
+   #if defined(HAS_HEARTRATE)
    Redraw_Image(&m_Image_Heart,RESOURCE_ID_IMAGE_HEART,Color_Image);
    #endif
    Redraw_Image(&m_Image_Background,RESOURCE_ID_IMAGE_BACKGROUND,Color_Background);
@@ -590,7 +540,7 @@ void show_ConnectionSymbols(bool show)
 // Display the phone battery's image
 void show_HeartRate(bool show)
 {
-   
+   #if defined(HAS_HEARTRATE)
    // Set the layers hidden attribute
    if (layer_get_hidden((Layer *)Layer_Heart_Text) == show)
    {
@@ -602,7 +552,7 @@ void show_HeartRate(bool show)
       layer_set_hidden((Layer *)Layer_Heart_Text, !show);
       layer_set_hidden((Layer *)m_Image_Heart.thisLayer, !show);
    }   
-   
+   #endif
 }
 
 
@@ -615,4 +565,6 @@ TextLayer* GetBatteryTextLayerPebble() {   return Layer_Battery_Text_Pebble;}
 TextLayer* GetDateTextLayer() {   return Layer_Date_Text;}
 TextLayer* GetDayTextLayer() {   return Layer_Day_Text;}
 TextLayer* GetStepTextLayer() {   return Layer_Steps_Text;}
+#if defined(HAS_HEARTRATE)
 TextLayer* GetHeartTextLayer() {   return Layer_Heart_Text;}
+#endif
