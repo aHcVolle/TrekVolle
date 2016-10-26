@@ -94,34 +94,40 @@ static void initialise_ui(void)
    
    #elif defined(PBL_PLATFORM_CHALK)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 180, 180));
-      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(140, 134, ICON_SIZE, ICON_SIZE));
+      
       m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 98, ICON_SIZE, ICON_SIZE));
-      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, ICON_SIZE, ICON_SIZE));
+   
       m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(28, 134, ICON_SIZE, ICON_SIZE));
-      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(72, 134, ICON_SIZE, ICON_SIZE));
-      m_Image_Network.thisLayer = bitmap_layer_create(GRect(123, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(78, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Network.thisLayer = bitmap_layer_create(GRect(129, 134, ICON_SIZE, ICON_SIZE));
+      m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(144, 134, ICON_SIZE, ICON_SIZE));
+   
+      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(49, 152, ICON_SIZE, ICON_SIZE));  
+      
    
       Layer_TimeHour_Text = text_layer_create(GRect(0, 11, 85, 49));
       Layer_TimeMinute_Text = text_layer_create(GRect(86, 11, 90, 49));
-      Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
-      Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
-      Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
       Layer_Date_Text = text_layer_create(GRect(44, 55, 100, 20));
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(43, 130, 38, 20));
-      Layer_Battery_Text_Phone = text_layer_create(GRect(87, 130, 38, 20));
+      
+      Layer_Day_Text = text_layer_create(GRect(0, 72, 177, 20));
+      Layer_Weather_Text = text_layer_create(GRect(24, 93, 175, 22));
+            
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(41, 130, 38, 20));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(91, 130, 38, 20));
+      Layer_Steps_Text = text_layer_create(GRect(65, 151, 123, 20));
 
    #elif defined(PBL_PLATFORM_EMERY)
       m_Image_Background.thisLayer = bitmap_layer_create(GRect(0, 0, 200, 228));
       
-      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 140, ICON_SIZE, ICON_SIZE));
+      m_Image_Weather.thisLayer = bitmap_layer_create(GRect(5, 136, ICON_SIZE, ICON_SIZE));
    
       m_Image_BatteryPebble.thisLayer = bitmap_layer_create(GRect(10, 180, ICON_SIZE, ICON_SIZE));
       m_Image_BatteryPhone.thisLayer = bitmap_layer_create(GRect(80, 180, ICON_SIZE, ICON_SIZE));
       m_Image_Bluetooth.thisLayer = bitmap_layer_create(GRect(160, 180, ICON_SIZE, ICON_SIZE));
       m_Image_Network.thisLayer = bitmap_layer_create(GRect(180, 180, ICON_SIZE, ICON_SIZE));
    
-      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(10, 200, ICON_SIZE, ICON_SIZE));
-      m_Image_Heart.thisLayer = bitmap_layer_create(GRect(140, 200, ICON_SIZE, ICON_SIZE));
+      m_Image_Steps.thisLayer = bitmap_layer_create(GRect(10, 205, ICON_SIZE, ICON_SIZE));
+      m_Image_Heart.thisLayer = bitmap_layer_create(GRect(140, 205, ICON_SIZE, ICON_SIZE));
       
    
       Layer_TimeHour_Text = text_layer_create(GRect(0, 4, 100, 49));
@@ -130,11 +136,11 @@ static void initialise_ui(void)
       Layer_Day_Text = text_layer_create(GRect(0, 99, 200, 28));
       Layer_Weather_Text = text_layer_create(GRect(26, 129, 144, 28));
       
-      Layer_Battery_Text_Pebble = text_layer_create(GRect(26, 175, 38, 28));
-      Layer_Battery_Text_Phone = text_layer_create(GRect(100, 175, 38, 28));
+      Layer_Battery_Text_Pebble = text_layer_create(GRect(30, 175, 60, 28));
+      Layer_Battery_Text_Phone = text_layer_create(GRect(100, 175, 60, 28));
    
-      Layer_Steps_Text = text_layer_create(GRect(26, 198, 110, 28));
-      Layer_Heart_Text = text_layer_create(GRect(160, 198, 110, 28));
+      Layer_Steps_Text = text_layer_create(GRect(30, 200, 110, 28));
+      Layer_Heart_Text = text_layer_create(GRect(162, 200, 110, 28));
       
       
    

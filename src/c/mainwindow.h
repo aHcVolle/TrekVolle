@@ -19,8 +19,9 @@
 #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT) || defined(PBL_PLATFORM_DIORITE) || defined(PBL_PLATFORM_CHALK)
  #define ICON_SIZE 16
 #else
- #define ICON_SIZE 22
+ #define ICON_SIZE 20
 #endif
+
 
 
 #if defined(PBL_PLATFORM_DIORITE) || defined(PBL_PLATFORM_EMERY)

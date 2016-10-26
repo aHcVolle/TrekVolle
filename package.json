@@ -62,6 +62,189 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/Weather_ThickClouds_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_THICKCLOUDS",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Snow_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_SNOW",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_RainyNight_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAINYNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Rainy_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAINY",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Rain_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_RAIN",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Mist_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_MIST",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Lightning_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_LIGHTNING",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_CloudyNight_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDYNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Cloudy_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDY",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Clouds_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLOUDS",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_ClearNight_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLEARNIGHT",
+                    "storageFormat": "png",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Weather_Clear_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_WEATHER_CLEAR",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Steps_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_STEPS",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Network_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_NETWORK",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Heart_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_HEART",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Error_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_ERROR",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Bluetooth_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BLUETOOTH",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryMid_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_MID",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryLow_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_LOW",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/BatteryHigh_20.png",
+                    "memoryFormat": "1BitPalette",
+                    "name": "IMAGE_BATTERY_HIGH",
+                    "targetPlatforms": [
+                        "emery"
+                    ],
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/Weather_ThickClouds_16.png",
                     "memoryFormat": "1BitPalette",
                     "name": "IMAGE_WEATHER_THICKCLOUDS",
@@ -295,189 +478,6 @@
                         "basalt",
                         "chalk",
                         "diorite"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_ThickClouds_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_THICKCLOUDS",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Snow_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_SNOW",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Rainy_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_RAINY",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_RainyNight_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_RAINYNIGHT",
-                    "storageFormat": "png",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Rain_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_RAIN",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Mist_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_MIST",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Lightning_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_LIGHTNING",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Cloudy_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_CLOUDY",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_CloudyNight_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_CLOUDYNIGHT",
-                    "storageFormat": "png",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Clouds_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_CLOUDS",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_Clear_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_CLEAR",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Weather_ClearNight_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_WEATHER_CLEARNIGHT",
-                    "storageFormat": "png",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Steps_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_STEPS",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Network_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_NETWORK",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Heart_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_HEART",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Error_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_ERROR",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/Bluetooth_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_BLUETOOTH",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/BatteryMid_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_BATTERY_MID",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/BatteryLow_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_BATTERY_LOW",
-                    "targetPlatforms": [
-                        "emery"
-                    ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/BatteryHigh_22.png",
-                    "memoryFormat": "1BitPalette",
-                    "name": "IMAGE_BATTERY_HIGH",
-                    "targetPlatforms": [
-                        "emery"
                     ],
                     "type": "bitmap"
                 },
