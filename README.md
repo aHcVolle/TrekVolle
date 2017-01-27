@@ -27,7 +27,7 @@ ToDo:
 - Geolocation on Android7 seems broken
 
 Links:
-- Discussion: [Pebble forums] (https://forums.getpebble.com/discussion/31262/watchface-trekvolle#latest)
+- Discussion: [Pebble forums] (https://forums.pebble.com/t/watchface-all-platforms-trekvolle/19452)
 - Store: [Pebble Store] (https://apps.getpebble.com/applications/56bb35ee90610aa83400000f)
 
 Credits & Thanks to:
