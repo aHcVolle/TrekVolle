@@ -67,7 +67,7 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    }
    
    
-   // And check if we are online (will do nothing if bluetoth is disconnected)
+   // And check if we are online (will do nothing if bluetooth is disconnected)
    //Network_Request();
    
    if (b_ConnectionState)
