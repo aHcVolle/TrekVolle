@@ -5,6 +5,37 @@ TextLayer* m_Health_Movement_Text_Layer;
 TextLayer* m_Health_Heart_Text_Layer;
 #if defined(PBL_HEALTH)
 
+// Check if we are doing some sports
+void Sport_CheckData(int NewStepCount, int NewDistance)
+{
+    if (NewStepCount == m_i_Sport_LastStepCount)
+        return;
+    
+    if (m_i_Sport_LastStepCount == 0)
+    {
+        // Initial call
+        m_i_Sport_LastStepCount = NewStepCount;
+        m_i_Sport_LastDistance  = NewDistance;
+        return;
+    }
+    
+    if ((NewStepCount - m_i_Sport_LastStepCount) > m_i_Sport_Step_Threshold)
+    {
+        // we are running
+        m_i_Sport_Duration++; // One more min
+        m_i_Sport_DistanceDifference = NewDistance - m_i_Sport_LastDistance;
+        m_i_Sport_Distance += m_i_Sport_DistanceDifference; // Add the difference
+        
+    }
+    
+    m_i_Sport_LastStepCount = NewStepCount;
+    m_i_Sport_LastDistance  = NewDistance;
+        
+}
+
+
+
+
 // Get the data from the health service
 void Health_GetMovementData(void)
 {
@@ -41,60 +72,80 @@ void Health_GetMovementData(void)
       Step_Count = 2030;
       Step_Distance = 2087;
    #endif
+      
+   Sport_CheckData(Step_Count,Step_Distance);
    
    // Buffer to store the health information
    static char s_HealthText[20];
    static char s_StepCountText[10];
    static char s_StepDistanceText[10];
-   
-   if (Step_Count > 100000)
+   if (m_i_Health_DisplayState == DISPLAY_GLOBAL)
    {
-      int Step_Count_K = Step_Count / 1000;
-      snprintf(s_StepCountText,sizeof(s_StepCountText),"%dk",Step_Count_K);
-   }
-   else if (Step_Count > 10000)
-   {
-      int Step_Count_K = Step_Count / 1000;
-      int Step_Count_H = (Step_Count - (Step_Count_K * 1000)) / 100;
-      snprintf(s_StepCountText,sizeof(s_StepCountText),"%d.%01dk",Step_Count_K,Step_Count_H);
-   }
-   else if (Step_Count > 1000)
-   {
-      int Step_Count_K = Step_Count / 1000;
-      int Step_Count_H = (Step_Count - (Step_Count_K * 1000) ) / 10;
-      
-      snprintf(s_StepCountText,sizeof(s_StepCountText),"%d.%02dk",Step_Count_K,Step_Count_H);
+    if (Step_Count > 100000)
+    {
+        int Step_Count_K = Step_Count / 1000;
+        snprintf(s_StepCountText,sizeof(s_StepCountText),"%dk",Step_Count_K);
+    }
+    else if (Step_Count > 10000)
+    {
+        int Step_Count_K = Step_Count / 1000;
+        int Step_Count_H = (Step_Count - (Step_Count_K * 1000)) / 100;
+        snprintf(s_StepCountText,sizeof(s_StepCountText),"%d.%01dk",Step_Count_K,Step_Count_H);
+    }
+    else if (Step_Count > 1000)
+    {
+        int Step_Count_K = Step_Count / 1000;
+        int Step_Count_H = (Step_Count - (Step_Count_K * 1000) ) / 10;
+        
+        snprintf(s_StepCountText,sizeof(s_StepCountText),"%d.%02dk",Step_Count_K,Step_Count_H);
+    }
+    else
+    {
+        snprintf(s_StepCountText,sizeof(s_StepCountText),"%d",Step_Count);
+    }
+    
+    if (Step_Distance > 100000)
+    {
+        int Step_Distance_K = Step_Distance / 1000;
+        snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%dkm",Step_Distance_K);
+    }
+    else if (Step_Distance > 10000)
+    {
+        int Step_Distance_K = Step_Distance / 1000;
+        int Step_Distance_H = (Step_Distance - (Step_Distance_K * 1000)) / 100;
+        snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%d.%01dkm",Step_Distance_K,Step_Distance_H);
+    }
+    else if (Step_Distance > 1000)
+    {
+        int Step_Distance_K = Step_Distance / 1000;
+        int Step_Distance_H = (Step_Distance - (Step_Distance_K * 1000)) / 10;
+        
+        snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%d.%02dkm",Step_Distance_K,Step_Distance_H);
+    }
+    else
+    {
+        snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%dm",Step_Distance);
+    }
+    
+    snprintf(s_HealthText,sizeof(s_HealthText),"%s %s",s_StepCountText,s_StepDistanceText);
    }
    else
    {
-      snprintf(s_StepCountText,sizeof(s_StepCountText),"%d",Step_Count);
+       // Data to display:
+       // 10:11h 10.2km 10.2m // 19 chars
+       // Calculate data
+       
+       int i_Hours = m_i_Sport_Duration / 60;
+       int i_Minutes = m_i_Sport_Duration % 60;
+       
+       float f_Distance = m_i_Sport_Distance / 1000.0;
+       
+       float f_Pace = 0;
+       if (m_i_Sport_DistanceDifference > 0)
+           f_Pace = 1.0 / (float)m_i_Sport_DistanceDifference/ 1000.0;
+       
+       snprintf(s_HealthText,sizeof(s_HealthText),"%d:%02dh %.1fkm %.1fm",i_Hours,i_Minutes,f_Distance,f_Pace);
    }
-   
-   if (Step_Distance > 100000)
-   {
-      int Step_Distance_K = Step_Distance / 1000;
-      snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%dkm",Step_Distance_K);
-   }
-   else if (Step_Distance > 10000)
-   {
-      int Step_Distance_K = Step_Distance / 1000;
-      int Step_Distance_H = (Step_Distance - (Step_Distance_K * 1000)) / 100;
-      snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%d.%01dkm",Step_Distance_K,Step_Distance_H);
-   }
-   else if (Step_Distance > 1000)
-   {
-      int Step_Distance_K = Step_Distance / 1000;
-      int Step_Distance_H = (Step_Distance - (Step_Distance_K * 1000)) / 10;
-      
-      snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%d.%02dkm",Step_Distance_K,Step_Distance_H);
-   }
-   else
-   {
-      snprintf(s_StepDistanceText,sizeof(s_StepDistanceText),"%dm",Step_Distance);
-   }
-   
-   snprintf(s_HealthText,sizeof(s_HealthText),"%s %s",s_StepCountText,s_StepDistanceText);
-   
    
    // And display the data
    text_layer_set_text(m_Health_Movement_Text_Layer, s_HealthText);
@@ -183,6 +234,15 @@ void Health_Init()
    m_Health_Heart_Text_Layer = GetHeartTextLayer();
    #endif
 
+   m_i_Sport_LastStepCount = 0;
+   m_i_Sport_LastDistance = 0;
+
+   m_i_Sport_Duration = 0;
+   m_i_Sport_Distance = 0;
+   m_i_Sport_DistanceDifference = 0;
+   
+   m_i_Health_DisplayState = DISPLAY_GLOBAL;
+   
    // Hide the heartrate layer
    show_HeartRate(false);
    

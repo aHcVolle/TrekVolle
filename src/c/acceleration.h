@@ -3,6 +3,7 @@
 
 #include <pebble.h>
 #include "weather.h"
+#include "health.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_ACCELERATION

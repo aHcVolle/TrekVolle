@@ -8,6 +8,7 @@
 #include "configuration.h"
 #include "acceleration.h"
 #include "clock.h"
+#include "health.h"
 
 #ifdef DEBUG_ENABLED
    #define DEBUG_COMMUNICATION

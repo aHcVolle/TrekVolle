@@ -37,6 +37,14 @@ static void Acceleration_Handle(AccelAxisType axis, int32_t direction)
    // Redraw the weather text to display the new data
    Weather_RedrawText();
 
+   #if defined(PBL_HEALTH)
+   // Switch display state
+   if ((m_i_Health_DisplayState == DISPLAY_GLOBAL) && (m_i_Sport_Duration > 0))
+      m_i_Health_DisplayState = DISPLAY_SPORT;
+   else
+      m_i_Health_DisplayState = DISPLAY_GLOBAL;
+   
+   #endif
    
    // Try to avoid double switches....   
    app_timer_register(1000, Acceleration_TimerCallback, NULL);

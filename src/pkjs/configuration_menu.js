@@ -266,6 +266,16 @@ module.exports = [
         "min": 0,
         "max": 100,
         "step": 10
+      },
+      {
+        "type": "slider",
+        "messageKey": "SPORT_STEP_THRESHOLD",
+        "defaultValue": 60,
+        "label": "Minimum steps/minute",
+        "description": "Minimum steps/minute for the sports tracker to activate.",
+        "min": 0,
+        "max": 200,
+        "step": 1
       }
     ]
   },

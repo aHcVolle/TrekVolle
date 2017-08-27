@@ -12,7 +12,7 @@
 #endif
 
 // Display states
-enum DisplayStates
+enum WeatherDisplayStates
 {
    DISPLAY_CONDITIONS,
    DISPLAY_LOCATION

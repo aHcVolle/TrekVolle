@@ -109,6 +109,12 @@ void LoadConfigFromStorage()
      m_b_Acceleration_Enabled = persist_read_bool(MESSAGE_KEY_ACCELERATION_ENABLE);
    }
    
+   #if defined (PBL_HEALTH)
+   if (persist_exists(MESSAGE_KEY_SPORT_STEP_THRESHOLD)) 
+   {
+     m_i_Sport_Step_Threshold = persist_read_int(MESSAGE_KEY_SPORT_STEP_THRESHOLD);
+   }
+   #endif
 }
 
 
@@ -193,7 +199,9 @@ void SaveConfigToStorage()
    WriteBool(MESSAGE_KEY_BLUETOOTH_VIBRATIONENABLED, m_b_Bluetooth_VibrationEnabled);
    
    WriteBool(MESSAGE_KEY_ACCELERATION_ENABLE, m_b_Acceleration_Enabled);
-    
+   #if defined (PBL_HEALTH)
+   WriteInt(MESSAGE_KEY_SPORT_STEP_THRESHOLD,m_i_Sport_Step_Threshold);
+   #endif
 }
 
 // Init all variables to their default value
@@ -245,5 +253,9 @@ void LoadDefaultConfig()
    m_b_Acceleration_Enabled = true;
    
    m_i_BatterySavingLevel = 20;
+   
+   #if defined (PBL_HEALTH)
+   m_i_Sport_Step_Threshold = 60;
+   #endif
 }
 

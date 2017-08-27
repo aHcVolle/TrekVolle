@@ -56,7 +56,8 @@
             "WEATHER_PROVIDER",
             "WEATHER_API_KEY",
             "CLOCK_SLEEP_BEGIN",
-            "CLOCK_SLEEP_END"
+            "CLOCK_SLEEP_END",
+            "SPORT_STEP_THRESHOLD"
         ],
         "projectType": "native",
         "resources": {
@@ -567,5 +568,5 @@
             "watchface": true
         }
     },
-    "version": "1.17.0"
+    "version": "1.18.0"
 }

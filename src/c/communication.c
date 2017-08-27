@@ -52,6 +52,9 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
    Tuple *Acceleration_Enabled_tuple = dict_find(iterator,MESSAGE_KEY_ACCELERATION_ENABLE);
    Tuple *Battery_Saving_Level_tuple = dict_find(iterator,MESSAGE_KEY_BATTERY_SAVING_LEVEL);
    
+   #if defined (PBL_HEALTH)
+        Tuple *Sport_Step_Threshold_tuple = dict_find(iterator,MESSAGE_KEY_SPORT_STEP_THRESHOLD);
+   #endif
    
    // Save if there was a change in the clock display   
    bool b_ClockChanged = false;
@@ -373,8 +376,17 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       
    }
    
-   
-   
+   #if defined (PBL_HEALTH)
+   if (Sport_Step_Threshold_tuple)
+   {
+      m_i_Sport_Step_Threshold = Sport_Step_Threshold_tuple->value->int32;
+      
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_SPORT_STEP_THREHOLD: %d",m_i_Sport_Step_Threshold);
+      #endif     
+      
+   }
+   #endif
    
 }
 
