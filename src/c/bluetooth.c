@@ -1,7 +1,5 @@
 #include "bluetooth.h"
 
-static char m_s_BTDebug_TextBuffer[32];
-
 // Redraw the bluetooth image
 void Bluetooth_Redraw()
 {
