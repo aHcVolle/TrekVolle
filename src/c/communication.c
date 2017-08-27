@@ -254,9 +254,7 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       int hh = 0;
       int mm = 0;
       char c_Temp[3];
-      #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_BEGIN: %s",Clock_Sleep_Begin_tuple->value->cstring);
-      #endif
+      
       
       c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[0];
       c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[1];
@@ -267,6 +265,10 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       c_Temp[2] = 0;
       mm  = atoi(c_Temp);
       m_i_Clock_Sleep_Begin = hh * 100 + mm;
+      
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_BEGIN: %s %d ",Clock_Sleep_Begin_tuple->value->cstring,m_i_Clock_Sleep_Begin);
+      #endif
    }
    
    if (Clock_Sleep_End_tuple)
@@ -274,19 +276,21 @@ static void Communication_InboxReceived(DictionaryIterator *iterator, void *cont
       int hh = 0;
       int mm = 0;
       char c_Temp[3];
-      #ifdef DEBUG_COMMUNICATION
-         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_END: %s",Clock_Sleep_End_tuple->value->cstring);
-      #endif
       
-      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[0];
-      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[1];
+      
+      c_Temp[0] = Clock_Sleep_End_tuple->value->cstring[0];
+      c_Temp[1] = Clock_Sleep_End_tuple->value->cstring[1];
       c_Temp[2] = 0;
       hh  = atoi(c_Temp);
-      c_Temp[0] = Clock_Sleep_Begin_tuple->value->cstring[3];
-      c_Temp[1] = Clock_Sleep_Begin_tuple->value->cstring[4];
+      c_Temp[0] = Clock_Sleep_End_tuple->value->cstring[3];
+      c_Temp[1] = Clock_Sleep_End_tuple->value->cstring[4];
       c_Temp[2] = 0;
       mm  = atoi(c_Temp);
       m_i_Clock_Sleep_End = hh * 100 + mm;
+      
+      #ifdef DEBUG_COMMUNICATION
+         printf("[COM][Communication_InboxReceived] Received data KEY_CLOCK_SLEEP_END: %s %d",Clock_Sleep_End_tuple->value->cstring,m_i_Clock_Sleep_End);
+      #endif
    }
    
    // If we have new min max weather data

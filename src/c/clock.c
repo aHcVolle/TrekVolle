@@ -84,6 +84,9 @@ bool Clock_IsSleepingTime(struct tm* Now)
  
    int i_Now = Now->tm_hour * 100 + Now->tm_min;
    
+   if (!m_b_Clock_Sleep)
+       return false;
+   
    if (m_i_Clock_Sleep_Begin < m_i_Clock_Sleep_End)
    {
        if ((i_Now > m_i_Clock_Sleep_Begin) && (i_Now < m_i_Clock_Sleep_End))

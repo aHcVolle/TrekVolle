@@ -54,7 +54,7 @@ void Weather_RedrawText()
       
    // Set the text
    text_layer_set_text(m_Weather_Text_Layer, m_s_Weather_TextBuffer);
-   // Redraw the text
+   // Redraw the text now
    //layer_mark_dirty(text_layer_get_layer(m_Weather_Text_Layer));
 }
 

@@ -1,5 +1,7 @@
 #include "bluetooth.h"
 
+static char m_s_BTDebug_TextBuffer[32];
+
 // Redraw the bluetooth image
 void Bluetooth_Redraw()
 {
@@ -26,6 +28,9 @@ void Bluetooth_Redraw()
 // Bluetooth connection changes are processed here
 static void Bluetooth_Handle(bool b_ConnectionState) 
 {
+    
+    
+    
    // Get out of here if there was no change
    if (m_b_Bluetooth_ConnectionState == b_ConnectionState)
       return;
@@ -38,7 +43,7 @@ static void Bluetooth_Handle(bool b_ConnectionState)
    m_b_Bluetooth_ConnectionState = b_ConnectionState;
    
    bool b_Vibrate = m_b_Bluetooth_VibrationEnabled;
-   if ((m_b_Clock_Sleep && m_b_Clock_SleepEnabled) || (m_b_BatterySavingActive))
+   if (m_b_Clock_SleepEnabled || (m_b_BatterySavingActive))
    {
       #ifdef DEBUG_BLUETOOTH
       if (b_Vibrate)
@@ -64,7 +69,7 @@ static void Bluetooth_Handle(bool b_ConnectionState)
       #endif
       vibes_double_pulse();
       //printf("BT disconnected");
-   }
+   } 
    
    
    // And check if we are online (will do nothing if bluetooth is disconnected)
