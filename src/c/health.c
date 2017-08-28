@@ -138,9 +138,6 @@ void Health_GetMovementData(void)
        int i_Hours = m_i_Sport_Duration / 60;
        int i_Minutes = m_i_Sport_Duration % 60;
        
-       if (m_i_Sport_DistanceDifference > 0)
-           f_Pace = 1.0 / (float)m_i_Sport_DistanceDifference/ 1000.0;
-       
        int Sport_Distance_K = m_i_Sport_Distance / 1000;
        int Sport_Distance_H = (m_i_Sport_Distance - (Sport_Distance_K * 1000)) / 10;
        
