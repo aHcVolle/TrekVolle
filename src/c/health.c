@@ -138,13 +138,25 @@ void Health_GetMovementData(void)
        int i_Hours = m_i_Sport_Duration / 60;
        int i_Minutes = m_i_Sport_Duration % 60;
        
-       float f_Distance = m_i_Sport_Distance / 1000.0;
-       
        float f_Pace = 0;
        if (m_i_Sport_DistanceDifference > 0)
            f_Pace = 1.0 / (float)m_i_Sport_DistanceDifference/ 1000.0;
        
-       snprintf(s_HealthText,sizeof(s_HealthText),"%d:%02dh %.1fkm %.1fm",i_Hours,i_Minutes,f_Distance,f_Pace);
+       int Sport_Distance_K = m_i_Sport_Distance / 1000;
+       int Sport_Distance_H = (m_i_Sport_Distance - (Sport_Distance_K * 1000)) / 10;
+       
+       int Sport_Pace_K = 0;
+       int Sport_Pace_H = 0;
+       
+       if (m_i_Sport_DistanceDifference > 0)
+       {
+           int i_Pace = 1.0 / (float)m_i_Sport_DistanceDifference/ 100.0;
+           Sport_Pace_K = i_Pace / 10;
+           Sport_Pace_H = (i_Pace - (Sport_Pace_K * 10)) / 10;
+           
+       }
+       
+       snprintf(s_HealthText,sizeof(s_HealthText),"%01d:%02dh %01d.%01dkm %01d.%01dm",i_Hours,i_Minutes,Sport_Distance_K,Sport_Distance_H,Sport_Pace_K,Sport_Pace_H);
    }
    
    // And display the data
